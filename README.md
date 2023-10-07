@@ -1,2 +1,2 @@
 # controlStock
-java Mysql Controld de stock1.0.0
+java Mysql Control de stock1.0.0
