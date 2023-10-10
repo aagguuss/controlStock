@@ -8,7 +8,7 @@ import entidades.Rol;
 import entidades.Usuario;
 import java.util.List;
 
-import persistendiciaDao.UsuarioDao;
+import Persistencia.UsuarioDao;
 
 /**
  *
@@ -24,7 +24,6 @@ public class usuarioService {
     }
 
     public Usuario crearUsuario(String nombre, String password, Rol rol) {
-        System.out.println("estas en el servicio");
         Usuario usuario = new Usuario();
         usuario.setPassword(password);
         usuario.setName(nombre);

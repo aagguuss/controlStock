@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -36,7 +34,7 @@ public class Usuario implements Serializable {
     @ManyToOne
     @JoinColumn(name = "fk_rol")
     private Rol rol;
-
+   
     public Usuario() {
     }
 

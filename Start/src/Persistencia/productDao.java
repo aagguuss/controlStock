@@ -4,8 +4,7 @@
  */
 package Persistencia;
 
-
-import entidades.Usuario;
+import Entidades.Product;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,17 +14,15 @@ import javax.persistence.Persistence;
  *
  * @author agust
  */
-public class UsuarioDao {
-      private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("persistencia");
+public class productDao {
+    private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("persistencia");
     private EntityManager em = EMF.createEntityManager();
 
-    public UsuarioDao() {
+    public productDao() {
         
     }
-
-   
-
-    public void conectar() {
+    
+     public void conectar() {
         if (!em.isOpen()) {
             em = EMF.createEntityManager();
         }
@@ -37,49 +34,44 @@ public class UsuarioDao {
         }
     }
 
-    public void guardar(Usuario usuario) {
+    public void guardar(Product product) {
         conectar();
         em.getTransaction().begin();
-        em.persist(usuario);
+        em.persist(product);
         em.getTransaction().commit();
         desconectar();
     }
 
-    public void eliminar(Usuario usuario) {
+    public void eliminar(Product product) {
         conectar();
         em.getTransaction().begin();
-        em.remove(usuario);
+        em.remove(product);
         em.getTransaction().commit();
         desconectar();
     }
 
-    public void editar(Usuario usuario) {
+    public void editar(Product product) {
         conectar();
         em.getTransaction().begin();
-        em.merge(usuario);
+        em.merge(product);
         em.getTransaction().commit();
         desconectar();
     }
 
-    public Usuario buscarPorId(int id) throws Exception {
+    public Product buscarPorId(int id) throws Exception {
         conectar();
-        Usuario usuario = em.find(Usuario.class, id);
+       Product product = em.find(Product.class, id);
         desconectar();
-        return usuario;
+        return product;
     }
 
-    public List<Usuario> listarTodos() throws Exception {
+    public List<Product> listarTodos() throws Exception {
         conectar();
-        List<Usuario> usuario = em.createQuery("SELECT l FROM Usuario l")
+        // revisar query segun se desarrollen las tablas
+        List<Product> usuario = em.createQuery("SELECT l FROM Product l")
                 .getResultList();
         desconectar();
         return usuario;
     }
 
-    public List<Usuario> UsuarioConsulta(String nombre) {
-        conectar();
-        List<Usuario> usuario = em.createQuery("select a from Usuario a WHERE a.name = '"+nombre+"'").getResultList();
-        desconectar();
-        return usuario;
-    }
 }
