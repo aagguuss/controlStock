@@ -32,7 +32,15 @@ public class ProductService {
             return null;
         }
     }
-    
+    public Product ProductForSell(String ProductName, String ProductBlend, double buyingPrice, double sellingPrice ,int howManyProducts){
+        Product product = new Product();
+        product.setProductName(ProductName);
+        product.setProductBlend(ProductBlend);
+        product.setBuyingPrice(buyingPrice);
+        product.setSellingPRice(sellingPrice);
+        product.setStock(howManyProducts);
+    return product;
+    }
     public double getsellingPrice(double buyingPrice, double gain){
       return buyingPrice+(buyingPrice * gain);          
     }

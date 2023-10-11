@@ -6,7 +6,9 @@ import Servicios.ProductService;
  *
  * @author agust
  */
+
 public class Product {
+    int Id;
     ProductService pS ;
      String ProductName,  ProductBlend;
      double buyingPrice, sellingPRice;
@@ -15,16 +17,7 @@ public class Product {
  
     public Product() {    
     }
-    public Product ProductForSell(String ProductName, String ProdctBlend, double buyingPrice, double sellingPrice ,int howManyProducts){
-        Product product = new Product();
-        product.setProductName(ProductName);
-        product.setProductBlend(ProductBlend);
-        product.setBuyingPrice(buyingPrice);
-        product.setSellingPRice(sellingPrice);
-        product.setStock(howManyProducts);
-    return product;
-    }
-
+    
     public ProductService getpS() {
         return pS;
     }

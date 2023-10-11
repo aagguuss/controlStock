@@ -5,8 +5,16 @@
 package Entidades;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 /**
  *
  * @author agust
@@ -14,10 +22,17 @@ import java.util.List;
  * howManyP = howManyProducts
  * 
  */
-public final class Sell {
+@Entity
+@Table(name="sell")
+public class Sell implements  Serializable {
+    @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+    @Temporal(javax.persistence.TemporalType.DATE)
     Date sellingDate; 
     // evaluando si al comprar tiene sentido la ista con a cantidad y en cambio desde interfaz de usario utilizar el espaci de memoria stock
     //y cuando se factura la venta que ese numero se le reste al stock en base de datos;
+     @ManyToOne
     List<Product> products;
     double totalAmount;
     double Winning;
