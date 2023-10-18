@@ -4,6 +4,8 @@
  */
 package start;
 
+import UI.MenuInicio;
+
 /**
  *
  * @author agust
@@ -12,9 +14,11 @@ public class Start {
 
     /**
      * @param args the command line arguments
+     * desde aqui iniciamos la ejecucion de la interfaz de usuario en capaz
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        MenuInicio Mi = new MenuInicio();
+        Mi.setVisible(true);
     }
     
 }

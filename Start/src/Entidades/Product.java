@@ -1,30 +1,41 @@
 
 
 package Entidades;
-import Servicios.ProductService;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 /**
  *
  * @author agust
  */
-
-public class Product {
+@Entity
+@Table(name="product")
+public class Product implements Serializable {
+    @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int Id;
-    ProductService pS ;
-     String ProductName,  ProductBlend;
-     double buyingPrice, sellingPRice;
-     int Stock,stockWarning;
+    @Column(name="product_name")
+    String ProductName;
+    @Column (name="product_blend")
+    String  ProductBlend;
+    @Column (name="buying_price")
+     double buyingPrice;
+    @Column (name="selling_price")
+     double sellingPRice;
+    @Column (name="stock")
+     int Stock;
+    @Column (name="stock_waring")
+     int    stockWarning;
 
  
     public Product() {    
     }
     
-    public ProductService getpS() {
-        return pS;
-    }
 
-    public void setpS(ProductService pS) {
-        this.pS = pS;
-    }
 
     public String getProductName() {
         return ProductName;

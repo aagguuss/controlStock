@@ -8,6 +8,7 @@ package Entidades;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,9 +33,12 @@ public class Sell implements  Serializable {
     Date sellingDate; 
     // evaluando si al comprar tiene sentido la ista con a cantidad y en cambio desde interfaz de usario utilizar el espaci de memoria stock
     //y cuando se factura la venta que ese numero se le reste al stock en base de datos;
-     @ManyToOne
+    @ManyToOne
+    //@JoinColumn(name=fk_product)
     List<Product> products;
+    @Column(name="total_amount")
     double totalAmount;
+    @Column(name="Winning")
     double Winning;
 
     public Sell() {
