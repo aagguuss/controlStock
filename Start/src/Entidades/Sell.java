@@ -13,6 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,8 +36,10 @@ public class Sell implements  Serializable {
     Date sellingDate; 
     // evaluando si al comprar tiene sentido la ista con a cantidad y en cambio desde interfaz de usario utilizar el espaci de memoria stock
     //y cuando se factura la venta que ese numero se le reste al stock en base de datos;
-    @ManyToOne
-    //@JoinColumn(name=fk_product)
+    @ManyToMany
+    @JoinTable(name = "sell_product",
+               joinColumns = @JoinColumn(name = "sell_id"),
+               inverseJoinColumns = @JoinColumn(name = "product_id"))
     List<Product> products;
     @Column(name="total_amount")
     double totalAmount;

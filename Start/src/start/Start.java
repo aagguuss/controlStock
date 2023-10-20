@@ -4,6 +4,8 @@
  */
 package start;
 
+import Entidades.Product;
+import Servicios.ProductService;
 import UI.MenuInicio;
 
 /**
@@ -11,14 +13,11 @@ import UI.MenuInicio;
  * @author agust
  */
 public class Start {
-
-    /**
-     * @param args the command line arguments
-     * desde aqui iniciamos la ejecucion de la interfaz de usuario en capaz
-     */
-    public static void main(String[] args) {
-        MenuInicio Mi = new MenuInicio();
-        Mi.setVisible(true);
-    }
-    
-}
+    public static void main(String[] args) throws Exception {
+        //MenuInicio Mi = new MenuInicio();
+        //Mi.setVisible(true);
+        ProductService ps = new ProductService();
+      
+      
+     
+}}

@@ -95,6 +95,11 @@ public class MenuInicio extends javax.swing.JFrame {
         MimtStock.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MimtStock.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
         MimtStock.setText("Stock");
+        MimtStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MimtStockActionPerformed(evt);
+            }
+        });
         JMenuPrincipal.add(MimtStock);
 
         MitmCesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -110,7 +115,6 @@ public class MenuInicio extends javax.swing.JFrame {
         MitmConsultas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MitmConsultas.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
         MitmConsultas.setText("Consultas");
-        MitmConsultas.setActionCommand("Consultas");
         MitmConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MitmConsultasActionPerformed(evt);
@@ -137,23 +141,25 @@ public class MenuInicio extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-        Venta V = new Venta();
-        V.setVisible(true);
+       
         
     }//GEN-LAST:event_MitmVentaActionPerformed
 
     private void MitmConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmConsultasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MitmConsultasActionPerformed
+
+    private void MimtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MimtStockActionPerformed
+       Stock S1 = new Stock();
+       S1.setVisible(true);
+    }//GEN-LAST:event_MimtStockActionPerformed
 
     /**
      * @param args the command line arguments

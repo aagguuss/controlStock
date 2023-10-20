@@ -15,7 +15,7 @@ import javax.persistence.Persistence;
  * @author agust
  */
 public class productDao {
-    private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("persistencia");
+    private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("StartPU");
     private EntityManager em = EMF.createEntityManager();
 
     public productDao() {
@@ -68,10 +68,10 @@ public class productDao {
     public List<Product> listarTodos() throws Exception {
         conectar();
         // revisar query segun se desarrollen las tablas
-        List<Product> usuario = em.createQuery("SELECT l FROM Product l")
+        List<Product> products = em.createQuery("SELECT l FROM Product l")
                 .getResultList();
         desconectar();
-        return usuario;
+        return products;
     }
 
 }

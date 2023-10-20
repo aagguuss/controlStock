@@ -16,7 +16,7 @@ import javax.persistence.Persistence;
  * @author agust
  */
 public class UsuarioDao {
-      private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("persistencia");
+      private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("StartPU");
     private EntityManager em = EMF.createEntityManager();
 
     public UsuarioDao() {
