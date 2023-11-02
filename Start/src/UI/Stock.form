@@ -110,18 +110,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="65" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="14" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace pref="9" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -136,36 +137,41 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="771" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="833" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="BtnEditar" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
-                      <Component id="BtnMarcar" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
-                      <Component id="BtnAceptar" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                      <Component id="BtnAgregar" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
+                      <Component id="BtnMarcar1" min="-2" pref="151" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
+                          <Component id="BtnAceptar" min="-2" pref="115" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" pref="571" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Component id="BtnEditar" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="BtnMarcar" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="438" max="-2" attributes="0"/>
+                          <Component id="BtnMarcar1" min="-2" pref="40" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BtnAgregar" min="-2" pref="40" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="BtnAceptar" min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="567" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -184,15 +190,15 @@
                   <Font name="SimSun" size="12" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="9" rowCount="20">
-                    <Column editable="false" title="ID" type="java.lang.Integer"/>
+                  <Table columnCount="9" rowCount="0">
+                    <Column editable="false" title="Id" type="java.lang.Integer"/>
                     <Column editable="true" title="Nombre" type="java.lang.String"/>
                     <Column editable="true" title="Marca" type="java.lang.String"/>
                     <Column editable="true" title="Categoria" type="java.lang.String"/>
-                    <Column editable="false" title="Precio de Compra" type="java.lang.Double"/>
+                    <Column editable="true" title="Precio de compra" type="java.lang.Double"/>
                     <Column editable="true" title="Precio" type="java.lang.Double"/>
                     <Column editable="true" title="Stock" type="java.lang.Integer"/>
-                    <Column editable="true" title="Alerta Stock" type="java.lang.Integer"/>
+                    <Column editable="true" title="Alerta stock" type="java.lang.Integer"/>
                     <Column editable="true" title="Interes" type="java.lang.Double"/>
                   </Table>
                 </Property>
@@ -276,14 +282,31 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEditarActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="groupButtons.add(BtnEditar);"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="BtnMarcar">
+        <Component class="javax.swing.JRadioButton" name="BtnAgregar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Agregar Productos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAgregarActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="groupButtons.add(BtnAgregar);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="BtnMarcar1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Marcar Alertas "/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnMarcarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnMarcar1ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="BtnMarcar1.setSelected(true);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

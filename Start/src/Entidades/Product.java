@@ -34,8 +34,11 @@ public class Product implements Serializable {
      int Stock;
     @Column (name="stock_waring")
      int    stockWarning;
+    @Column (name="interest")
+    double interest;
     @ManyToMany(mappedBy = "products")
     List<Sell> sells;
+    
 
  
     public Product() {    
@@ -63,8 +66,24 @@ public class Product implements Serializable {
         return buyingPrice;
     }
 
+    public double getInterest() {
+        return interest;
+    }
+
+    public void setInterest(double interest) {
+        this.interest = interest;
+    }
+
     public void setBuyingPrice(double buyingPrice) {
         this.buyingPrice = buyingPrice;
+    }
+
+    public List<Sell> getSells() {
+        return sells;
+    }
+
+    public void setSells(List<Sell> sells) {
+        this.sells = sells;
     }
 
     public double getSellingPRice() {
@@ -101,6 +120,10 @@ public class Product implements Serializable {
 
     public int getId() {
         return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
     }
     
     

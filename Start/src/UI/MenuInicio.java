@@ -4,6 +4,9 @@
  */
 package UI;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -157,8 +160,14 @@ public class MenuInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_MitmConsultasActionPerformed
 
     private void MimtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MimtStockActionPerformed
-       Stock S1 = new Stock();
-       S1.setVisible(true);
+       Stock S1;
+        try {
+            S1 = new Stock();
+             S1.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(MenuInicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }//GEN-LAST:event_MimtStockActionPerformed
 
     /**

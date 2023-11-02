@@ -3,23 +3,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
-
+import Entidades.Product;
+import ServicioIU.StockService;
 import Servicios.ProductService;
+import java.awt.Color;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.DefaultTableModel;
+
+
 
 /**
- *
  * @author agust
  */
 public class Stock extends javax.swing.JFrame {
-
+    DefaultTableModel model;
     ProductService Ps ;
+    StockService Ss; 
+    private List<Product> products2;
+   ButtonGroup groupButtons;
     /**
      * Creates new form Venta
+     * @throws java.lang.Exception
      */
-    public Stock() {
+    public Stock() throws Exception {
+        this.Ss = new StockService();
+        this.Ps= new ProductService(); 
+        products2 = Ps.Dao.listarTodos(); 
+        this.groupButtons = new ButtonGroup();
         initComponents();
-        this.Ps= new ProductService();  
-        // aca debo cargar la informacion de base de datos en una variable, luego insetarlo en la tabla modificar el tamaño de la tabla 
+        this.model= Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);
+        // Agregar eventos de cambio de valor a las celdas
+        model.addTableModelListener((TableModelEvent e) -> {
+         if (e.getType() == TableModelEvent.UPDATE) {
+             int row = e.getFirstRow();
+             int column = e.getColumn();
+             // Verificar si se modificó alguna de las columnas de interés
+             if (column == 4 || column == 5 || column == 8) {
+                 calculatePrice(row,model);
+             }
+         }
+         
+        });
     }
 
     /**
@@ -36,7 +64,8 @@ public class Stock extends javax.swing.JFrame {
         TableVenta = new javax.swing.JTable();
         BtnAceptar = new javax.swing.JButton();
         BtnEditar = new javax.swing.JRadioButton();
-        BtnMarcar = new javax.swing.JRadioButton();
+        BtnAgregar = new javax.swing.JRadioButton();
+        BtnMarcar1 = new javax.swing.JRadioButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         JMenuPrincipal = new javax.swing.JMenu();
         MitmVenta = new javax.swing.JMenuItem();
@@ -53,36 +82,17 @@ public class Stock extends javax.swing.JFrame {
         TableVenta.setFont(new java.awt.Font("SimSun", 1, 12)); // NOI18N
         TableVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Nombre", "Marca", "Categoria", "Precio de Compra", "Precio", "Stock", "Alerta Stock", "Interes"
+                "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, false, true, true, true, true
+                false, true, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -109,6 +119,7 @@ public class Stock extends javax.swing.JFrame {
             }
         });
 
+        groupButtons.add(BtnEditar);
         BtnEditar.setText("Editar");
         BtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,10 +127,19 @@ public class Stock extends javax.swing.JFrame {
             }
         });
 
-        BtnMarcar.setText("Marcar Alertas ");
-        BtnMarcar.addActionListener(new java.awt.event.ActionListener() {
+        groupButtons.add(BtnAgregar);
+        BtnAgregar.setText("Agregar Productos");
+        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnMarcarActionPerformed(evt);
+                BtnAgregarActionPerformed(evt);
+            }
+        });
+
+        BtnMarcar1.setSelected(true);
+        BtnMarcar1.setText("Marcar Alertas ");
+        BtnMarcar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnMarcar1ActionPerformed(evt);
             }
         });
 
@@ -128,30 +148,34 @@ public class Stock extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnMarcar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnMarcar1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(BtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnMarcar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(438, 438, 438)
-                        .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(BtnMarcar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(65, 65, 65))
         );
 
         JMenuPrincipal.setText("Panel de Opciones");
@@ -205,16 +229,17 @@ public class Stock extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 65, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -229,17 +254,80 @@ public class Stock extends javax.swing.JFrame {
     }//GEN-LAST:event_MitmConsultasActionPerformed
 
     private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
-     
+     if (BtnEditar.isSelected()){
+        Ss.Edit(model);
+         try {
+             products2=Ps.Dao.listarTodos();
+         } catch (Exception ex) {
+             Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
+         }
+     } else if (BtnAgregar.isSelected()){
+         Ss.Add(model);
+         try {
+             products2=Ps.Dao.listarTodos();
+         } catch (Exception ex) {
+             Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
+         }
+     }
     }//GEN-LAST:event_BtnAceptarActionPerformed
 
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
-        // TODO add your handling code here:
+      if (BtnEditar.isSelected()) {
+                    model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);     
+                } else {
+                     model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);                 
+               }   
     }//GEN-LAST:event_BtnEditarActionPerformed
 
-    private void BtnMarcarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMarcarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnMarcarActionPerformed
+    private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
+       if (BtnAgregar.isSelected()) {
+                    model = Ss.AddSelected((DefaultTableModel)TableVenta.getModel()) ;      
+                } else {
+                     model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);               
+               }   
+    }//GEN-LAST:event_BtnAgregarActionPerformed
 
+    private void BtnMarcar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMarcar1ActionPerformed
+         if (BtnMarcar1.isSelected()) {
+                  markRows();
+            } else {
+                 unmarkRows();
+            }
+    }//GEN-LAST:event_BtnMarcar1ActionPerformed
+
+    //esto deberia pasarse a StockService pero hasta no haberlo probado vamos a dejarlo aca
+   private void calculatePrice(int row,DefaultTableModel model1) {
+         
+       try{    
+         double precioCompra = (Double) model.getValueAt(row, 4);
+         double interes = (Double) model.getValueAt(row, 8);
+         double precio = (Double) model.getValueAt(row, 5);
+         // Verificar si los valores necesarios están presentes y el interés es diferente de cero
+         if (precioCompra!=0 && interes!=0 && precio==0 ) {
+                 precio = precioCompra * (interes + 1);
+                 model.setValueAt(precio, row, 5);                
+            }
+         if (precioCompra!=0 && precio!=0 && interes == 0) {
+                 interes = (precio/precioCompra)-1;
+                 model.setValueAt(interes, row, 8);     
+                }
+            }catch( Exception e ){
+                            System.out.println(e.fillInStackTrace());
+                }
+}
+    private void markRows() {
+    for (int row = 0; row < TableVenta.getRowCount(); row++) {
+        int stock = (int) TableVenta.getValueAt(row, 6);
+        int alertaStock = (int) TableVenta.getValueAt(row, 7);
+        if (stock <= alertaStock) {
+            TableVenta.setBackground(Color.RED);
+        }
+    }
+}
+    private void unmarkRows() {
+    TableVenta.setBackground(Color.WHITE);
+}
+    
     /**
      * @param args the command line arguments
      */
@@ -247,8 +335,9 @@ public class Stock extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAceptar;
+    private javax.swing.JRadioButton BtnAgregar;
     private javax.swing.JRadioButton BtnEditar;
-    private javax.swing.JRadioButton BtnMarcar;
+    private javax.swing.JRadioButton BtnMarcar1;
     private javax.swing.JMenu JMenuPrincipal;
     private javax.swing.JMenuItem MimtStock;
     private javax.swing.JMenuItem MitmCesion;
