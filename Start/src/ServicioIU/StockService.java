@@ -98,10 +98,10 @@ public class StockService {
                                                         }
         return model;
     }   
-    public DefaultTableModel AddSelected(DefaultTableModel model){
+    public DefaultTableModel AddSelected(DefaultTableModel model,int rows){
              System.out.println("estamos el servicio add select ");
              model.setRowCount(0); // Eliminar contenido existente
-             model.setRowCount(100); // Establecer 100 filas vacía
+             model.setRowCount(rows); // Establecer 100 filas vacía
 
     for (int row = 0; row < model.getRowCount(); row++) {
         for (int column = 0; column < model.getColumnCount(); column++) {
