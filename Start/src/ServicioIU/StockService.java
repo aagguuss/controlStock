@@ -7,6 +7,7 @@ import Entidades.Product;
 import Servicios.ProductService;
 import java.util.List;
 import java.util.Objects;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -123,5 +124,57 @@ public class StockService {
            !Objects.isNull(product.getStockWarning()) && 
            !Objects.isNull(product.getInterest());
 }
+
+    public DefaultTableModel comprobarPrecios(DefaultTableModel model) {
+         Double precioCompra = 0.0;
+         Double interes =  0.0;
+         Double precio =  0.0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                precioCompra = (Double) model.getValueAt(i, 4);
+                interes = (Double) model.getValueAt(i, 8);
+                precio = (Double) model.getValueAt(i, 5);
+                if (precio!=precioCompra*(interes+1)){
+                     Object[] opciones = { "Precio final", "Interes" };
+                    int seleccion = JOptionPane.showOptionDialog(null, "El precio final no coincide con el interes. ¿Cual es el correcto?", "Selecciona una opción", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
+
+                    if (seleccion == 0) {
+                        interes= (precio/precioCompra)-1;
+                    // Acciones para elegir el precio final
+                         model.setValueAt(interes, i, 8);
+                    } 
+                     else if (seleccion == 1) {
+                    // Acciones para elegir el cálculo
+                        precio = precioCompra * (interes + 1);
+                        model.setValueAt(precio, i, 5);
+                    }
+                 }
+            }
+            
+        }
+        return model;
+    }
+
+    public DefaultTableModel comprobarRepetidos(DefaultTableModel model) throws Exception {
+         List<Product>  modelP = ps.Dao.listarTodos();// convendria traer solo nombre marca  y categoria 
+                 String nombre ="";
+                 String marca ="";
+                 String categoria  ="";
+         for (int i = 0; i < model.getRowCount(); i++) {
+             for (int j = 0; j < model.getColumnCount(); j++) {
+                 nombre =(String) model.getValueAt(i, 1);
+                 marca =(String) model.getValueAt(i, 2);
+                 categoria  =(String) model.getValueAt(i, 3);
+                 for (Product product : modelP) {
+                      if (nombre.equalsIgnoreCase(product.getProductName())&& marca.equalsIgnoreCase(product.getProductBlend()) && categoria.equalsIgnoreCase(product.getCategory())){
+                          // cambian los precios a o se suma stock 
+                 } 
+                }
+                 
+             }
+            
+        }
+        return model;
+    }
 
 }

@@ -260,18 +260,21 @@ public class Stock extends javax.swing.JFrame {
     private void MitmConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmConsultasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MitmConsultasActionPerformed
-
+//TODO
     private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
      if (BtnEditar.isSelected()){
-        Ss.Edit(model);
          try {
+             //TODO checkear comprobar precios         
+             Ss.Edit(Ss.comprobarPrecios(model));
              products2=Ps.Dao.listarTodos();
          } catch (Exception ex) {
              Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
          }
      } else if (BtnAgregar.isSelected()){
-         Ss.Add(model);
+         // comprobar que no esten repetidos nombre marca y categoria 
+         ///TODO checkear comprobar precios    
          try {
+             Ss.Add(Ss.comprobarPrecios(Ss.comprobarRepetidos(model)));
              products2=Ps.Dao.listarTodos();
          } catch (Exception ex) {
              Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
@@ -298,7 +301,7 @@ public class Stock extends javax.swing.JFrame {
                      model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);               
                }   
     }//GEN-LAST:event_BtnAgregarActionPerformed
-
+//esta maaaaaal 
     private void BtnMarcar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMarcar1ActionPerformed
          if (BtnMarcar1.isSelected()) {
                   markRows();
@@ -319,8 +322,7 @@ public class Stock extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
     //esto deberia pasarse a StockService pero hasta no haberlo probado vamos a dejarlo aca
-   private void calculatePrice(int row,DefaultTableModel model1) {
-         
+   private void calculatePrice(int row,DefaultTableModel model1) {        
        try{    
          Double precioCompra = (Double) model1.getValueAt(row, 4);
          Double interes = (Double) model1.getValueAt(row, 8);
@@ -339,7 +341,9 @@ public class Stock extends javax.swing.JFrame {
                             System.out.println(e.getClass());
                             System.out.println(e.toString());
                 }
+       
 }
+   // esto esta mal marca lo seleccionado o marca todo pero no la fila que quiero 
     private void markRows() {
     for (int row = 0; row < TableVenta.getRowCount(); row++) {
         int stock = (int) TableVenta.getValueAt(row, 6);
@@ -349,6 +353,7 @@ public class Stock extends javax.swing.JFrame {
         }
     }
 }
+    // esto tambien esta mal
     private void unmarkRows() {
     TableVenta.setSelectionBackground(Color.WHITE);
 }
