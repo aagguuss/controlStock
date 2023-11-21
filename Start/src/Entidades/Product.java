@@ -125,6 +125,11 @@ public class Product implements Serializable {
     public void setId(int Id) {
         this.Id = Id;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" + "Id=" + Id + ", ProductName=" + ProductName + ", ProductBlend=" + ProductBlend + ", category=" + category + ", buyingPrice=" + buyingPrice + ", sellingPRice=" + sellingPRice + ", Stock=" + Stock + ", stockWarning=" + stockWarning + ", interest=" + interest + ", sells=" + sells + '}';
+    }
     
     
 }

@@ -20,6 +20,5 @@ public class Start {
         Stock s = new Stock();
         s.setVisible(true);
         
-      
      
 }}

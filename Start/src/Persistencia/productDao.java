@@ -18,7 +18,9 @@ public class productDao {
     private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("StartPU");
     private EntityManager em = EMF.createEntityManager();
 
+private final String sql;
     public productDao() {
+        this.sql = "UPDATE nombre_tabla SET columna1 = valor1, columna2 = valor2 WHERE ID=";
         
     }
     
@@ -51,6 +53,7 @@ public class productDao {
     }
 
     public void editar(Product product) {
+        System.out.println(product.toString());
         conectar();
         em.getTransaction().begin();
         em.merge(product);
@@ -60,7 +63,7 @@ public class productDao {
 
     public Product buscarPorId(int id) throws Exception {
         conectar();
-       Product product = em.find(Product.class, id);
+        Product product = em.find(Product.class, id);
         desconectar();
         return product;
     }
@@ -73,5 +76,9 @@ public class productDao {
         desconectar();
         return products;
     }
-
+    public void Update(Product product){
+    
+        
+    }
+    
 }

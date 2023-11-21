@@ -14,6 +14,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 /**
  * @author agust
  */
@@ -264,15 +265,20 @@ public class Stock extends javax.swing.JFrame {
     private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
      if (BtnEditar.isSelected()){
          try {
-             //TODO checkear comprobar precios         
-             Ss.Edit(Ss.comprobarPrecios(model));
-             products2=Ps.Dao.listarTodos();
+             //TODO checkear comprobar precios
+             TableModel modelbis = TableVenta.getModel();
+             System.out.println("model al seleccionar aceptar");
+             model = (DefaultTableModel) modelbis;
+             System.out.println("model despues de la accion  TableVenta.getModel() sea cargada");
+            products2=Ss.EditaleData(Ss.comprobarPrecios(model));
+            int a = 0;
          } catch (Exception ex) {
-             Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
          }
      } else if (BtnAgregar.isSelected()){
          // comprobar que no esten repetidos nombre marca y categoria 
          ///TODO checkear comprobar precios    
+         //adaptas metodo vijeo si es que editar fincona
+         
          try {
              Ss.Add(Ss.comprobarPrecios(Ss.comprobarRepetidos(model)));
              products2=Ps.Dao.listarTodos();
@@ -284,8 +290,16 @@ public class Stock extends javax.swing.JFrame {
 
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
       if (BtnEditar.isSelected()) {
-                    model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);     
+          try {
+              model= Ss.SaveNewData(Ps.Dao.listarTodos()) ;
+               model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);        
+          } catch (Exception ex) {
+              System.out.println("Error: " + ex.getMessage());
+                      
+          }
+                   
                 } else {
+                   
                      model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);                 
                }   
     }//GEN-LAST:event_BtnEditarActionPerformed
@@ -294,7 +308,7 @@ public class Stock extends javax.swing.JFrame {
         
         if (BtnAgregar.isSelected()) {
                     String input = (JOptionPane.showInputDialog("Ingrese la cantidad de filas de productos a agregar el maximo es 100"));
-                    if (!"null".equals(input)){
+                    if (input != null){
                     int rows = Integer.parseInt(input);
                    model = Ss.AddSelected((DefaultTableModel)TableVenta.getModel(),rows) ;  }    
                 } else {
@@ -313,7 +327,7 @@ public class Stock extends javax.swing.JFrame {
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
 
         String input = (JOptionPane.showInputDialog("Ingrese a partir de que indic desea borrar las filas "));
-        if (!"null".equals(input)){
+        if (input != null){
             int rows = Integer.parseInt(input);
         for (int i = rows ; i < model.getRowCount();i++){
         model.removeRow(i);
@@ -349,13 +363,15 @@ public class Stock extends javax.swing.JFrame {
         int stock = (int) TableVenta.getValueAt(row, 6);
         int alertaStock = (int) TableVenta.getValueAt(row, 7);
         if (stock <= alertaStock) {
+            TableVenta.setRowSelectionInterval(6, row);
             TableVenta.setSelectionBackground(Color.RED);
         }
     }
 }
     // esto tambien esta mal
     private void unmarkRows() {
-    TableVenta.setSelectionBackground(Color.WHITE);
+        TableVenta.setBackground(Color.WHITE);
+    
 }
    
 
@@ -378,4 +394,6 @@ public class Stock extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    
 }
