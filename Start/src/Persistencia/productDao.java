@@ -9,22 +9,25 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author agust
  */
 public class productDao {
+
     private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("StartPU");
     private EntityManager em = EMF.createEntityManager();
 
-private final String sql;
+    private final String sql;
+
     public productDao() {
         this.sql = "UPDATE nombre_tabla SET columna1 = valor1, columna2 = valor2 WHERE ID=";
-        
+
     }
-    
-     public void conectar() {
+
+    public void conectar() {
         if (!em.isOpen()) {
             em = EMF.createEntityManager();
         }
@@ -43,6 +46,7 @@ private final String sql;
         em.getTransaction().commit();
         desconectar();
     }
+// el elemento que debe ser ingresado a elimnar debe ser un dato obtendio de la persistencia a travez de entity manager para que lo reconozca https://www.youtube.com/watch?v=jPnYs3QiILI 26:13
 
     public void eliminar(Product product) {
         conectar();
@@ -51,14 +55,27 @@ private final String sql;
         em.getTransaction().commit();
         desconectar();
     }
+// el dato que de ingresa en el merge debe ser un objeto obetnido de la persistencia https://www.youtube.com/watch?v=jPnYs3QiILI  13:33
 
     public void editar(Product product) {
-        System.out.println(product.toString());
         conectar();
-        em.getTransaction().begin();
-        em.merge(product);
-        em.getTransaction().commit();
-        desconectar();
+        try {
+            Product p = em.find(Product.class, product.getId());
+             em.getTransaction().begin();
+            if (em.contains(p)) {        
+                em.merge(product);
+                em.getTransaction().commit();
+                JOptionPane.showMessageDialog(null, "Modificacion producida con exito");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo modificar correctamente ");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar " + e.getMessage());
+        } finally {
+            if(em != null ){
+            desconectar();
+            }    
+        }     
     }
 
     public Product buscarPorId(int id) throws Exception {
@@ -75,10 +92,6 @@ private final String sql;
                 .getResultList();
         desconectar();
         return products;
-    }
-    public void Update(Product product){
-    
-        
-    }
-    
+    }  
+
 }

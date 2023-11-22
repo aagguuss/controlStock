@@ -291,15 +291,13 @@ public class Stock extends javax.swing.JFrame {
     private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
       if (BtnEditar.isSelected()) {
           try {
-              model= Ss.SaveNewData(Ps.Dao.listarTodos()) ;
+              products2=Ps.Dao.listarTodos();
+              model= Ss.SaveNewData(products2) ;
                model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);        
           } catch (Exception ex) {
-              System.out.println("Error: " + ex.getMessage());
-                      
-          }
-                   
-                } else {
-                   
+              System.out.println("Error: " + ex.getMessage());          
+          }  
+                } else {  
                      model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);                 
                }   
     }//GEN-LAST:event_BtnEditarActionPerformed
