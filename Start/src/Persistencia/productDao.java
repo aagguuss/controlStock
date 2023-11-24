@@ -20,11 +20,7 @@ public class productDao {
     private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("StartPU");
     private EntityManager em = EMF.createEntityManager();
 
-    private final String sql;
-
     public productDao() {
-        this.sql = "UPDATE nombre_tabla SET columna1 = valor1, columna2 = valor2 WHERE ID=";
-
     }
 
     public void conectar() {
@@ -42,18 +38,35 @@ public class productDao {
     public void guardar(Product product) {
         conectar();
         em.getTransaction().begin();
-        em.persist(product);
-        em.getTransaction().commit();
-        desconectar();
+        try {
+            em.persist(product);
+            em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "producto guardado con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al guardar :" + e.getMessage());
+        } finally {
+            desconectar();
+        }
     }
 // el elemento que debe ser ingresado a elimnar debe ser un dato obtendio de la persistencia a travez de entity manager para que lo reconozca https://www.youtube.com/watch?v=jPnYs3QiILI 26:13
 
     public void eliminar(Product product) {
         conectar();
-        em.getTransaction().begin();
-        em.remove(product);
-        em.getTransaction().commit();
-        desconectar();
+        try {
+            Product p = em.find(Product.class, product.getId());
+            em.getTransaction().begin();
+            if (em.contains(p)) {
+                em.remove(p);
+                em.getTransaction().commit();
+                JOptionPane.showMessageDialog(null, "producto eliminado con exito");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro el producto");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al Eliminar :" + e.getMessage());
+        } finally {
+            desconectar();
+        }
     }
 // el dato que de ingresa en el merge debe ser un objeto obetnido de la persistencia https://www.youtube.com/watch?v=jPnYs3QiILI  13:33
 
@@ -61,21 +74,19 @@ public class productDao {
         conectar();
         try {
             Product p = em.find(Product.class, product.getId());
-             em.getTransaction().begin();
-            if (em.contains(p)) {        
+            em.getTransaction().begin();
+            if (em.contains(p)) {
                 em.merge(product);
                 em.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Modificacion producida con exito");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No se pudo modificar correctamente ");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al modificar " + e.getMessage());
         } finally {
-            if(em != null ){
             desconectar();
-            }    
-        }     
+        }
     }
 
     public Product buscarPorId(int id) throws Exception {
@@ -92,6 +103,6 @@ public class productDao {
                 .getResultList();
         desconectar();
         return products;
-    }  
+    }
 
 }

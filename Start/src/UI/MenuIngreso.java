@@ -4,8 +4,11 @@
  */
 package UI;
 
+import Servicios.rolServicio;
 import java.awt.HeadlessException;
 import Servicios.usuarioService;
+import entidades.Rol;
+import entidades.Usuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,12 +18,14 @@ import javax.swing.JOptionPane;
 public class MenuIngreso extends javax.swing.JFrame {
 
     usuarioService us = new usuarioService();
+    rolServicio rs = new rolServicio();
 
     /**
      * Creates new form menu_F
      */
-    public MenuIngreso() {
+    public MenuIngreso() throws Exception {
         initComponents();
+        verificarUsuarioAdmin();
     }
 
     /**
@@ -41,7 +46,6 @@ public class MenuIngreso extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -49,7 +53,7 @@ public class MenuIngreso extends javax.swing.JFrame {
         setFocusCycleRoot(false);
         setIconImages(null);
 
-        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), javax.swing.BorderFactory.createTitledBorder("")));
         jPanel1.setPreferredSize(new java.awt.Dimension(425, 334));
         jPanel1.setLayout(null);
@@ -57,7 +61,7 @@ public class MenuIngreso extends javax.swing.JFrame {
         LblBienvenido.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
         LblBienvenido.setForeground(new java.awt.Color(102, 255, 51));
         LblBienvenido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LblBienvenido.setText("Bienvenido a la biblioteca");
+        LblBienvenido.setText("Ingreso al sistema");
         LblBienvenido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         LblBienvenido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(LblBienvenido);
@@ -66,34 +70,38 @@ public class MenuIngreso extends javax.swing.JFrame {
         lblUser.setBackground(new java.awt.Color(153, 204, 255));
         lblUser.setFont(new java.awt.Font("Segoe UI Black", 3, 18)); // NOI18N
         lblUser.setForeground(new java.awt.Color(102, 255, 51));
-        lblUser.setText("User :");
+        lblUser.setText("Usuario :");
         jPanel1.add(lblUser);
-        lblUser.setBounds(20, 90, 90, 40);
+        lblUser.setBounds(20, 100, 90, 40);
 
         lblPassword.setFont(new java.awt.Font("Segoe UI Black", 3, 18)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(102, 255, 51));
-        lblPassword.setText("Password :");
+        lblPassword.setText("Constraseña:");
         jPanel1.add(lblPassword);
-        lblPassword.setBounds(10, 160, 120, 25);
+        lblPassword.setBounds(10, 180, 130, 25);
 
-        btnAceptar.setText("log");
+        btnAceptar.setBackground(new java.awt.Color(0, 102, 0));
+        btnAceptar.setText("Entrar");
+        btnAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
             }
         });
         jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(110, 300, 80, 20);
+        btnAceptar.setBounds(110, 270, 90, 30);
         btnAceptar.getAccessibleContext().setAccessibleName("Entrar");
 
+        btnSalir.setBackground(new java.awt.Color(0, 102, 0));
         btnSalir.setText("Salir");
+        btnSalir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
         jPanel1.add(btnSalir);
-        btnSalir.setBounds(260, 300, 80, 20);
+        btnSalir.setBounds(270, 270, 100, 30);
 
         txtUsuario.setBackground(new java.awt.Color(204, 204, 204));
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +110,7 @@ public class MenuIngreso extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtUsuario);
-        txtUsuario.setBounds(120, 100, 210, 30);
+        txtUsuario.setBounds(140, 110, 210, 30);
 
         txtPassword.setBackground(new java.awt.Color(204, 204, 204));
         txtPassword.setText("\n");
@@ -112,13 +120,7 @@ public class MenuIngreso extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtPassword);
-        txtPassword.setBounds(120, 160, 211, 30);
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ruined-book.jpeg"))); // NOI18N
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(0, -30, 580, 390);
-        jLabel4.getAccessibleContext().setAccessibleName("imgLbl");
-        jLabel4.getAccessibleContext().setAccessibleDescription("imagenMenu");
+        txtPassword.setBounds(140, 180, 211, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,11 +154,11 @@ public class MenuIngreso extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nombre = txtUsuario.getText();
         char[] password = txtPassword.getPassword();
-        txtPassword.setText(" ");
+        txtPassword.setText("");
         txtUsuario.setText(" ");
         String mensaje = us.ValidarUsuario(nombre, password);
 
-        if (mensaje.equalsIgnoreCase("Bienvenido al panel de Biblioteca")) {
+        if (mensaje.equalsIgnoreCase("Entrando al sistema")) {
             try {
                 JOptionPane.showMessageDialog(null, mensaje);
                 mensaje = us.validarRol(nombre, password);
@@ -182,6 +184,28 @@ public class MenuIngreso extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+      private void verificarUsuarioAdmin() throws Exception {
+        boolean existeAdmin = us.existeUsuarioAdmin();
+        
+        if (existeAdmin=false) {
+            // Crear nuevo usuario administrador
+            Usuario admin = new Usuario();
+            admin.setName("admin");
+            admin.setPassword("Administrador");
+            admin.setAlta(true);
+            
+            Rol rolAdmin = new Rol();
+            rolAdmin.setNombre("Administrador");
+            
+            admin.setRol(rolAdmin);
+            rolAdmin.getListaUsuarios().add(admin);
+            // revisar servicios  hacer comprabaciones 
+            rs.crearRol(rolAdmin.getNombre());
+            us.crearUsuario(admin.getName(), admin.getPassword(), rolAdmin);
+        }else{
+      
+      }
+    }
     /**
      * @param args the command line arguments
      */
@@ -190,7 +214,6 @@ public class MenuIngreso extends javax.swing.JFrame {
     private javax.swing.JLabel LblBienvenido;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblPassword;

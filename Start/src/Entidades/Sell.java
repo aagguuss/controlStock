@@ -82,5 +82,13 @@ public class Sell implements  Serializable {
     public void setWinning(double Winning) {
         this.Winning = Winning;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
    
 }

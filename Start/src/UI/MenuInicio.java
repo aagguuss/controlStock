@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -64,7 +62,7 @@ public class MenuInicio extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(483, Short.MAX_VALUE)
-                .addComponent(LabelTipoCesion, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(LabelTipoCesion, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(262, 262, 262))
@@ -108,6 +106,11 @@ public class MenuInicio extends javax.swing.JFrame {
         MitmCesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MitmCesion.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
         MitmCesion.setText("Cesion");
+        MitmCesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MitmCesionActionPerformed(evt);
+            }
+        });
         JMenuPrincipal.add(MitmCesion);
 
         MitmDevolucion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -125,6 +128,7 @@ public class MenuInicio extends javax.swing.JFrame {
         });
         JMenuPrincipal.add(MitmConsultas);
 
+        MitmSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         MitmSalir.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
         MitmSalir.setText("Salir");
         JMenuPrincipal.add(MitmSalir);
@@ -144,14 +148,23 @@ public class MenuInicio extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-       
+            Venta V;
+            try {
+            V = new Venta();
+            V.setVisible(true);
+        } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al abrir ventas"+e.getMessage());
+        }
         
     }//GEN-LAST:event_MitmVentaActionPerformed
 
@@ -165,10 +178,20 @@ public class MenuInicio extends javax.swing.JFrame {
             S1 = new Stock();
              S1.setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(MenuInicio.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al abrir Stock"+ex.getMessage());
         }
       
     }//GEN-LAST:event_MimtStockActionPerformed
+
+    private void MitmCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmCesionActionPerformed
+        MenuIngreso mi;
+        try {
+            mi = new MenuIngreso();
+            mi.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion "+e.getMessage());
+        }
+    }//GEN-LAST:event_MitmCesionActionPerformed
 
     /**
      * @param args the command line arguments

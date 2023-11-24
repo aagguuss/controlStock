@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package javaconjpalibreria;
+package Servicios;
 
 import entidades.Rol;
 import java.util.List;
-import persistendiciaDao.RolDao;
+import Persistencia.RolDao;
 
 /**
  *
@@ -23,7 +23,7 @@ public class rolServicio {
     public Rol crearRol(String nombre) {
         try {
             Rol rol = new Rol();
-           rol.setNombre(nombre);
+            rol.setNombre(nombre);
             dao.guardar(rol);
             return rol;
         } catch (Exception e) {
@@ -31,11 +31,12 @@ public class rolServicio {
             return null;
         }
     }
-    public void mostrarRol() throws Exception{
-       List<Rol> listaRoles =  dao.listarTodos();
-        for (Rol var :listaRoles) {
-           System.out.println(var.toString());
-            
+
+    public void mostrarRol() throws Exception {
+        List<Rol> listaRoles = dao.listarTodos();
+        for (Rol var : listaRoles) {
+            System.out.println(var.toString());
+
         }
     }
 }

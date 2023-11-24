@@ -45,11 +45,11 @@ public class usuarioService {
         } else {
             for (Usuario var : usuario) {
                 if (var.getName().equals(nombre) && concatPas.equals(var.getPassword()) && var.isAlta() == false) {
-                    mensaje = "este usario fue dado de baja";
+                    mensaje = "este usario fue dado de baja ";
                     continue;// salta a la proxima iteracion del foreach
                 }
                 if (var.getName().equals(nombre) && concatPas.equals(var.getPassword())) {
-                    mensaje = "Bienvenido al administrados de Biblioteca";
+                    mensaje = "Entrando al sistema";
                     break;
                 }
                 if (var.getName().equals(nombre) && !concatPas.equals(var.getPassword())) {
@@ -73,10 +73,15 @@ public class usuarioService {
             if (var1.getRol().getNombre().equalsIgnoreCase("Adminitrador")){
                 mensaje="Permisos4dministrador";
             }
-            if(var1.getRol().getNombre().equalsIgnoreCase("Bibliotecario")){
+            if(var1.getRol().getNombre().equalsIgnoreCase("Vendedor")){
              mensaje="Permisos5imples";
             }
         }
         return mensaje;
+    }
+
+    public boolean existeUsuarioAdmin() throws Exception {
+        
+    return dao.existeUsuarioAdmin();
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,28 +32,56 @@ public class sellDao {
         }
     }
 
-    public void guardar(Sell Sell) {
+    public void guardar(Sell sell) {
         conectar();
-        em.getTransaction().begin();
-        em.persist(Sell);
-        em.getTransaction().commit();
-        desconectar();
+        try {
+            em.getTransaction().begin();
+            em.persist(sell);
+            em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Venta cargada exitosamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al cargar la venta:" + e.getMessage());
+        } finally {
+            desconectar();
+        }
     }
 
-    public void eliminar(Sell Sell) {
+    public void eliminar(Sell sell) {
         conectar();
-        em.getTransaction().begin();
-        em.remove(Sell);
-        em.getTransaction().commit();
-        desconectar();
+        try {
+            Sell s = em.find(Sell.class, sell.getId());
+            em.getTransaction().begin();
+            if (em.contains(s)) {
+                em.remove(s);
+                em.getTransaction().commit();
+                JOptionPane.showMessageDialog(null, "El usuario a sido elimindo");
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario no ha sido encontrado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar " + e.getMessage());
+        } finally {
+            desconectar();
+        }
     }
 
-    public void editar(Sell Sell) {
+    public void editar(Sell sell) {
         conectar();
-        em.getTransaction().begin();
-        em.merge(Sell);
-        em.getTransaction().commit();
-        desconectar();
+        try {
+            Sell s = em.find(Sell.class, sell.getId());
+            em.getTransaction().begin();
+            if (em.contains(s)) {
+                em.merge(sell);
+                em.getTransaction().commit();
+                JOptionPane.showMessageDialog(null, "Modificacion producida con exito");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro la venta");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar " + e.getMessage());
+        } finally {
+            desconectar();
+        }
     }
 
     public Sell buscarPorId(int id) throws Exception {

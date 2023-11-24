@@ -324,7 +324,7 @@ public class Stock extends javax.swing.JFrame {
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
 
-        String input = (JOptionPane.showInputDialog("Ingrese a partir de que indic desea borrar las filas "));
+        String input = (JOptionPane.showInputDialog("Ingrese a partir de que indice desea borrar las filas "));
         if (input != null){
             int rows = Integer.parseInt(input);
         for (int i = rows ; i < model.getRowCount();i++){

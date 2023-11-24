@@ -4,10 +4,9 @@
  */
 package start;
 
-import Entidades.Product;
-import Servicios.ProductService;
+
 import UI.MenuInicio;
-import UI.Stock;
+
 
 /**
  *
@@ -15,10 +14,5 @@ import UI.Stock;
  */
 public class Start {
     public static void main(String[] args) throws Exception {
-       // MenuInicio Mi = new MenuInicio();
-        //Mi.setVisible(true);
-        Stock s = new Stock();
-        s.setVisible(true);
-        
-     
+    
 }}
