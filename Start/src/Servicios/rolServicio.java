@@ -7,6 +7,8 @@ package Servicios;
 import entidades.Rol;
 import java.util.List;
 import Persistencia.RolDao;
+import entidades.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,11 +22,13 @@ public class rolServicio {
         this.dao = new RolDao();
     }
 
-    public Rol crearRol(String nombre) {
+    public Rol crearRol(Rol nombre) {
         try {
             Rol rol = new Rol();
-            rol.setNombre(nombre);
+            rol.setNombre(nombre.getNombre());
+           rol.setListaUsuarios(nombre.getListaUsuarios());
             dao.guardar(rol);
+            JOptionPane.showMessageDialog(null, "El rol  fue designado correctamente");
             return rol;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -38,5 +42,20 @@ public class rolServicio {
             System.out.println(var.toString());
 
         }
+    }
+    
+    public Rol BuscarAdminRol() throws Exception{
+
+    return dao.buscarPorId(1);
+            
+    }
+    public void AgregarUsuarioAdministradorList(Usuario u ) throws Exception{
+        
+        dao.agregarUsuarioAdministradorList(u); 
+
+    }
+
+    public void editarRol(Rol rolAdmin) {
+      dao.editar(rolAdmin);
     }
 }

@@ -16,16 +16,20 @@ import javax.swing.JOptionPane;
  * @author agust
  */
 public class productDao {
-
-    private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("StartPU");
-    private EntityManager em = EMF.createEntityManager();
+     private dao DAO ;
+    private EntityManager em ;
+    
+    
 
     public productDao() {
+        this.DAO = new dao();
+        this.em = DAO.EMF.createEntityManager();
+        
     }
 
     public void conectar() {
         if (!em.isOpen()) {
-            em = EMF.createEntityManager();
+            em = DAO.EMF.createEntityManager();
         }
     }
 
@@ -37,8 +41,8 @@ public class productDao {
 
     public void guardar(Product product) {
         conectar();
-        em.getTransaction().begin();
         try {
+            em.getTransaction().begin();
             em.persist(product);
             em.getTransaction().commit();
             JOptionPane.showMessageDialog(null, "producto guardado con exito");

@@ -5,6 +5,8 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,9 +31,13 @@ public class Rol implements Serializable {
     @Column(name ="nombre") 
     String nombre;   
     @OneToMany(mappedBy ="rol")
-    private List<Usuario>listaUsuarios;
+    public ArrayList<Usuario>listaUsuarios;
+    
     public Rol() {
+       this.listaUsuarios= new ArrayList();
+     
     }
+
 
     public int getID() {
         return Id;
@@ -57,11 +63,11 @@ public class Rol implements Serializable {
         this.Id = Id;
     }
 
-    public List<Usuario> getListaUsuarios() {
+    public ArrayList<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
 

@@ -4,11 +4,22 @@
  */
 package Persistencia;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
  * @author agust
  */
 
 public class dao {
+ public static EntityManagerFactory EMF =  Persistence.createEntityManagerFactory("StartPU");
+    
+
+    public dao() {
+    
+    }
   
+ 
+   
 }

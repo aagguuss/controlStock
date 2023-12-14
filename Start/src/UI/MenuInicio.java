@@ -3,14 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
-import javax.swing.JOptionPane;
 
+import Servicios.usuarioService;
+import entidades.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author agust
  */
 public class MenuInicio extends javax.swing.JFrame {
+
+    usuarioService us = new usuarioService();
 
     /**
      * Creates new form MenuInicio
@@ -54,15 +58,15 @@ public class MenuInicio extends javax.swing.JFrame {
         );
 
         LabelTipoCesion.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        LabelTipoCesion.setText("No hay cesion activa , Fase en desarrollo ");
+        LabelTipoCesion.setText(disposemessange());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(483, Short.MAX_VALUE)
-                .addComponent(LabelTipoCesion, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(250, Short.MAX_VALUE)
+                .addComponent(LabelTipoCesion, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(262, 262, 262))
@@ -158,14 +162,15 @@ public class MenuInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-            Venta V;
-            try {
+        Venta V;
+        try {
             V = new Venta();
             V.setVisible(true);
+            this.dispose();
         } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al abrir ventas"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al abrir ventas" + e.getMessage());
         }
-        
+
     }//GEN-LAST:event_MitmVentaActionPerformed
 
     private void MitmConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmConsultasActionPerformed
@@ -173,14 +178,15 @@ public class MenuInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_MitmConsultasActionPerformed
 
     private void MimtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MimtStockActionPerformed
-       Stock S1;
+        Stock S1;
         try {
             S1 = new Stock();
-             S1.setVisible(true);
+            S1.setVisible(true);
+            this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir Stock"+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al abrir Stock" + ex.getMessage());
         }
-      
+
     }//GEN-LAST:event_MimtStockActionPerformed
 
     private void MitmCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmCesionActionPerformed
@@ -188,16 +194,26 @@ public class MenuInicio extends javax.swing.JFrame {
         try {
             mi = new MenuIngreso();
             mi.setVisible(true);
+            this.dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion " + e.getMessage());
         }
     }//GEN-LAST:event_MitmCesionActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+    private String disposemessange() {
+        Usuario u = us.buscarUsuarioActivo();
+        String var = "";
+        try {
+            var = "El usuario activo es :" + u.getName();
+        } catch (Exception e) {
+            JOptionPane.showInternalMessageDialog(null, "Error : " + e.getMessage());
+        }
 
+        return var;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu JMenuPrincipal;
     private javax.swing.JLabel LabelTipoCesion;

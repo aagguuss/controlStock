@@ -17,12 +17,17 @@ import javax.swing.JOptionPane;
  * @author agust
  */
 public class sellDao {
-    private final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("StartPU");
-    private EntityManager em = EMF.createEntityManager();
+    dao DAO ;
+    private EntityManager em ;
+
+    public sellDao() {
+         this.DAO = new dao();
+        this.em = DAO.EMF.createEntityManager();
+    }
     
      public void conectar() {
         if (!em.isOpen()) {
-            em = EMF.createEntityManager();
+            em = DAO.EMF.createEntityManager();
         }
     }
 

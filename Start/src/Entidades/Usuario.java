@@ -31,9 +31,13 @@ public class Usuario implements Serializable {
     protected String password;
     @Column(name = "alta")
     protected boolean alta;
+   
     @ManyToOne
     @JoinColumn(name = "fk_rol")
     private Rol rol;
+
+  
+    
    
     public Usuario() {
     }

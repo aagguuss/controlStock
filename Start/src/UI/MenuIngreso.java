@@ -5,10 +5,11 @@
 package UI;
 
 import Servicios.rolServicio;
-import java.awt.HeadlessException;
 import Servicios.usuarioService;
 import entidades.Rol;
 import entidades.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,10 +23,28 @@ public class MenuIngreso extends javax.swing.JFrame {
 
     /**
      * Creates new form menu_F
+     * @throws java.lang.Exception
      */
     public MenuIngreso() throws Exception {
+        boolean existeAdmin = us.existeUsuarioAdmin();
+        if (existeAdmin == false) {
+            JOptionPane.showMessageDialog(rootPane, "Creando Usuario Administrador Inicial ");
+            // Crear nuevo usuario administrador
+            Usuario admin = new Usuario();
+            admin.setName("admin");
+            admin.setPassword("admin");
+            admin.setAlta(true);
+            Rol rolAdmin = new Rol();
+            rolAdmin.setNombre("Administrador");
+            rs.crearRol(rolAdmin);
+            admin.setRol(rs.BuscarAdminRol());
+            us.crearUsuario(admin);
+            admin = us.BuscarUsuarioInicial();
+            rs.AgregarUsuarioAdministradorList(admin);
+            JOptionPane.showMessageDialog(null, "El usuario : admin, fue creado exitosamente, su contraseña es : admin");
+        }
         initComponents();
-        verificarUsuarioAdmin();
+
     }
 
     /**
@@ -156,55 +175,80 @@ public class MenuIngreso extends javax.swing.JFrame {
         char[] password = txtPassword.getPassword();
         txtPassword.setText("");
         txtUsuario.setText(" ");
-        String mensaje = us.ValidarUsuario(nombre, password);
-
-        if (mensaje.equalsIgnoreCase("Entrando al sistema")) {
+        String mensaje;
+        try {
+            mensaje = us.ValidarUsuario(nombre, password);
+            
             try {
-                JOptionPane.showMessageDialog(null, mensaje);
-                mensaje = us.validarRol(nombre, password);
-                if (mensaje.equalsIgnoreCase("Permisos4dministrador")) {
-                    //llamar interfaz administrador
-                  //  MenuInicialAdmin adminMenu = new MenuInicialAdmin(nombre);
-                     // Cierra el menú de inicio de sesión actual
-                 //   adminMenu.setVisible(true);
-                    this.dispose();
-                    
-                    // cerrar panel de log in 
+                if (mensaje.equalsIgnoreCase("Entrando 4l $istema")){
+                us.activarUsuario(nombre, password);
                 }
-                if (mensaje.equalsIgnoreCase("Permisos5imples")) {
-                    //llamar interfaz Bibliotecario
-                    // cerrar panel de log in 
-                }
-            } catch (HeadlessException e) {
-                throw e;
+            } catch (Exception e) {
             }
-        } else {
-            JOptionPane.showMessageDialog(null, mensaje);
+            if (mensaje.equalsIgnoreCase("Entrando 4l $istema")) {
+                try {
+                    JOptionPane.showMessageDialog(null, "Entrando al Programa");
+                    mensaje = us.validarRol(nombre, password);
+                   
+                    if (mensaje.equalsIgnoreCase("Permisos4dministrador")) {
+                        //llamar interfaz administrador
+                        MenuInicio adminMenu = new MenuInicio();
+                        // Cierra el menú de inicio de sesión actual
+                        adminMenu.setVisible(true);
+                        
+                        // cerrar panel de log in 
+                    }
+                    if (mensaje.equalsIgnoreCase("Permisos5imples")) {
+                        //llamar interfaz vendedor 
+                        // cerrar panel de log in 
+                    }
+                } catch (Exception e) {
+                     JOptionPane.showMessageDialog(null , "Error en la line 198 : "+e.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, mensaje);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MenuIngreso.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null , "Error en la line 206 : "+ex.getMessage());
+            ex.printStackTrace();
         }
 
+            
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-      private void verificarUsuarioAdmin() throws Exception {
+    private void verificarUsuarioAdmin() throws Exception {
         boolean existeAdmin = us.existeUsuarioAdmin();
-        
-        if (existeAdmin=false) {
+
+        if (existeAdmin = false) {
             // Crear nuevo usuario administrador
             Usuario admin = new Usuario();
             admin.setName("admin");
             admin.setPassword("Administrador");
             admin.setAlta(true);
-            
+
             Rol rolAdmin = new Rol();
             rolAdmin.setNombre("Administrador");
-            
+
             admin.setRol(rolAdmin);
-            rolAdmin.getListaUsuarios().add(admin);
-            // revisar servicios  hacer comprabaciones 
-            rs.crearRol(rolAdmin.getNombre());
-            us.crearUsuario(admin.getName(), admin.getPassword(), rolAdmin);
-        }else{
-      
-      }
+
+            // revisar servicios  hacer test
+            rs.crearRol(rolAdmin);
+            rolAdmin = rs.BuscarAdminRol();
+            us.crearUsuario(admin);
+
+            admin = us.BuscarUsuarioInicial();
+
+            rolAdmin = rs.BuscarAdminRol();
+            rolAdmin.listaUsuarios.add(admin);
+            admin.setRol(rolAdmin);
+            admin.setRol(rolAdmin);
+
+            rs.editarRol(rolAdmin);
+
+            us.editarUsuario(admin);
+
+        }
     }
     /**
      * @param args the command line arguments
