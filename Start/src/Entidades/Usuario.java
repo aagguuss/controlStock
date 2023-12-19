@@ -22,6 +22,8 @@ import javax.persistence.Table;
 @Table(name = "Usuario")
 public class Usuario implements Serializable {
 
+    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int Id;
@@ -82,4 +84,8 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "Id=" + Id + ", name=" + name + ", password=" + password + ", alta=" + alta + ", rol=" + rol.toString() + '}';
+    }
 }

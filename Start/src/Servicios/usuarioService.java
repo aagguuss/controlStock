@@ -32,18 +32,14 @@ public class usuarioService {
         return usuario;
     }
 
-    public String ValidarUsuario(String nombre, char[] passwordI) throws Exception {
+    public String ValidarUsuario(String nombre, String passwordI) throws Exception {
         String mensaje = "";
-        String concatPas = "";
         Usuario var = new Usuario();
-        for (char varC : passwordI) {
-            concatPas += varC;
-        }
         // tremos el usuario indicado 
         try {
 
-            var = dao.UsuarioConsulta(nombre, concatPas);
-
+            var = dao.UsuarioConsulta(nombre, passwordI);
+            System.out.println(var.toString());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al iniciar UsuarioConsulta : " + e.getMessage());
         }
@@ -52,38 +48,32 @@ public class usuarioService {
             JOptionPane.showMessageDialog(null, "El nombre de usuario proporcionado no se encuentra en la memoria");
         }
         // comprobamos que el usuario este correcto 
-        if (var.getName().equals(nombre) && concatPas.equals(var.getPassword()) && var.isAlta() == false) {
+        if (var.getName().equals(nombre) && passwordI.equals(var.getPassword()) && var.isAlta() == false) {
             mensaje = "Entrando 4l $istema";
             //persistimos que el usuario comprobado se encuentra en el sistema de alta
 
         }
-        if (var.getName().equals(nombre) && !concatPas.equals(var.getPassword())) {
+        if (var.getName().equals(nombre) && !passwordI.equals(var.getPassword())) {
             mensaje = "contraseña incorrecta";
         }
 
         return mensaje;
     }
 
-    public String validarRol(String nombre, char[] passwordI) {
+    public String validarRol(String nombre, String passwordI) {
         String mensaje = "";
-        String concatPas = "";
         Usuario var1 = new Usuario();
-        for (char var : passwordI) {
-            concatPas += concatPas+var;
-        }
         try {
-            dao.conectar();
-            var1 = dao.UsuarioConsulta(nombre, concatPas);
-            JOptionPane.showMessageDialog(null,"Consulta en validar rol contactPas :"+concatPas+"");
-            dao.desconectar();
+            var1 = dao.UsuarioConsulta(nombre, passwordI);
+            System.out.println("var1 : "+var1.getRol().getID());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al consultar rol : " + e.getMessage());
         }
 
-        if (var1.getRol().getNombre().equalsIgnoreCase("Adminitrador")) {
+        if (var1.getRol().getID()==1) {
             mensaje = "Permisos4dministrador";
         }
-        if (var1.getRol().getNombre().equalsIgnoreCase("Vendedor")) {
+        if (var1.getRol().getID()==2) {
             mensaje = "Permisos5imples";
         }
 
@@ -107,13 +97,10 @@ public class usuarioService {
         return dao.buscarUsuarioActivo();
     }
 
-    public void activarUsuario(String nombre, char[] password) {
-        String concatPas = "";
-        for (char c : password) {
-            concatPas = concatPas+c;
-        }
+    public void activarUsuario(String nombre, String password) {
+        
         try {
-             Usuario var = dao.UsuarioConsulta(nombre, concatPas);
+             Usuario var = dao.UsuarioConsulta(nombre, password);
              dao.activarUsuario(var);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -121,6 +108,9 @@ public class usuarioService {
         }
         
     }
-
+    
+    public void desactivarUsuario(Usuario u ){
+    dao.desactivarUsuario(u);
+    }
     
 }

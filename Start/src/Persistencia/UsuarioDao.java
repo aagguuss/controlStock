@@ -7,6 +7,7 @@ package Persistencia;
 import entidades.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,19 +15,20 @@ import javax.swing.JOptionPane;
  * @author agust
  */
 public class UsuarioDao {
-    private dao DAO ;
-    private EntityManager em ;
+
+    private dao DAO;
+    private EntityManager em;
 
     public UsuarioDao() {
-            this.DAO = new dao();
-           this.em = dao.EMF.createEntityManager();
+        this.DAO = new dao();
+        this.em = dao.EMF.createEntityManager();
     }
 
     public void conectar() {
-        
+
         if (em == null || !em.isOpen()) {
-            em = dao.EMF.createEntityManager();  
-           
+            em = dao.EMF.createEntityManager();
+
         }
     }
 
@@ -43,11 +45,11 @@ public class UsuarioDao {
             em.persist(usuario);
             em.getTransaction().commit();
             JOptionPane.showMessageDialog(null, "Usuario dado alta exitosamente ");
-           
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al cargar usuario:" + e.getMessage());
         } finally {
-             desconectar();
+            desconectar();
         }
 
     }
@@ -86,7 +88,7 @@ public class UsuarioDao {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al modificar " + e.getMessage());
         } finally {
-            
+
         }
     }
 
@@ -107,18 +109,15 @@ public class UsuarioDao {
 
     public Usuario UsuarioConsulta(String nombre, String password) {
         conectar();
-         Usuario usuario = new Usuario();
+        Usuario u = new Usuario();
         try {
-            List uList=  em.createQuery("select a from Usuario a WHERE a.name = '" + nombre + "' AND a.password = '" + password + "'").getResultList();
-        usuario = (Usuario) uList.get(0);
+            u = (Usuario) em.createQuery("select a from Usuario a WHERE a.name = '" + nombre + "' AND a.password = '" + password + "'").getSingleResult();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             desconectar();
         }
-        
-    
-        return usuario;
+        return u;
     }
 
     public boolean existeUsuarioAdmin() throws Exception {
@@ -128,32 +127,66 @@ public class UsuarioDao {
     }
 
     public Usuario buscarUsuarioActivo() {
+
         conectar();
-        Usuario u = (Usuario) em.createQuery("select a from Usuario WHERE a.alta = 'true'");
-        
+
+        // Corrected query execution
+        Object query = em.createQuery("SELECT u FROM Usuario u WHERE u.alta = 'true'").getSingleResult();
+        Usuario u = null;
+
+        try {
+            u = (Usuario) query;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            desconectar();
+        }
+
         return u;
     }
 
     public void activarUsuario(Usuario u) {
         conectar();
         try {
-            Usuario uPersist = em.find(Usuario.class,u.getId());
+            Usuario uPersist = em.find(Usuario.class, u.getId());
             uPersist.setAlta(true);
             em.getTransaction().begin();
             if (em.contains(uPersist)) {
                 em.merge(uPersist);
-            em.getTransaction().commit();
+                em.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Usuario activo");
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo activar el ususaio  ");
             }
-            
-          
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al Acitvar Usuario" + u.getName() + "  : " + e.getMessage());
-        }finally{
-        desconectar();
+        } finally {
+            desconectar();
         }
-       
+
     }
+
+    public void desactivarUsuario(Usuario u) {
+        conectar();
+        try {
+            Usuario uPersist = em.find(Usuario.class, u.getId());
+            uPersist.setAlta(false);
+            em.getTransaction().begin();
+            if (em.contains(uPersist)) {
+                em.merge(uPersist);
+                em.getTransaction().commit();
+                JOptionPane.showMessageDialog(null, "Usuario activo");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo activar el ususaio  ");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al Acitvar Usuario" + u.getName() + "  : " + e.getMessage());
+        } finally {
+            desconectar();
+        }
+
+    }
+
 }

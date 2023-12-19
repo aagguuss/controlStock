@@ -8,8 +8,6 @@ import Servicios.rolServicio;
 import Servicios.usuarioService;
 import entidades.Rol;
 import entidades.Usuario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +25,15 @@ public class MenuIngreso extends javax.swing.JFrame {
      */
     public MenuIngreso() throws Exception {
         boolean existeAdmin = us.existeUsuarioAdmin();
+        try {
+            Usuario u = us.buscarUsuarioActivo();
+            if (u!=null) {
+            us.desactivarUsuario(u);
+            }
+            
+        } catch (Exception e) {
+            e.getMessage();
+        }
         if (existeAdmin == false) {
             JOptionPane.showMessageDialog(rootPane, "Creando Usuario Administrador Inicial ");
             // Crear nuevo usuario administrador
@@ -72,7 +79,7 @@ public class MenuIngreso extends javax.swing.JFrame {
         setFocusCycleRoot(false);
         setIconImages(null);
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 0));
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), javax.swing.BorderFactory.createTitledBorder("")));
         jPanel1.setPreferredSize(new java.awt.Dimension(425, 334));
         jPanel1.setLayout(null);
@@ -84,9 +91,9 @@ public class MenuIngreso extends javax.swing.JFrame {
         LblBienvenido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         LblBienvenido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(LblBienvenido);
-        LblBienvenido.setBounds(20, 10, 390, 65);
+        LblBienvenido.setBounds(20, 10, 440, 65);
 
-        lblUser.setBackground(new java.awt.Color(153, 204, 255));
+        lblUser.setBackground(new java.awt.Color(153, 153, 153));
         lblUser.setFont(new java.awt.Font("Segoe UI Black", 3, 18)); // NOI18N
         lblUser.setForeground(new java.awt.Color(102, 255, 51));
         lblUser.setText("Usuario :");
@@ -99,7 +106,7 @@ public class MenuIngreso extends javax.swing.JFrame {
         jPanel1.add(lblPassword);
         lblPassword.setBounds(10, 180, 130, 25);
 
-        btnAceptar.setBackground(new java.awt.Color(0, 102, 0));
+        btnAceptar.setBackground(new java.awt.Color(51, 255, 51));
         btnAceptar.setText("Entrar");
         btnAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +116,6 @@ public class MenuIngreso extends javax.swing.JFrame {
         });
         jPanel1.add(btnAceptar);
         btnAceptar.setBounds(110, 270, 90, 30);
-        btnAceptar.getAccessibleContext().setAccessibleName("Entrar");
 
         btnSalir.setBackground(new java.awt.Color(0, 102, 0));
         btnSalir.setText("Salir");
@@ -120,7 +126,7 @@ public class MenuIngreso extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnSalir);
-        btnSalir.setBounds(270, 270, 100, 30);
+        btnSalir.setBounds(280, 270, 100, 30);
 
         txtUsuario.setBackground(new java.awt.Color(204, 204, 204));
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +135,7 @@ public class MenuIngreso extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtUsuario);
-        txtUsuario.setBounds(140, 110, 210, 30);
+        txtUsuario.setBounds(160, 120, 210, 30);
 
         txtPassword.setBackground(new java.awt.Color(204, 204, 204));
         txtPassword.setText("\n");
@@ -139,17 +145,19 @@ public class MenuIngreso extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtPassword);
-        txtPassword.setBounds(140, 180, 211, 30);
+        txtPassword.setBounds(160, 180, 211, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -171,24 +179,31 @@ public class MenuIngreso extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+      
         String nombre = txtUsuario.getText();
         char[] password = txtPassword.getPassword();
+        String concatpas= "";
         txtPassword.setText("");
-        txtUsuario.setText(" ");
+        txtUsuario.setText("");
         String mensaje;
+        for (char c : password) {
+            concatpas += c;
+        }
         try {
-            mensaje = us.ValidarUsuario(nombre, password);
-            
+            System.out.println("validando usuario ");
+            mensaje = us.ValidarUsuario(nombre, concatpas);
+            System.out.println("mensaje");
             try {
                 if (mensaje.equalsIgnoreCase("Entrando 4l $istema")){
-                us.activarUsuario(nombre, password);
+                us.activarUsuario(nombre, concatpas);
                 }
             } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
             if (mensaje.equalsIgnoreCase("Entrando 4l $istema")) {
                 try {
                     JOptionPane.showMessageDialog(null, "Entrando al Programa");
-                    mensaje = us.validarRol(nombre, password);
+                    mensaje = us.validarRol(nombre, concatpas);
                    
                     if (mensaje.equalsIgnoreCase("Permisos4dministrador")) {
                         //llamar interfaz administrador
@@ -196,7 +211,7 @@ public class MenuIngreso extends javax.swing.JFrame {
                         // Cierra el menú de inicio de sesión actual
                         adminMenu.setVisible(true);
                         
-                        // cerrar panel de log in 
+                        // cerrar panel ;de log in 
                     }
                     if (mensaje.equalsIgnoreCase("Permisos5imples")) {
                         //llamar interfaz vendedor 
@@ -205,11 +220,9 @@ public class MenuIngreso extends javax.swing.JFrame {
                 } catch (Exception e) {
                      JOptionPane.showMessageDialog(null , "Error en la line 198 : "+e.getMessage());
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, mensaje);
             }
         } catch (Exception ex) {
-            Logger.getLogger(MenuIngreso.class.getName()).log(Level.SEVERE, null, ex);
+            /*Logger.getLogger(MenuIngreso.class.getName()).log(Level.SEVERE, null, ex);*/
             JOptionPane.showMessageDialog(null , "Error en la line 206 : "+ex.getMessage());
             ex.printStackTrace();
         }

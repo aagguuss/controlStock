@@ -80,6 +80,7 @@ public class productDao {
             Product p = em.find(Product.class, product.getId());
             em.getTransaction().begin();
             if (em.contains(p)) {
+                p= product;
                 em.merge(product);
                 em.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Modificacion producida con exito");

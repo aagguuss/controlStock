@@ -39,6 +39,7 @@ public class Stock extends javax.swing.JFrame {
              int column = e.getColumn();
              // Verificar si se modificó alguna de las columnas de interés
              if (column == 4 || column == 5 || column == 8) {
+                 // agregar que interprete a cualquier valor nulo en la casilla como = a 0 dentro de calculatePrice
                  calculatePrice(row,model);
              }
          }  
@@ -266,11 +267,13 @@ public class Stock extends javax.swing.JFrame {
      if (BtnEditar.isSelected()){
          try {
              //TODO checkear comprobar precios
-             TableModel modelbis = TableVenta.getModel();
+             TableModel modelbis = this.TableVenta.getModel();
              System.out.println("model al seleccionar aceptar");
              model = (DefaultTableModel) modelbis;
              System.out.println("model despues de la accion  TableVenta.getModel() sea cargada");
+             
             products2=Ss.EditaleData(Ss.comprobarPrecios(model));
+            
             int a = 0;
          } catch (Exception ex) {
          }
@@ -284,6 +287,7 @@ public class Stock extends javax.swing.JFrame {
              products2=Ps.Dao.listarTodos();
          } catch (Exception ex) {
              Logger.getLogger(Stock.class.getName()).log(Level.SEVERE, null, ex);
+                     JOptionPane.showMessageDialog(null, "Error al  cargar productos "+ex.getMessage());
          }
      }
     }//GEN-LAST:event_BtnAceptarActionPerformed
@@ -293,7 +297,7 @@ public class Stock extends javax.swing.JFrame {
           try {
               products2=Ps.Dao.listarTodos();
               model= Ss.SaveNewData(products2) ;
-               model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);        
+              model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);        
           } catch (Exception ex) {
               System.out.println("Error: " + ex.getMessage());          
           }  
@@ -305,7 +309,7 @@ public class Stock extends javax.swing.JFrame {
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         
         if (BtnAgregar.isSelected()) {
-                    String input = (JOptionPane.showInputDialog("Ingrese la cantidad de filas de productos a agregar el maximo es 100"));
+                    String input = (JOptionPane.showInputDialog("Ingrese la cantidad de filas de productos a agregar, el maximo es 100"));
                     if (input != null){
                     int rows = Integer.parseInt(input);
                    model = Ss.AddSelected((DefaultTableModel)TableVenta.getModel(),rows) ;  }    
