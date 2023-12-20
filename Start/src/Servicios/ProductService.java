@@ -6,6 +6,7 @@ package Servicios;
 
 import Entidades.Product;
 import Persistencia.productDao;
+import java.util.List;
 
 /**
  *
@@ -54,6 +55,13 @@ public class ProductService {
     }
     public String stockWarring(String productName,String productBlend ){
     return "El Stock de "+productName+" marca "+productBlend;
+    }
+
+    public void ProductEdit(List<Product> products2) {
+         for (int i = 0; i < products2.size(); i++) {
+            Dao.editar(products2.get(i));
+        }
+                 
     }
     
 }

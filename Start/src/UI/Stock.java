@@ -7,6 +7,7 @@ import Entidades.Product;
 import ServicioIU.StockService;
 import Servicios.ProductService;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -265,17 +266,19 @@ public class Stock extends javax.swing.JFrame {
 //TODO
     private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
      if (BtnEditar.isSelected()){
+        
          try {
              //TODO checkear comprobar precios
              TableModel modelbis = this.TableVenta.getModel();
              System.out.println("model al seleccionar aceptar");
              model = (DefaultTableModel) modelbis;
-             System.out.println("model despues de la accion  TableVenta.getModel() sea cargada");
+             System.out.println("model despues de la accion  TableVenta.getModel() sea cargada");      
              
             products2=Ss.EditaleData(Ss.comprobarPrecios(model));
-            
+            Ps.ProductEdit(products2);
             int a = 0;
          } catch (Exception ex) {
+             JOptionPane.showMessageDialog(rootPane, "Errorr en btn aceptar linea 281 Stock : "+ex.getMessage());
          }
      } else if (BtnAgregar.isSelected()){
          // comprobar que no esten repetidos nombre marca y categoria 
@@ -296,10 +299,9 @@ public class Stock extends javax.swing.JFrame {
       if (BtnEditar.isSelected()) {
           try {
               products2=Ps.Dao.listarTodos();
-              model= Ss.SaveNewData(products2) ;
               model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);        
           } catch (Exception ex) {
-              System.out.println("Error: " + ex.getMessage());          
+              System.out.println("Error linea 304: " + ex.getMessage());          
           }  
                 } else {  
                      model = Ss.Display((DefaultTableModel) TableVenta.getModel(),products2);                 

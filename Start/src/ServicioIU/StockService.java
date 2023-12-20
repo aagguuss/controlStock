@@ -56,6 +56,7 @@ public class StockService {
             }
 
             if (todosLosAtributosCompletos(Productpersist)) {
+                
                 ps.Dao.guardar(Productpersist);
                 System.out.println("datos guardados");
             } else {
@@ -142,6 +143,8 @@ public class StockService {
             }
 
         }
+        System.out.println("Model en comprobar precio :");
+        printmodelContents(model);
         return model;
     }
 
@@ -170,6 +173,8 @@ public class StockService {
                 }
             }
         }
+        System.out.println("model antes de partir de comprobar repetidos");
+        printmodelContents(model);
         return model;
     }
 
@@ -287,7 +292,7 @@ public class StockService {
         } catch (Exception e) {
                 System.out.println("error en cargar product para editar datos de la table model : "+e.getMessage());
         }
-        
+        PrintProducts(ProductPersist);
         return ProductPersist;
     }
 
