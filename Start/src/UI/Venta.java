@@ -4,8 +4,9 @@
  */
 package UI;
 
-import ServicioIU.StockService;
+import ServicioIU.InterfaceService;
 import Servicios.ProductService;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,13 +16,13 @@ import javax.swing.table.DefaultTableModel;
 public class Venta extends javax.swing.JFrame {
     DefaultTableModel model;
     ProductService Ps ;
-    StockService Ss; 
+    InterfaceService Ss; 
     /**
      * Creates new form NewJFrame
      * @throws java.lang.Exception
      */
     public Venta() throws Exception {
-        this.Ss = new StockService();
+        this.Ss = new InterfaceService();
         this.Ps = new ProductService();
         initComponents();
         this.model= Ss.Display((DefaultTableModel) TableStockVenta.getModel(),Ps.Dao.listarTodos());
@@ -329,20 +330,19 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtFieldIdActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-       // event listener para este boton que filtre segun las 3 categorias segun esten con daos en una consulta a la base de datos 
-       if(TxtFieldId.getText()!=null||TxtFieldId.getText().equals("")||TxtFieldId.getText().equals(" ")){
-           String Id;
-           Id = TxtFieldId.getText(); 
-       }
-        if(TxtFieldDescripcion.getText()!=null||TxtFieldDescripcion.getText().equals("")||TxtFieldDescripcion.getText().equals(" ")){
-            String description;
-            description=TxtFieldDescripcion.getText();
-       }
-       if(TxtFieldMarca.getText()!=null || TxtFieldMarca.getText().equals("")|| TxtFieldMarca.getText().equals(" ")) {
-           String marca;
-           marca = TxtFieldMarca.getText();
-        } 
-       
+        List<Boolean> isnull=null;
+        List<String> categoria=null;
+        try {
+           categoria.add("Id");
+           categoria.add("Description");
+           categoria.add("Blend");
+           isnull.add(Ss.BooleanFilter(TxtFieldId.getText()));
+           isnull.add(Ss.BooleanFilter(TxtFieldDescripcion.getText()));
+           isnull.add(Ss.BooleanFilter(TxtFieldMarca.getText()));
+        } catch (Exception e) {
+        }
+        Ss.ConsultasProductos(isnull, categoria);
+        
     }//GEN-LAST:event_BtnBuscarActionPerformed
 
     

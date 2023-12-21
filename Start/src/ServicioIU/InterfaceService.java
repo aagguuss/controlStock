@@ -17,12 +17,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author agust
  */
-public class StockService {
+public class InterfaceService {
 
     ProductService ps;
     DefaultTableModel internModel;
 
-    public StockService() {
+    public InterfaceService() {
         this.ps = new ProductService();
         this.internModel = new DefaultTableModel();
     }
@@ -329,4 +329,25 @@ public class StockService {
         }
     }
 
+    public List<String> ConsultasProductos(List<Boolean> isnull , List<String> categoria){
+        
+        for (int i = 0; categoria.size() < 10; i++) {
+            for (int j = 0; isnull.size() < 10; j++) {
+                if(isnull.get(j)){
+                
+                }else{
+                categoria.remove(i);
+                }
+            }
+        }
+        return categoria;
+    }
+
+    public Boolean BooleanFilter(String text) {
+       if(text!=null||" ".equals(text)||"".equals(text)){
+       return true;
+       }else{
+       return false;
+       }
+    }
 }

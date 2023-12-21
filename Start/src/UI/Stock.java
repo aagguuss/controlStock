@@ -4,7 +4,7 @@
  */
 package UI;
 import Entidades.Product;
-import ServicioIU.StockService;
+import ServicioIU.InterfaceService;
 import Servicios.ProductService;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -22,12 +22,13 @@ import javax.swing.table.TableModel;
 public class Stock extends javax.swing.JFrame {
     DefaultTableModel model;
     ProductService Ps ;
-    StockService Ss; 
+    InterfaceService Ss; 
     private List<Product> products2;
+    //checkear que hace bottongroup
     ButtonGroup groupButtons;
 
     public Stock() throws Exception {
-        this.Ss = new StockService();
+        this.Ss = new InterfaceService();
         this.Ps= new ProductService(); 
         products2 = Ps.Dao.listarTodos(); 
         this.groupButtons = new ButtonGroup();
