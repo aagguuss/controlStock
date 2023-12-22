@@ -56,7 +56,7 @@ public class InterfaceService {
             }
 
             if (todosLosAtributosCompletos(Productpersist)) {
-                
+
                 ps.Dao.guardar(Productpersist);
                 System.out.println("datos guardados");
             } else {
@@ -214,47 +214,47 @@ public class InterfaceService {
     public List<Product> EditaleData(DefaultTableModel model) {
         List<Product> ProductPersist = new ArrayList<>();
         System.out.println("model dentro de StockService");
-       // printmodelContents(model);
+        // printmodelContents(model);
         Product Product = null;
         // carga el o los productos en la variable product como variable auxiliar  
         try {
-            for (int i = 0; i < model.getRowCount()-1; i++) {
-            Product = new Product();
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                
-                if (j == 0) {
-                    Product.setId((Integer) model.getValueAt(i, j));
-                    System.out.println("ID: "+model.getValueAt(i, j));
-                }
-                if (j == 1) {
-                    Product.setProductName((String) model.getValueAt(i, j));
-                }
+            for (int i = 0; i < model.getRowCount() - 1; i++) {
+                Product = new Product();
+                for (int j = 0; j < model.getColumnCount(); j++) {
 
-                if (j == 2) {
-                    Product.setProductBlend((String) model.getValueAt(i, j));
-                }
+                    if (j == 0) {
+                        Product.setId((Integer) model.getValueAt(i, j));
+                        System.out.println("ID: " + model.getValueAt(i, j));
+                    }
+                    if (j == 1) {
+                        Product.setProductName((String) model.getValueAt(i, j));
+                    }
 
-                if (j == 3) {
-                    Product.setCategory((String) model.getValueAt(i, j));
-                }
-                if (j == 4) {
-                    Product.setBuyingPrice((Double) model.getValueAt(i, j));
-                }
-                if (j == 5) {
-                    Product.setSellingPRice((Double) model.getValueAt(i, j));
-                }
-                if (j == 6) {
-                    Product.setStock((Integer) model.getValueAt(i, j));
-                }
-                if (j == 7) {
-                    Product.setStockWarning((Integer) model.getValueAt(i, j));
-                }
-                if (j == 8) {
-                    Product.setInterest((Double) model.getValueAt(i, j));
-                }
-                
+                    if (j == 2) {
+                        Product.setProductBlend((String) model.getValueAt(i, j));
+                    }
 
-                /*
+                    if (j == 3) {
+                        Product.setCategory((String) model.getValueAt(i, j));
+                    }
+                    if (j == 4) {
+                        Product.setBuyingPrice((Double) model.getValueAt(i, j));
+                    }
+                    if (j == 5) {
+                        Product.setSellingPRice((Double) model.getValueAt(i, j));
+                    }
+                    if (j == 6) {
+                        Product.setStock((Integer) model.getValueAt(i, j));
+                    }
+                    if (j == 7) {
+                        Product.setStockWarning((Integer) model.getValueAt(i, j));
+                    }
+                    if (j == 8) {
+                        Product.setInterest((Double) model.getValueAt(i, j));
+                    }
+
+
+                    /*
                  Product = new Product();
                 switch (j) {
                 case 0 ->
@@ -279,18 +279,18 @@ public class InterfaceService {
                 }
                 
                 }*/
-                System.out.println(Product.toString());
-                System.out.println("product antes de cargar al dao");
-                ps.Dao.editar(Product);
-                ProductPersist.add(Product);
+                    System.out.println(Product.toString());
+                    System.out.println("product antes de cargar al dao");
+                    ps.Dao.editar(Product);
+                    ProductPersist.add(Product);
+                }
             }
-        }
-        // Acción para la combinación "Editar"
-        System.out.println("Opción Editar seleccionada");
-        // Realizar acciones específicas para la opción "Editar"
-        // ...
+            // Acción para la combinación "Editar"
+            System.out.println("Opción Editar seleccionada");
+            // Realizar acciones específicas para la opción "Editar"
+            // ...
         } catch (Exception e) {
-                System.out.println("error en cargar product para editar datos de la table model : "+e.getMessage());
+            System.out.println("error en cargar product para editar datos de la table model : " + e.getMessage());
         }
         PrintProducts(ProductPersist);
         return ProductPersist;
@@ -329,14 +329,14 @@ public class InterfaceService {
         }
     }
 
-    public List<String> ConsultasProductos(List<Boolean> isnull , List<String> categoria){
-        
+    public List<String> ConsultasProductos(List<Boolean> isnull, List<String> categoria) {
+
         for (int i = 0; categoria.size() < 10; i++) {
             for (int j = 0; isnull.size() < 10; j++) {
-                if(isnull.get(j)){
-                
-                }else{
-                categoria.remove(i);
+                if (isnull.get(j)) {
+
+                } else {
+                    categoria.remove(i);
                 }
             }
         }
@@ -344,10 +344,10 @@ public class InterfaceService {
     }
 
     public Boolean BooleanFilter(String text) {
-       if(text!=null||" ".equals(text)||"".equals(text)){
-       return true;
-       }else{
-       return false;
-       }
+        if (text != null || " ".equals(text) || "".equals(text)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

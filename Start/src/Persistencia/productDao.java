@@ -7,8 +7,7 @@ package Persistencia;
 import Entidades.Product;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,15 +15,14 @@ import javax.swing.JOptionPane;
  * @author agust
  */
 public class productDao {
-     private dao DAO ;
-    private EntityManager em ;
-    
-    
+
+    private dao DAO;
+    private EntityManager em;
 
     public productDao() {
         this.DAO = new dao();
         this.em = DAO.EMF.createEntityManager();
-        
+
     }
 
     public void conectar() {
@@ -80,7 +78,7 @@ public class productDao {
             Product p = em.find(Product.class, product.getId());
             em.getTransaction().begin();
             if (em.contains(p)) {
-                p= product;
+                p = product;
                 em.merge(product);
                 em.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Modificacion producida con exito");
@@ -108,6 +106,23 @@ public class productDao {
                 .getResultList();
         desconectar();
         return products;
+    }
+
+    public List<Product> listarEspecificados(List<String> categoria) {
+        conectar();
+        List<Product> buscados =null;
+        try {
+            StringBuilder queryString = new StringBuilder("SELECT c FROM Customer c WHERE");
+            Query query = em.createQuery(queryString.toString());
+            for (int i = 0; i < categoria.size(); i++) {
+                query.setParameter(i + 1, "%" + categoria.get(i) + "%");
+            }
+             buscados = query.getResultList();
+        } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error en lsitar especificados :"+e.getMessage());
+        }
+        desconectar();
+        return buscados;
     }
 
 }

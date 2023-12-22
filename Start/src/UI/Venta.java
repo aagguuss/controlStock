@@ -7,6 +7,7 @@ package UI;
 import ServicioIU.InterfaceService;
 import Servicios.ProductService;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,18 +15,21 @@ import javax.swing.table.DefaultTableModel;
  * @author agust
  */
 public class Venta extends javax.swing.JFrame {
+
     DefaultTableModel model;
-    ProductService Ps ;
-    InterfaceService Ss; 
+    ProductService Ps;
+    InterfaceService Ss;
+
     /**
      * Creates new form NewJFrame
+     *
      * @throws java.lang.Exception
      */
     public Venta() throws Exception {
         this.Ss = new InterfaceService();
         this.Ps = new ProductService();
         initComponents();
-        this.model= Ss.Display((DefaultTableModel) TableStockVenta.getModel(),Ps.Dao.listarTodos());
+        this.model = Ss.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarTodos());
     }
 
     /**
@@ -330,26 +334,26 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtFieldIdActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-        List<Boolean> isnull=null;
-        List<String> categoria=null;
+        List<Boolean> isnull = null;
+        List<String> categoria = null;
         try {
-           categoria.add("Id");
-           categoria.add("Description");
-           categoria.add("Blend");
-           isnull.add(Ss.BooleanFilter(TxtFieldId.getText()));
-           isnull.add(Ss.BooleanFilter(TxtFieldDescripcion.getText()));
-           isnull.add(Ss.BooleanFilter(TxtFieldMarca.getText()));
+            categoria.add("Id");
+            categoria.add("Description");
+            categoria.add("Blend");
+            isnull.add(Ss.BooleanFilter(TxtFieldId.getText()));
+            isnull.add(Ss.BooleanFilter(TxtFieldDescripcion.getText()));
+            isnull.add(Ss.BooleanFilter(TxtFieldMarca.getText()));
+            categoria = Ss.ConsultasProductos(isnull, categoria);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en la interface venta : " + e.getMessage());
         }
-        Ss.ConsultasProductos(isnull, categoria);
-        
+        model = Ss.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarEspecificados(categoria));
+
     }//GEN-LAST:event_BtnBuscarActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgregar;
