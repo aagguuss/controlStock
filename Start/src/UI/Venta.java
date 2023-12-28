@@ -4,9 +4,13 @@
  */
 package UI;
 
+import Entidades.Product;
 import ServicioIU.InterfaceService;
 import Servicios.ProductService;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,8 +21,13 @@ import javax.swing.table.DefaultTableModel;
 public class Venta extends javax.swing.JFrame {
 
     DefaultTableModel model;
+    DefaultTableModel modelCarrito;
     ProductService Ps;
     InterfaceService Ss;
+    List<Boolean> isnull;
+    List<String> categoria;
+    List<String> products;
+    private Object e;
 
     /**
      * Creates new form NewJFrame
@@ -28,8 +37,12 @@ public class Venta extends javax.swing.JFrame {
     public Venta() throws Exception {
         this.Ss = new InterfaceService();
         this.Ps = new ProductService();
+        this.isnull = new ArrayList<>();
+        this.categoria = new ArrayList<>();
+        this.products = new ArrayList<>();
         initComponents();
         this.model = Ss.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarTodos());
+        this.modelCarrito = (DefaultTableModel) TableCarrito.getModel();
     }
 
     /**
@@ -58,6 +71,8 @@ public class Venta extends javax.swing.JFrame {
         TableStockVenta = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        TxtFieldCategoria = new javax.swing.JTextField();
+        Lblcategoria = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         JMenuPrincipal = new javax.swing.JMenu();
         MitmVenta = new javax.swing.JMenuItem();
@@ -103,8 +118,18 @@ public class Venta extends javax.swing.JFrame {
         });
 
         BtnAgregar.setText("Agregar");
+        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAgregarActionPerformed(evt);
+            }
+        });
 
         BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
 
         TableCarrito.setFont(new java.awt.Font("SimSun", 1, 12)); // NOI18N
         TableCarrito.setModel(new javax.swing.table.DefaultTableModel(
@@ -112,14 +137,14 @@ public class Venta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes", "Indice"
+                "Id", "Nombre", "Marca", "Categoria", "Precio", "Cantidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, false
+                false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -144,14 +169,14 @@ public class Venta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes", "Indice"
+                "Id", "Nombre", "Marca", "Categoria", "Precio", "Stock"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -174,6 +199,14 @@ public class Venta extends javax.swing.JFrame {
 
         jLabel2.setText("Productos en el carrito ");
 
+        TxtFieldCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtFieldCategoriaActionPerformed(evt);
+            }
+        });
+
+        Lblcategoria.setText("Categoria");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -188,20 +221,25 @@ public class Venta extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LblDescripcion)
                             .addComponent(LblMarca)
-                            .addComponent(LblId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(LblId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Lblcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(TxtFieldMarca, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                .addComponent(TxtFieldDescripcion)
+                                .addComponent(TxtFieldCategoria))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(TxtFieldMarca, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                    .addComponent(TxtFieldDescripcion)
-                                    .addComponent(TxtFieldId))
-                                .addGap(31, 31, 31)
+                                .addGap(13, 13, 13)
+                                .addComponent(TxtFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(BtnEliminar)
                                     .addComponent(BtnBuscar)
-                                    .addComponent(BtnAgregar)))
-                            .addComponent(LblValor, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(BtnAgregar)
+                                    .addComponent(LblValor, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -221,8 +259,8 @@ public class Venta extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(TxtFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LblId))
+                                    .addComponent(TxtFieldCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Lblcategoria))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(LblDescripcion)
@@ -230,22 +268,24 @@ public class Venta extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(TxtFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LblMarca))
-                                .addGap(16, 16, 16)
-                                .addComponent(LblValor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(LblMarca)))
                             .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(116, 116, 116)
-                        .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(168, 168, 168)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LblValor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29))
         );
 
         JMenuPrincipal.setText("Panel de Opciones");
@@ -334,22 +374,46 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtFieldIdActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-        List<Boolean> isnull = null;
-        List<String> categoria = null;
+
+        getData();
         try {
-            categoria.add("Id");
-            categoria.add("Description");
-            categoria.add("Blend");
-            isnull.add(Ss.BooleanFilter(TxtFieldId.getText()));
-            isnull.add(Ss.BooleanFilter(TxtFieldDescripcion.getText()));
-            isnull.add(Ss.BooleanFilter(TxtFieldMarca.getText()));
             categoria = Ss.ConsultasProductos(isnull, categoria);
+            products = Ss.ConsultasProductos(isnull, products);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en btnBuscatAction:" + e.getMessage());
+        }
+        try {
+            model = Ss.DisplayVentaCarrito((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarEspecificados(categoria, products));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en la interface venta : " + e.getMessage());
         }
-        model = Ss.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarEspecificados(categoria));
+
 
     }//GEN-LAST:event_BtnBuscarActionPerformed
+
+    private void TxtFieldCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtFieldCategoriaActionPerformed
+
+    private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
+        // TODO add your handling code here:
+        try {
+            String intString = TxtFieldId.getText();
+            modelCarrito = Ss.AddCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el boton agregar al carrito :" + e.getMessage()+"    "+e.toString());
+        }
+    }//GEN-LAST:event_BtnAgregarActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+
+        try {
+            String intString = TxtFieldId.getText();
+            modelCarrito = Ss.removeOneFromCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en el boton eliminar al carrito :" + ex.getMessage());
+        }
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,6 +428,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel LblId;
     private javax.swing.JLabel LblMarca;
     private javax.swing.JLabel LblValor;
+    private javax.swing.JLabel Lblcategoria;
     private javax.swing.JMenuItem MimtStock;
     private javax.swing.JMenuItem MitmCesion;
     private javax.swing.JMenuItem MitmConsultas;
@@ -372,6 +437,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JMenuItem MitmVenta;
     private javax.swing.JTable TableCarrito;
     private javax.swing.JTable TableStockVenta;
+    private javax.swing.JTextField TxtFieldCategoria;
     private javax.swing.JTextField TxtFieldDescripcion;
     private javax.swing.JTextField TxtFieldId;
     private javax.swing.JTextField TxtFieldMarca;
@@ -382,4 +448,24 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
+
+    private void getData() {
+        try {
+            categoria.clear();
+            categoria.add("category");
+            categoria.add("ProductName");
+            categoria.add(" ProductBlend");
+            products.clear();
+            products.add(TxtFieldCategoria.getText());
+            products.add(TxtFieldDescripcion.getText());
+            products.add(TxtFieldMarca.getText());
+            isnull.clear();
+            isnull.add(Ss.BooleanFilter(TxtFieldCategoria.getText()));
+            isnull.add(Ss.BooleanFilter(TxtFieldDescripcion.getText()));
+            isnull.add(Ss.BooleanFilter(TxtFieldMarca.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en getData() :" + e.getMessage());
+        }
+
+    }
 }

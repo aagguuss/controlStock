@@ -154,7 +154,6 @@ public class UsuarioDao {
             if (em.contains(uPersist)) {
                 em.merge(uPersist);
                 em.getTransaction().commit();
-                JOptionPane.showMessageDialog(null, "Usuario activo");
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo activar el ususaio  ");
             }

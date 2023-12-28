@@ -190,9 +190,7 @@ public class MenuIngreso extends javax.swing.JFrame {
             concatpas += c;
         }
         try {
-            System.out.println("validando usuario ");
             mensaje = us.ValidarUsuario(nombre, concatpas);
-            System.out.println("mensaje");
             try {
                 if (mensaje.equalsIgnoreCase("Entrando 4l $istema")){
                 us.activarUsuario(nombre, concatpas);

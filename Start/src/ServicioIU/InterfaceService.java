@@ -7,6 +7,7 @@ package ServicioIU;
 import Entidades.Product;
 import Servicios.ProductService;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.JOptionPane;
@@ -82,6 +83,21 @@ public class InterfaceService {
                 product.getStockWarning(),
                 product.getInterest()
             };
+            model.addRow(row);
+        }
+        return model;
+    }
+
+    public DefaultTableModel DisplayVentaCarrito(DefaultTableModel model, List<Product> products2) {
+        model.setRowCount(0); // Eliminar contenido existente
+        for (Product product : products2) {
+            Object[] row = {
+                product.getId(),
+                product.getProductName(),
+                product.getProductBlend(),
+                product.getCategory(),
+                product.getSellingPRice(),
+                product.getStock(),};
             model.addRow(row);
         }
         return model;
@@ -330,24 +346,75 @@ public class InterfaceService {
     }
 
     public List<String> ConsultasProductos(List<Boolean> isnull, List<String> categoria) {
-
-        for (int i = 0; categoria.size() < 10; i++) {
-            for (int j = 0; isnull.size() < 10; j++) {
-                if (isnull.get(j)) {
-
+        List<String> categoriaPivote = new ArrayList<>();
+        try {
+            Iterator<String> iterCategoria = categoria.iterator();
+            Iterator<Boolean> iterIsnull = isnull.iterator();
+            while (iterCategoria.hasNext() && iterIsnull.hasNext()) {
+                String currentCategoria = iterCategoria.next();
+                boolean currentIsnull = iterIsnull.next();
+                if (currentIsnull) {
+                    categoriaPivote.add(currentCategoria);
                 } else {
-                    categoria.remove(i);
                 }
             }
+
+        } catch (Exception e) {
         }
-        return categoria;
+        return categoriaPivote;
     }
 
     public Boolean BooleanFilter(String text) {
-        if (text != null || " ".equals(text) || "".equals(text)) {
-            return true;
-        } else {
-            return false;
+        return text != null && !" ".equals(text) && !"".equals(text) && !"[]".equals(text);
+    }
+
+    public DefaultTableModel AddCarrito(Product product, DefaultTableModel defaultTableModel) {
+
+        if (repeatControl(product, defaultTableModel)) {
+            Object[] p = {product.getId(),
+                product.getProductName(),
+                product.getProductBlend(),
+                product.getCategory(),
+                product.getSellingPRice(), 1};
+
+            defaultTableModel.addRow(p);
         }
+
+        return defaultTableModel;
+    }
+
+    public DefaultTableModel removeOneFromCarrito(Product buscarPorId, DefaultTableModel defaultTableModel) {
+
+        for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+            for (int j = 0; j < defaultTableModel.getColumnCount(); j++) {
+                if (j == defaultTableModel.findColumn("Id")) {
+                    if (buscarPorId.getId() == (int) defaultTableModel.getValueAt(i, j)) {
+                        defaultTableModel.removeRow(i);
+                    }
+                }
+            }
+        }
+
+        return defaultTableModel;
+    }
+
+    private boolean repeatControl(Product product, DefaultTableModel defaultTableModel) {
+        boolean ok = true;
+        //evaluar que no funcione al estar la tabla vacia 
+        if (defaultTableModel.getRowCount() >= 1) {
+             for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+                for (int j = 0; j < defaultTableModel.getColumnCount(); j++) {
+                    if (j == defaultTableModel.findColumn("Id")) {
+                        if (product.getId() == (int) defaultTableModel.getValueAt(i, j)) {
+                            ok = false;
+                        }
+                    }
+                }
+            }
+        } else {
+           
+        }
+
+        return ok;
     }
 }

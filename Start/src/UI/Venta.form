@@ -142,24 +142,30 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="LblDescripcion" min="-2" max="-2" attributes="0"/>
                               <Component id="LblMarca" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="LblId" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Component id="LblId" min="-2" pref="30" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="Lblcategoria" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="TxtFieldMarca" pref="150" max="32767" attributes="0"/>
-                                      <Component id="TxtFieldDescripcion" max="32767" attributes="0"/>
-                                      <Component id="TxtFieldId" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="TxtFieldMarca" pref="150" max="32767" attributes="0"/>
+                                  <Component id="TxtFieldDescripcion" max="32767" attributes="0"/>
+                                  <Component id="TxtFieldCategoria" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                                  <Component id="TxtFieldId" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="BtnEliminar" min="-2" max="-2" attributes="0"/>
                                       <Component id="BtnBuscar" min="-2" max="-2" attributes="0"/>
                                       <Component id="BtnAgregar" min="-2" max="-2" attributes="0"/>
+                                      <Component id="LblValor" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="LblValor" min="-2" pref="137" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -185,8 +191,8 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="TxtFieldId" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="LblId" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="TxtFieldCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Lblcategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
@@ -198,16 +204,19 @@
                                       <Component id="TxtFieldMarca" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="LblMarca" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                  <Component id="LblValor" min="-2" pref="36" max="-2" attributes="0"/>
                               </Group>
                               <Component id="BtnBuscar" alignment="0" min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
-                          <Component id="BtnAgregar" min="-2" pref="31" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="BtnAgregar" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                              <Component id="TxtFieldId" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="LblId" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="BtnEliminar" min="-2" pref="31" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="LblValor" min="-2" pref="36" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jScrollPane3" min="-2" pref="231" max="-2" attributes="0"/>
@@ -215,9 +224,9 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="263" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -270,11 +279,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Agregar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAgregarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BtnEliminar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEliminarActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>
@@ -289,17 +304,13 @@
                   <Font name="SimSun" size="12" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="10" rowCount="0">
+                  <Table columnCount="6" rowCount="0">
                     <Column editable="false" title="Id" type="java.lang.Integer"/>
-                    <Column editable="true" title="Nombre" type="java.lang.String"/>
-                    <Column editable="true" title="Marca" type="java.lang.String"/>
-                    <Column editable="true" title="Categoria" type="java.lang.String"/>
-                    <Column editable="true" title="Precio de compra" type="java.lang.Double"/>
-                    <Column editable="true" title="Precio" type="java.lang.Double"/>
-                    <Column editable="true" title="Stock" type="java.lang.Integer"/>
-                    <Column editable="true" title="Alerta stock" type="java.lang.Integer"/>
-                    <Column editable="true" title="Interes" type="java.lang.Double"/>
-                    <Column editable="false" title="Indice" type="java.lang.Integer"/>
+                    <Column editable="false" title="Nombre" type="java.lang.String"/>
+                    <Column editable="false" title="Marca" type="java.lang.String"/>
+                    <Column editable="false" title="Categoria" type="java.lang.String"/>
+                    <Column editable="false" title="Precio" type="java.lang.Double"/>
+                    <Column editable="true" title="Cantidad" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="cellSelectionEnabled" type="boolean" value="true"/>
@@ -331,17 +342,13 @@
                   <Font name="SimSun" size="12" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="10" rowCount="0">
+                  <Table columnCount="6" rowCount="0">
                     <Column editable="false" title="Id" type="java.lang.Integer"/>
-                    <Column editable="true" title="Nombre" type="java.lang.String"/>
-                    <Column editable="true" title="Marca" type="java.lang.String"/>
-                    <Column editable="true" title="Categoria" type="java.lang.String"/>
-                    <Column editable="true" title="Precio de compra" type="java.lang.Double"/>
-                    <Column editable="true" title="Precio" type="java.lang.Double"/>
-                    <Column editable="true" title="Stock" type="java.lang.Integer"/>
-                    <Column editable="true" title="Alerta stock" type="java.lang.Integer"/>
-                    <Column editable="true" title="Interes" type="java.lang.Double"/>
-                    <Column editable="false" title="Indice" type="java.lang.Integer"/>
+                    <Column editable="false" title="Nombre" type="java.lang.String"/>
+                    <Column editable="false" title="Marca" type="java.lang.String"/>
+                    <Column editable="false" title="Categoria" type="java.lang.String"/>
+                    <Column editable="false" title="Precio" type="java.lang.Double"/>
+                    <Column editable="false" title="Stock" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="cellSelectionEnabled" type="boolean" value="true"/>
@@ -368,6 +375,16 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Productos en el carrito "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="TxtFieldCategoria">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtFieldCategoriaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Lblcategoria">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Categoria"/>
           </Properties>
         </Component>
       </SubComponents>
