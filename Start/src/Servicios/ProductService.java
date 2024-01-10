@@ -34,8 +34,9 @@ public class ProductService {
             return null;
         }
     }
-    public Product ProductForSell(String ProductName, String ProductBlend,String Category, double buyingPrice, double sellingPrice ,int howManyProducts){
+    public Product ProductForSell(int Id ,String ProductName, String ProductBlend,String Category, double buyingPrice, double sellingPrice ,int howManyProducts){
         Product product = new Product();
+        product.setId(Id);
         product.setProductName(ProductName);
         product.setProductBlend(ProductBlend);
         product.setCategory(Category);

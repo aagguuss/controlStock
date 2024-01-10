@@ -6,8 +6,10 @@ package Servicios;
 
 import Entidades.Product;
 import Entidades.Sell;
+import Persistencia.sellDao;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -18,16 +20,22 @@ import java.util.List;
  */
 public class sellService {
 // declarar daoservice 
+    sellDao dao;
+    ProductService ps;
     public sellService() {
+        this.ps = new ProductService();
+        this.dao= new sellDao();
+                
         //inicializar daoservice
     }
-public Sell createSell(List products){
+public void createSell(List products){
         Sell sell = new Sell();
         sell.setSellingDate(new Date());
         sell.setProducts(products);
         sell.setTotalAmount(totalAmount(products));
         sell.setWinning(totalWining(products));
-        return sell;
+        dao.guardar(sell);
+        
 }
 public double totalAmount(List<Product> products) {
     double total = 0;
@@ -44,6 +52,12 @@ public double totalWining(List<Product> products) {
     return total;
 }
     public void StockAdjust(Product product , int stockCompra){
-        
+        product.setStock(product.getStock()-stockCompra);
+        try {
+             ps.Dao.editar(product);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
     }
 }

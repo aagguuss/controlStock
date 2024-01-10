@@ -135,4 +135,10 @@ public class productDao {
         return buscados;
     }
 
+    public Double GetPrecioDeCopmra(Integer integer) throws Exception {
+       return buscarPorId(integer).getBuyingPrice();
+    }
+
+   
+
 }

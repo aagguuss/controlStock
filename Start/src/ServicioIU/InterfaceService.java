@@ -6,6 +6,7 @@ package ServicioIU;
 
 import Entidades.Product;
 import Servicios.ProductService;
+import Servicios.sellService;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.lang.Integer;
 
 /**
  *
@@ -20,11 +22,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class InterfaceService {
 
+    sellService ss;
     ProductService ps;
     DefaultTableModel internModel;
 
     public InterfaceService() {
         this.ps = new ProductService();
+        this.ss = new sellService();
         this.internModel = new DefaultTableModel();
     }
 
@@ -398,11 +402,19 @@ public class InterfaceService {
         return defaultTableModel;
     }
 
+    public DefaultTableModel DeleteallFromCarrito( DefaultTableModel defaultTableModel) {
+
+        for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+                    defaultTableModel.removeRow(i);
+        }
+        return defaultTableModel;
+    }
+
     private boolean repeatControl(Product product, DefaultTableModel defaultTableModel) {
         boolean ok = true;
         //evaluar que no funcione al estar la tabla vacia 
         if (defaultTableModel.getRowCount() >= 1) {
-             for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+            for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
                 for (int j = 0; j < defaultTableModel.getColumnCount(); j++) {
                     if (j == defaultTableModel.findColumn("Id")) {
                         if (product.getId() == (int) defaultTableModel.getValueAt(i, j)) {
@@ -412,9 +424,36 @@ public class InterfaceService {
                 }
             }
         } else {
-           
+
         }
 
         return ok;
     }
+
+    public double calculatePriceFromVenta(DefaultTableModel model1) {
+        double Total = 0;
+       List<Double> price = new ArrayList<>();
+       List<Double> amount= new ArrayList<>();
+          for (int i = 0; i < model1.getRowCount(); i++) {
+          price.add( (double)model1.getValueAt(i, 4));
+          amount.add((double) model1.getValueAt(i, 5)) ;
+        }
+         JOptionPane.showMessageDialog(null, price.toString()+"  "+amount.toString());
+      
+        return Total;
+    }
+
+    public List<Product> procesarTablaEnProductForSell(DefaultTableModel modelCarrito) throws Exception {
+        List<Product> productService = new ArrayList<>();
+        for (int i = 0; i < modelCarrito.getRowCount(); i++) {
+            productService.add(ps.ProductForSell((Integer) modelCarrito.getValueAt(i, 0),(String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
+            ss.StockAdjust(ps.Dao.buscarPorId((Integer) modelCarrito.getValueAt(i, 0)), (Integer) modelCarrito.getValueAt(i, 5));
+        }
+        return productService;
+    }
+
+    public void GestionarVenta(List<Product> producto) {
+        ss.createSell(producto);
+    }
+
 }

@@ -4,12 +4,9 @@
  */
 package Persistencia;
 
-import Entidades.Product;
 import Entidades.Sell;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,12 +19,12 @@ public class sellDao {
 
     public sellDao() {
          this.DAO = new dao();
-        this.em = DAO.EMF.createEntityManager();
+        this.em = dao.EMF.createEntityManager();
     }
     
      public void conectar() {
         if (!em.isOpen()) {
-            em = DAO.EMF.createEntityManager();
+            em = dao.EMF.createEntityManager();
         }
     }
 

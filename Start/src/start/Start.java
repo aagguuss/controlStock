@@ -5,6 +5,7 @@
 package start;
 
 import UI.MenuIngreso;
+import UI.Stock;
 
 /**
  *
@@ -14,4 +15,6 @@ public class Start {
     public static void main(String[] args) throws Exception {
     MenuIngreso Mi = new MenuIngreso();
     Mi.setVisible(true);
+   // Stock s = new Stock();
+   // s.setVisible(true);
 }}
