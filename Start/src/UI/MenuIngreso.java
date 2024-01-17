@@ -88,13 +88,23 @@ public class MenuIngreso extends javax.swing.JFrame {
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
+        btnAceptar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         LblBienvenido = new javax.swing.JLabel();
-        btnAceptar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
 
         jToggleButton1.setText("jToggleButton1");
+
+        btnAceptar.setBackground(new java.awt.Color(153, 255, 153));
+        btnAceptar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAceptar.setText("Entrar");
+        btnAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusCycleRoot(false);
@@ -112,18 +122,6 @@ public class MenuIngreso extends javax.swing.JFrame {
         LblBienvenido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(LblBienvenido);
         LblBienvenido.setBounds(10, 40, 370, 65);
-
-        btnAceptar.setBackground(new java.awt.Color(153, 255, 153));
-        btnAceptar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAceptar.setText("Entrar");
-        btnAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(140, 310, 110, 30);
 
         txtUsuario.setBackground(new java.awt.Color(51, 51, 51));
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
