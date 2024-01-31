@@ -7,7 +7,6 @@ package Persistencia;
 import entidades.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioDao {
 
-    private dao DAO;
+    public dao DAO;
     private EntityManager em;
 
     public UsuarioDao() {
@@ -79,6 +78,7 @@ public class UsuarioDao {
             Usuario u = em.find(Usuario.class, usuario.getId());
             em.getTransaction().begin();
             if (em.contains(u)) {
+                u = usuario;
                 em.merge(usuario);
                 em.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Modificacion producida con exito");
@@ -88,7 +88,7 @@ public class UsuarioDao {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al modificar " + e.getMessage());
         } finally {
-
+            desconectar();
         }
     }
 
@@ -187,5 +187,32 @@ public class UsuarioDao {
         }
 
     }
+    
+    public List<String> TraerTodosUsuario() {
+    try {
+        conectar();
 
+        List<String> resultadosBrutos = em.createQuery("SELECT DISTINCT p.name FROM Usuario p", String.class)
+                .getResultList();
+
+        return resultadosBrutos;
+    } finally {
+        desconectar();
+    }
+}
+
+    public Usuario buscarPorNombreContraseña(String nombre, String contraseña) {
+          try {
+        conectar();
+        Usuario usuarioEspecifico = em.createQuery("SELECT u FROM Usuario u WHERE u.name = :nombre AND u.password = :contrasena", Usuario.class)
+                .setParameter("nombre", nombre)
+                .setParameter("contrasena", contraseña)
+                .getSingleResult();
+
+        return usuarioEspecifico;
+
+    } finally {
+        desconectar();
+    }
+    }
 }

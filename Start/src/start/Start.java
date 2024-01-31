@@ -5,7 +5,6 @@
 package start;
 
 import UI.MenuIngreso;
-import UI.Stock;
 
 /**
  *

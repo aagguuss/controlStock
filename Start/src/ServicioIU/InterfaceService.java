@@ -163,7 +163,6 @@ public class InterfaceService {
             }
 
         }
-        System.out.println("Model en comprobar precio :");
         printmodelContents(model);
         return model;
     }
@@ -230,16 +229,16 @@ public class InterfaceService {
         return internModel;
     }
     // ver si los datos de la tabla se estan tomando 
-
+ // editar no esta funcionando
     public List<Product> EditaleData(DefaultTableModel model) {
         List<Product> ProductPersist = new ArrayList<>();
         System.out.println("model dentro de StockService");
         // printmodelContents(model);
-        Product Product = null;
+        Product Product = new Product();
         // carga el o los productos en la variable product como variable auxiliar  
         try {
-            for (int i = 0; i < model.getRowCount() - 1; i++) {
-                Product = new Product();
+            for (int i = 0; i < model.getRowCount() ; i++) {
+   
                 for (int j = 0; j < model.getColumnCount(); j++) {
 
                     if (j == 0) {
@@ -272,37 +271,9 @@ public class InterfaceService {
                     if (j == 8) {
                         Product.setInterest((Double) model.getValueAt(i, j));
                     }
-
-
-                    /*
-                 Product = new Product();
-                switch (j) {
-                case 0 ->
-                Product.setId((Integer) model.getValueAt(i, j));
-                case 1 ->
-                Product.setProductName((String) model.getValueAt(i, j));
-                case 2 ->
-                Product.setProductBlend((String) model.getValueAt(i, j));
-                case 3 ->
-                Product.setCategory((String) model.getValueAt(i, j));
-                case 4 ->
-                Product.setBuyingPrice((Double) model.getValueAt(i, j));
-                case 5 ->
-                Product.setSellingPRice((Double) model.getValueAt(i, j));
-                case 6 ->
-                Product.setStock((Integer) model.getValueAt(i, j));
-                case 7 ->
-                Product.setStockWarning((Integer) model.getValueAt(i, j));
-                case 8 ->
-                Product.setInterest((Double) model.getValueAt(i, j));
-                default -> {
-                }
-                
-                }*/
-                    System.out.println(Product.toString());
-                    System.out.println("product antes de cargar al dao");
+                    
                     ps.Dao.editar(Product);
-                    ProductPersist.add(Product);
+                    
                 }
             }
             // Acción para la combinación "Editar"
@@ -312,7 +283,7 @@ public class InterfaceService {
         } catch (Exception e) {
             System.out.println("error en cargar product para editar datos de la table model : " + e.getMessage());
         }
-        PrintProducts(ProductPersist);
+       
         return ProductPersist;
     }
 

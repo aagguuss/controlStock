@@ -5,6 +5,7 @@
 package Persistencia;
 
 import Entidades.Product;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -60,7 +61,7 @@ public class productDao {
             if (em.contains(p)) {
                 em.remove(p);
                 em.getTransaction().commit();
-                JOptionPane.showMessageDialog(null, "producto eliminado con exito");
+                
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro el producto");
             }
@@ -136,9 +137,76 @@ public class productDao {
     }
 
     public Double GetPrecioDeCopmra(Integer integer) throws Exception {
-       return buscarPorId(integer).getBuyingPrice();
+        return buscarPorId(integer).getBuyingPrice();
     }
 
-   
+    public List<Product> buscarPorMarca(String marca) throws Exception {
+        try {
+            conectar();
+            // Corregir la consulta utilizando parámetros con nombre
+            List<Product> products = em.createQuery("SELECT * FROM product WHERE ProductBlend = 'marca'", Product.class)
+                    .setParameter("marca", marca)
+                    .getResultList();
+            return products;
+        } finally {
+            desconectar();
+        }
 
+    }
+
+    public List<Product> buscarPorCategoria(String categoria) throws Exception {
+        try {
+            conectar();
+            // Corregir la consulta utilizando parámetros con nombre
+            List<Product> products = em.createQuery("SELECT * FROM product WHERE category = 'categoria'", Product.class)
+                    .setParameter("categoria", categoria)
+                    .getResultList();
+            return products;
+        } finally {
+            desconectar();
+        }
+
+    }
+
+     public List<Product> buscarPorCategoriayMarca(String categoria, String marca) throws Exception {
+        try {
+            conectar();
+            // Corregir la consulta utilizando parámetros con nombre
+            List<Product> products = em.createQuery("SELECT * FROM product WHERE categoty = 'categoria' And ProductBlend = 'marca'", Product.class)
+                    .setParameter("categoria", categoria)
+                    .setParameter("marca", marca)
+                    .getResultList();
+            return products;
+        } finally {
+            desconectar();
+        }
+
+    }
+
+   public List<String> TraerTodasMarcas() {
+    try {
+        conectar();
+
+        List<String> resultadosBrutos = em.createQuery("SELECT DISTINCT p.ProductBlend FROM Product p", String.class)
+                .getResultList();
+
+        return resultadosBrutos;
+    } finally {
+        desconectar();
+    }
+}
+
+    public List<String> TraerTodasCategorias() {
+        try {
+        conectar();
+
+        List<String> categorias = em.createQuery("SELECT DISTINCT p.category FROM Product p", String.class)
+                .getResultList();
+
+        return categorias;
+    } finally {
+        desconectar();
+    }
+
+    }
 }

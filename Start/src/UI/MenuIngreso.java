@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  * @author agust
  */
 public class MenuIngreso extends javax.swing.JFrame {
-    
+
     usuarioService us = new usuarioService();
     rolServicio rs = new rolServicio();
 
@@ -28,48 +28,33 @@ public class MenuIngreso extends javax.swing.JFrame {
      * @throws java.lang.Exception
      */
     public MenuIngreso() throws Exception {
-        boolean existeAdmin = us.existeUsuarioAdmin();
+        primerInicio();
         try {
             Usuario u = us.buscarUsuarioActivo();
             if (u != null) {
                 us.desactivarUsuario(u);
             }
-            
         } catch (Exception e) {
             e.getMessage();
         }
-        if (existeAdmin == false) {
-            JOptionPane.showMessageDialog(rootPane, "Creando Usuario Administrador Inicial ");
-            // Crear nuevo usuario administrador
-            Usuario admin = new Usuario();
-            admin.setName("admin");
-            admin.setPassword("admin");
-            admin.setAlta(true);
-            Rol rolAdmin = new Rol();
-            rolAdmin.setNombre("Administrador");
-            rs.crearRol(rolAdmin);
-            admin.setRol(rs.BuscarAdminRol());
-            us.crearUsuario(admin);
-            admin = us.BuscarUsuarioInicial();
-            rs.AgregarUsuarioAdministradorList(admin);
-            JOptionPane.showMessageDialog(null, "El usuario : admin, fue creado exitosamente, su contraseña es : admin");
-        }
+
         initComponents();
+        jPanel1.requestFocus();
         addPlaceHolderStyle(txtUsuario);
         addPlaceHolderStyle(txtPassword);
-            txtUsuario.setText("Usuario");
-            txtPassword.setText("Contraseña");
-            txtPassword.setEchoChar('\u0000');
-            
+        txtUsuario.setText("Usuario");
+        txtPassword.setText("Contraseña");
+        txtPassword.setEchoChar('\u0000');
+
     }
-    
+
     public void addPlaceHolderStyle(JTextField textfield) {
         Font font = textfield.getFont();
         textfield.setFont(font);
         textfield.setForeground(Color.gray);
-        
+
     }
-    
+
     public void removePlaceHolderStyle(JTextField textfield) {
         // adaptar valores a estilo actual 
         Font font = textfield.getFont();
@@ -87,28 +72,28 @@ public class MenuIngreso extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToggleButton1 = new javax.swing.JToggleButton();
-        btnAceptar = new javax.swing.JButton();
+        javax.swing.JButton btnAceptar2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         LblBienvenido = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
+        javax.swing.JButton btnAceptar = new javax.swing.JButton();
 
-        jToggleButton1.setText("jToggleButton1");
-
-        btnAceptar.setBackground(new java.awt.Color(153, 255, 153));
-        btnAceptar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAceptar.setText("Entrar");
-        btnAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar2.setBackground(new java.awt.Color(153, 255, 153));
+        btnAceptar2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAceptar2.setText("Entrar");
+        btnAceptar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnAceptar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+                btnAceptar2ActionPerformed(evt);
             }
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(33, 33, 33));
         setFocusCycleRoot(false);
         setIconImages(null);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(33, 33, 33));
         jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), javax.swing.BorderFactory.createTitledBorder("")));
@@ -121,7 +106,7 @@ public class MenuIngreso extends javax.swing.JFrame {
         LblBienvenido.setText("Login");
         LblBienvenido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(LblBienvenido);
-        LblBienvenido.setBounds(10, 40, 370, 65);
+        LblBienvenido.setBounds(0, 40, 370, 65);
 
         txtUsuario.setBackground(new java.awt.Color(51, 51, 51));
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,15 +147,29 @@ public class MenuIngreso extends javax.swing.JFrame {
         jPanel1.add(txtPassword);
         txtPassword.setBounds(90, 210, 210, 30);
 
+        btnAceptar.setBackground(new java.awt.Color(51, 51, 51));
+        btnAceptar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptar.setText("Entrar");
+        btnAceptar.setBorder(null);
+        jPanel1.add(btnAceptar);
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAceptar);
+        btnAceptar.setBounds(170, 270, 37, 20);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
         );
 
         pack();
@@ -184,17 +183,51 @@ public class MenuIngreso extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
-        String nombre = txtUsuario.getText();
-        char[] password = txtPassword.getPassword();
-        String concatpas = "";
-        txtPassword.setText("");
-        txtUsuario.setText("");
-        String mensaje;
-        for (char c : password) {
-            concatpas += c;
+    private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
+        if (txtUsuario.getText().equals("Usuario")) {
+            txtUsuario.setText("");
+            txtUsuario.requestFocus();
+            removePlaceHolderStyle(txtUsuario);
         }
+
+    }//GEN-LAST:event_txtUsuarioFocusGained
+
+    private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
+
+        txtPassword.setText("");
+        txtPassword.requestFocus();
+        removePlaceHolderStyle(txtPassword);
+        txtPassword.setEchoChar('\u2022');
+
+    }//GEN-LAST:event_txtPasswordFocusGained
+
+    private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
+
+        if (txtUsuario.getText().equalsIgnoreCase("")) {
+            addPlaceHolderStyle(txtUsuario);
+            txtUsuario.setText("Usuario");
+        }
+
+
+    }//GEN-LAST:event_txtUsuarioFocusLost
+
+    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
+        String concatpass = concatenarPassword(txtPassword.getPassword());
+
+        if (concatpass.equals("") || concatpass.equals("Contraseña")) {
+            addPlaceHolderStyle(txtPassword);
+            txtPassword.setText("Contraseña");
+            txtPassword.setEchoChar('\u0000');
+        }
+
+
+    }//GEN-LAST:event_txtPasswordFocusLost
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+     
+        String nombre = txtUsuario.getText();
+        String concatpas = concatenarPassword(txtPassword.getPassword());
+        String mensaje;
         try {
             mensaje = us.ValidarUsuario(nombre, concatpas);
             try {
@@ -208,7 +241,7 @@ public class MenuIngreso extends javax.swing.JFrame {
                 try {
                     JOptionPane.showMessageDialog(null, "Entrando al Programa");
                     mensaje = us.validarRol(nombre, concatpas);
-                    
+
                     if (mensaje.equalsIgnoreCase("Permisos4dministrador")) {
                         //llamar interfaz administrador
                         MenuInicio adminMenu = new MenuInicio();
@@ -230,78 +263,46 @@ public class MenuIngreso extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error en la line 206 : " + ex.getMessage());
             ex.printStackTrace();
         }
-        
+
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
-        if (txtUsuario.getText().equals("Usuario")) {
-            txtUsuario.setText("");
-            txtUsuario.requestFocus();
-            removePlaceHolderStyle(txtUsuario);
-        }
-           
-    }//GEN-LAST:event_txtUsuarioFocusGained
+    private void btnAceptar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptar2ActionPerformed
 
-    private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
-        
-            txtPassword.setText("");
-            txtPassword.requestFocus();
-            removePlaceHolderStyle(txtPassword);
-            txtPassword.setEchoChar('\u2022');
-      
-    }//GEN-LAST:event_txtPasswordFocusGained
+    }//GEN-LAST:event_btnAceptar2ActionPerformed
 
-    private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
-      
-        if (txtUsuario.getText().equalsIgnoreCase("")) {
-           addPlaceHolderStyle(txtUsuario);
-            txtUsuario.setText("Usuario");
-        }
-       
-        
-    }//GEN-LAST:event_txtUsuarioFocusLost
-
-    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
-       
-            addPlaceHolderStyle(txtPassword);
-            txtPassword.setText("Contraseña");
-            txtPassword.setEchoChar('\u0000');
-            
-       
-    }//GEN-LAST:event_txtPasswordFocusLost
+   
     
-    private void verificarUsuarioAdmin() throws Exception {
+
+    private String concatenarPassword(char[] pass) {
+        String concatpass = "";
+        for (char c : pass) {
+            concatpass = concatpass + c;
+        }
+        return concatpass;
+    }
+
+    private void primerInicio() throws Exception {
         boolean existeAdmin = us.existeUsuarioAdmin();
-        
-        if (existeAdmin = false) {
+        if (existeAdmin == false) {
+            JOptionPane.showMessageDialog(rootPane, "Creando Usuario Administrador Inicial ");
             // Crear nuevo usuario administrador
             Usuario admin = new Usuario();
             admin.setName("admin");
-            admin.setPassword("Administrador");
+            admin.setPassword("admin");
             admin.setAlta(true);
-            
-            Rol rolAdmin = new Rol();
-            rolAdmin.setNombre("Administrador");
-            
-            admin.setRol(rolAdmin);
+            //creamos rol administrador
+            Rol rolAdmin = rs.crearRol("Administrador");
 
-            // revisar servicios  hacer test
-            rs.crearRol(rolAdmin);
-            rolAdmin = rs.BuscarAdminRol();
+            //crear rol vendedor 
+            Rol rolVendedor =  rs.crearRol("Vendedor");
+            //asignamos rol de administrador a primer usuario y despues se persiste
+            admin.setRol(rs.BuscarAdminRol());
             us.crearUsuario(admin);
-            
+            // buscamos el primer usuario para añadirlo a la lista de administradores 
             admin = us.BuscarUsuarioInicial();
-            
-            rolAdmin = rs.BuscarAdminRol();
-            rolAdmin.listaUsuarios.add(admin);
-            admin.setRol(rolAdmin);
-            admin.setRol(rolAdmin);
-            
-            rs.editarRol(rolAdmin);
-            
-            us.editarUsuario(admin);
-            
+            rs.AgregarUsuarioAdministradorList(admin);
+            JOptionPane.showMessageDialog(null, "El usuario : admin, fue creado exitosamente, su contraseña es : admin");
         }
     }
     /**
@@ -310,9 +311,7 @@ public class MenuIngreso extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LblBienvenido;
-    private javax.swing.JButton btnAceptar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

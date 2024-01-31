@@ -22,13 +22,12 @@ public class rolServicio {
         this.dao = new RolDao();
     }
 
-    public Rol crearRol(Rol nombre) {
+    public Rol crearRol(String nombre) {
         try {
             Rol rol = new Rol();
-            rol.setNombre(nombre.getNombre());
-           rol.setListaUsuarios(nombre.getListaUsuarios());
+            rol.setNombre(nombre);
             dao.guardar(rol);
-            JOptionPane.showMessageDialog(null, "El rol  fue designado correctamente");
+            JOptionPane.showMessageDialog(null, "El rol  fue designado correctamente"+rol.getNombre());
             return rol;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -49,13 +48,32 @@ public class rolServicio {
     return dao.buscarPorId(1);
             
     }
+    
+     public Rol BuscarRol(String Rol) throws Exception{
+
+    return dao.buscarPorString(Rol);
+            
+    }
+     
     public void AgregarUsuarioAdministradorList(Usuario u ) throws Exception{
         
         dao.agregarUsuarioAdministradorList(u); 
+
+    }
+    public void AgregarUsuarioVendedorList(Usuario u ) throws Exception{
+        
+        dao.agregarUsuarioVendedorList(u); 
 
     }
 
     public void editarRol(Rol rolAdmin) {
       dao.editar(rolAdmin);
     }
-}
+
+    public void EliminarUsuarioVendedorList(Usuario usuarioAEditar) {
+       dao.eliminarUsuarioVendorList(usuarioAEditar); 
+    }
+
+    public void EliminarUsuarioAdministradorList(Usuario usuarioAEditar) {
+        dao.eliminarUsuarioAdministradorList(usuarioAEditar); 
+}}

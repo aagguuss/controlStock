@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class usuarioService {
 
-    UsuarioDao dao;
+    public UsuarioDao dao;
 
     public usuarioService() {
         this.dao = new UsuarioDao();
@@ -34,11 +34,10 @@ public class usuarioService {
 
     public String ValidarUsuario(String nombre, String passwordI) throws Exception {
         String mensaje = "";
-        Usuario var = new Usuario();
+        Usuario var = null ;
         // tremos el usuario indicado 
         try {
-
-            var = dao.UsuarioConsulta(nombre, passwordI);
+            var = dao.buscarPorNombreContraseña(nombre, passwordI);
             System.out.println(var.toString());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al iniciar UsuarioConsulta : " + e.getMessage());
@@ -48,7 +47,7 @@ public class usuarioService {
             JOptionPane.showMessageDialog(null, "El nombre de usuario proporcionado no se encuentra en la memoria");
         }
         // comprobamos que el usuario este correcto 
-        if (var.getName().equals(nombre) && passwordI.equals(var.getPassword()) && var.isAlta() == false) {
+        if (var.getName().equals(nombre) && passwordI.equals(var.getPassword())) {
             mensaje = "Entrando 4l $istema";
             //persistimos que el usuario comprobado se encuentra en el sistema de alta
 
@@ -84,6 +83,10 @@ public class usuarioService {
         return dao.buscarPorId(1);
 
     }
+    public Usuario BuscarUsuarioPorNombreContraseña(String nombre, String contraseña) throws Exception {
+        return dao.buscarPorNombreContraseña(nombre, contraseña);
+
+    }
 
     public boolean existeUsuarioAdmin() throws Exception {
         return dao.existeUsuarioAdmin();
@@ -100,7 +103,7 @@ public class usuarioService {
     public void activarUsuario(String nombre, String password) {
         
         try {
-             Usuario var = dao.UsuarioConsulta(nombre, password);
+             Usuario var = dao.buscarPorNombreContraseña(nombre, password);
              dao.activarUsuario(var);
         } catch (Exception e) {
             System.out.println(e.getMessage());

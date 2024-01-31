@@ -104,7 +104,14 @@ public class RolDao implements AutoCloseable{
         desconectar();
         return rol;
     }
-
+    public Rol buscarPorString(String Rol) throws Exception {
+        conectar();
+        Rol rol = em.find(Rol.class, Rol);
+        desconectar();
+        return rol;
+    }
+    
+    
     public List<Rol> listarTodos() throws Exception {
         conectar();
         List<Rol> usuario = em.createQuery("SELECT l FROM Rol l")
@@ -136,9 +143,58 @@ public class RolDao implements AutoCloseable{
         }
      
     }
+    public void agregarUsuarioVendedorList(Usuario u) throws Exception {
+        conectar();
+        try {
+            em.getTransaction().begin();
+            Rol r = buscarPorId(2);
+            ArrayList<Usuario> listaUsuarios = r.getListaUsuarios();
+            listaUsuarios.add(u);
+            desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar el usuario a la lista del rol : "+e.getMessage());
+             desconectar();
+        }finally{
+        desconectar();
+        }
+     
+    }
 
     @Override
     public void close() throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void eliminarUsuarioAdministradorList(Usuario usuarioAEditar) {
+        conectar();
+        try {
+            em.getTransaction().begin();
+            Rol r = buscarPorId(1);
+            ArrayList<Usuario> listaUsuarios = r.getListaUsuarios();
+            listaUsuarios.remove(usuarioAEditar);
+            desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar el usuario a la lista del rol : "+e.getMessage());
+             desconectar();
+        }finally{
+        desconectar();
+        }
+     
+    }
+
+    public void eliminarUsuarioVendorList(Usuario usuarioAEditar) {
+       conectar();
+        try {
+            em.getTransaction().begin();
+            Rol r = buscarPorId(2);
+            ArrayList<Usuario> listaUsuarios = r.getListaUsuarios();
+            listaUsuarios.remove(usuarioAEditar);
+            desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar el usuario a la lista del rol : "+e.getMessage());
+             desconectar();
+        }finally{
+        desconectar();
+        }
     }
 }
