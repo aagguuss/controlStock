@@ -36,7 +36,7 @@ public class Usuario implements Serializable {
    
     @ManyToOne
     @JoinColumn(name = "fk_rol")
-    private Rol rol;
+    protected Rol rol;
 
   
     

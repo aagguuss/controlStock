@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 
 /**
@@ -141,47 +142,108 @@ public class productDao {
     }
 
     public List<Product> buscarPorMarca(String marca) throws Exception {
-        try {
-            conectar();
-            // Corregir la consulta utilizando parámetros con nombre
-            List<Product> products = em.createQuery("SELECT * FROM product WHERE ProductBlend = 'marca'", Product.class)
-                    .setParameter("marca", marca)
-                    .getResultList();
-            return products;
-        } finally {
-            desconectar();
+         try {
+        conectar();
+
+        // Construir la consulta dinámicamente
+        String jpql = "SELECT p FROM Product p WHERE 1=1";
+
+      
+
+        // Verificar si se proporciona la marca como parámetro
+        if (marca != null && !marca.isEmpty()) {
+            jpql += " AND p.ProductBlend = :marca";
         }
 
+        // Crear la consulta
+        TypedQuery<Product> query = em.createQuery(jpql, Product.class);
+
+       
+        if (marca != null && !marca.isEmpty()) {
+            query.setParameter("marca", marca);
+        }
+
+        // Ejecutar la consulta y obtener resultados
+        List<Product> products = query.getResultList();
+
+        return products;
+    } catch (Exception e) {
+        System.out.println("" + e.getMessage());
+    } finally {
+        desconectar();
     }
+    return null;
+}
 
     public List<Product> buscarPorCategoria(String categoria) throws Exception {
-        try {
-            conectar();
-            // Corregir la consulta utilizando parámetros con nombre
-            List<Product> products = em.createQuery("SELECT * FROM product WHERE category = 'categoria'", Product.class)
-                    .setParameter("categoria", categoria)
-                    .getResultList();
-            return products;
-        } finally {
-            desconectar();
+    try {
+        conectar();
+
+        // Construir la consulta dinámicamente
+        String jpql = "SELECT p FROM Product p WHERE 1=1";
+
+        // Verificar si se proporciona la categoría como parámetro
+        if (categoria != null && !categoria.isEmpty()) {
+            jpql += " AND p.category = :categoria";
         }
+        // Crear la consulta
+        TypedQuery<Product> query = em.createQuery(jpql, Product.class);
 
+        // Establecer parámetros si es necesario
+        if (categoria != null && !categoria.isEmpty()) {
+            query.setParameter("categoria", categoria);
+        }
+      
+        // Ejecutar la consulta y obtener resultados
+        List<Product> products = query.getResultList();
+
+        return products;
+    } catch (Exception e) {
+        System.out.println("" + e.getMessage());
+    } finally {
+        desconectar();
     }
-
+    return null;
+}
      public List<Product> buscarPorCategoriayMarca(String categoria, String marca) throws Exception {
-        try {
-            conectar();
-            // Corregir la consulta utilizando parámetros con nombre
-            List<Product> products = em.createQuery("SELECT * FROM product WHERE categoty = 'categoria' And ProductBlend = 'marca'", Product.class)
-                    .setParameter("categoria", categoria)
-                    .setParameter("marca", marca)
-                    .getResultList();
-            return products;
-        } finally {
-            desconectar();
+     try {
+        conectar();
+
+        // Construir la consulta dinámicamente
+        String jpql = "SELECT p FROM Product p WHERE 1=1";
+
+        // Verificar si se proporciona la categoría como parámetro
+        if (categoria != null && !categoria.isEmpty()) {
+            jpql += " AND p.category = :categoria";
         }
 
+        // Verificar si se proporciona la marca como parámetro
+        if (marca != null && !marca.isEmpty()) {
+            jpql += " AND p.ProductBlend = :marca";
+        }
+
+        // Crear la consulta
+        TypedQuery<Product> query = em.createQuery(jpql, Product.class);
+
+        // Establecer parámetros si es necesario
+        if (categoria != null && !categoria.isEmpty()) {
+            query.setParameter("categoria", categoria);
+        }
+        if (marca != null && !marca.isEmpty()) {
+            query.setParameter("marca", marca);
+        }
+
+        // Ejecutar la consulta y obtener resultados
+        List<Product> products = query.getResultList();
+
+        return products;
+    } catch (Exception e) {
+        System.out.println("" + e.getMessage());
+    } finally {
+        desconectar();
     }
+    return null;
+}
 
    public List<String> TraerTodasMarcas() {
     try {

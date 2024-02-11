@@ -5,6 +5,9 @@
 package start;
 
 import UI.MenuIngreso;
+import UI.Stock;
+import UI.Stock1;
+import UI.Venta;
 
 /**
  *
@@ -12,8 +15,10 @@ import UI.MenuIngreso;
  */
 public class Start {
     public static void main(String[] args) throws Exception {
-    MenuIngreso Mi = new MenuIngreso();
-    Mi.setVisible(true);
-   // Stock s = new Stock();
-   // s.setVisible(true);
+    //MenuIngreso Mi = new MenuIngreso();
+    //Mi.setVisible(true);
+   //Stock s = new Stock();
+   //s.setVisible(true);
+   Venta v = new Venta();
+   v.setVisible(true);
 }}

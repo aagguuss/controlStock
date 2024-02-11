@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+
 /**
  *
  * @author agust
@@ -28,36 +29,35 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name="sell")
-public class Sell implements  Serializable {
-    @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    Date sellingDate; 
-    // evaluando si al comprar tiene sentido la ista con a cantidad y en cambio desde interfaz de usario utilizar el espaci de memoria stock
-    //y cuando se factura la venta que ese numero se le reste al stock en base de datos;
-    @ManyToMany
-    @JoinTable(name = "sell_product",
-               joinColumns = @JoinColumn(name = "sell_id"),
-               inverseJoinColumns = @JoinColumn(name = "product_id"))
-    List<Product> products;
-    @Column(name="total_amount")
-    double totalAmount;
-    @Column(name="Winning")
-    double Winning;
+public class Sell   implements  Serializable {
+   @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    protected Usuario usuario;
+
+    @ManyToMany
+    @JoinTable(
+        name = "sell_product",
+        joinColumns = @JoinColumn(name = "sell_id"),
+        inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products;
+
+    @Column(name = "total_amount")
+    private double totalAmount;
+
+    @Column(name = "profit")
+    private double profit;
     public Sell() {
         
     }
 
+   
 
-    public Date getSellingDate() {
-        return sellingDate;
-    }
-
-    public void setSellingDate(Date sellingDate) {
-        this.sellingDate = sellingDate;
-    }
+    
 
     public List<Product> getProducts() {
         return products;
@@ -75,14 +75,24 @@ public class Sell implements  Serializable {
         this.totalAmount = totalAmount;
     }
 
-    public double getWinning() {
-        return Winning;
+    public double getProfit() {
+        return profit;
     }
 
-    public void setWinning(double Winning) {
-        this.Winning = Winning;
+    public void setProfit(double profit) {
+        this.profit = profit;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+
+    
     public int getId() {
         return id;
     }

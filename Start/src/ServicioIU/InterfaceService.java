@@ -14,7 +14,6 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.lang.Integer;
 
 /**
  *
@@ -168,33 +167,56 @@ public class InterfaceService {
     }
 
     public DefaultTableModel comprobarRepetidos(DefaultTableModel model) throws Exception {
-        List<Product> modelP = ps.Dao.listarTodos();// convendria traer solo nombre marca  y categoria 
-        String nombre = "";
-        String marca = "";
-        String categoria = "";
-        int Stock = 0;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                nombre = (String) model.getValueAt(i, 1);
-                marca = (String) model.getValueAt(i, 2);
-                categoria = (String) model.getValueAt(i, 3);
-                for (Product product : modelP) {
-                    if (nombre.equalsIgnoreCase(product.getProductName()) && marca.equalsIgnoreCase(product.getProductBlend()) && categoria.equalsIgnoreCase(product.getCategory())) {
-                        // cambian los precios a o se suma stock
-                        Stock = (Integer) model.getValueAt(i, 6);
-                        product.setStock(Stock + product.getStock());
-                        product.setBuyingPrice((Double) model.getValueAt(i, 4));
-                        product.setSellingPRice((Double) model.getValueAt(i, 5));
-                        product.setInterest((Double) model.getValueAt(i, 8));
-                        ps.Dao.editar(product);
-                        model.removeRow(product.getId());
-                    }
+        List<Product> productList = ps.Dao.listarTodos();
+
+        for (int rowIndex = 0; rowIndex < model.getRowCount(); rowIndex++) {
+            String productName = (String) model.getValueAt(rowIndex, 1);
+            String productBlend = (String) model.getValueAt(rowIndex, 2);
+            String category = (String) model.getValueAt(rowIndex, 3);
+
+            for (Product product : productList) {
+                if (productName.equalsIgnoreCase(product.getProductName())
+                        && productBlend.equalsIgnoreCase(product.getProductBlend())
+                        && category.equalsIgnoreCase(product.getCategory())) {
+
+                    // Actualizar valores en la base de datos
+                    int stock = (Integer) model.getValueAt(rowIndex, 6);
+                    product.setStock(stock + product.getStock());
+                    product.setBuyingPrice((Double) model.getValueAt(rowIndex, 4));
+                    product.setSellingPRice((Double) model.getValueAt(rowIndex, 5));
+                    product.setInterest((Double) model.getValueAt(rowIndex, 8));
+                    ps.Dao.editar(product);
+
+                    // Actualizar valores en el modelo
+                    model.setValueAt(product.getStock(), rowIndex, 6);
+                    model.setValueAt(product.getBuyingPrice(), rowIndex, 4);
+                    model.setValueAt(product.getSellingPRice(), rowIndex, 5);
+                    model.setValueAt(product.getInterest(), rowIndex, 8);
+
+                    // Eliminar la fila del modelo
+                    model.removeRow(rowIndex);
+
+                    // Decrementar el índice para compensar la eliminación
+                    rowIndex--;
+                    break;  // No es necesario seguir buscando productos repetidos
                 }
             }
         }
-        System.out.println("model antes de partir de comprobar repetidos");
-        printmodelContents(model);
+
+        System.out.println("Model antes de salir de comprobar repetidos:");
+        printModelContents(model);
+
         return model;
+    }
+
+// Método auxiliar para imprimir el contenido del modelo
+    private void printModelContents(DefaultTableModel model) {
+        for (int rowIndex = 0; rowIndex < model.getRowCount(); rowIndex++) {
+            for (int colIndex = 0; colIndex < model.getColumnCount(); colIndex++) {
+                System.out.print(model.getValueAt(rowIndex, colIndex) + "\t");
+            }
+            System.out.println();
+        }
     }
 
     public DefaultTableModel SaveNewData(List<Product> listarTodos) {
@@ -229,61 +251,65 @@ public class InterfaceService {
         return internModel;
     }
     // ver si los datos de la tabla se estan tomando 
- // editar no esta funcionando
+    // editar no esta funcionando
     public List<Product> EditaleData(DefaultTableModel model) {
+        // Lista para almacenar los productos
         List<Product> ProductPersist = new ArrayList<>();
-        System.out.println("model dentro de StockService");
-        // printmodelContents(model);
-        Product Product = new Product();
-        // carga el o los productos en la variable product como variable auxiliar  
-        try {
-            for (int i = 0; i < model.getRowCount() ; i++) {
-   
-                for (int j = 0; j < model.getColumnCount(); j++) {
 
+        System.out.println("model dentro de StockService");
+
+        try {
+            // Iterar a través de las filas del modelo
+            for (int i = 0; i < model.getRowCount(); i++) {
+                // Crear una nueva instancia de Product para cada fila del modelo
+                Product product = new Product();
+
+                // Iterar a través de las columnas del modelo
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    // Establecer atributos del producto basado en los valores en el modelo
+
+                    // Si la columna es la primera (índice 0), establecer el ID del producto
                     if (j == 0) {
-                        Product.setId((Integer) model.getValueAt(i, j));
+                        product.setId((Integer) model.getValueAt(i, j));
                         System.out.println("ID: " + model.getValueAt(i, j));
                     }
+
+                    // Si la columna es la segunda (índice 1), establecer el nombre del producto
                     if (j == 1) {
-                        Product.setProductName((String) model.getValueAt(i, j));
+                        product.setProductName((String) model.getValueAt(i, j));
                     }
-
-                    if (j == 2) {
-                        Product.setProductBlend((String) model.getValueAt(i, j));
+                    if (j==2){
+                        product.setProductBlend((String) model.getValueAt(i, j) );
                     }
-
-                    if (j == 3) {
-                        Product.setCategory((String) model.getValueAt(i, j));
+                    if (j==3) {
+                        product.setCategory((String) model.getValueAt(i, j));
                     }
                     if (j == 4) {
-                        Product.setBuyingPrice((Double) model.getValueAt(i, j));
+                        product.setBuyingPrice((Double) model.getValueAt(i, j));
                     }
                     if (j == 5) {
-                        Product.setSellingPRice((Double) model.getValueAt(i, j));
+                        product.setSellingPRice((Double) model.getValueAt(i, j));
                     }
                     if (j == 6) {
-                        Product.setStock((Integer) model.getValueAt(i, j));
+                        product.setStock((Integer) model.getValueAt(i, j));
                     }
                     if (j == 7) {
-                        Product.setStockWarning((Integer) model.getValueAt(i, j));
+                        product.setStockWarning((Integer) model.getValueAt(i, j));
                     }
                     if (j == 8) {
-                        Product.setInterest((Double) model.getValueAt(i, j));
+                        product.setInterest((Double) model.getValueAt(i, j));
                     }
-                    
-                    ps.Dao.editar(Product);
-                    
+                    // Puedes agregar más condiciones similares para establecer otros atributos del producto
                 }
+
+                // Agregar el producto a la lista
+                ProductPersist.add(product);
             }
-            // Acción para la combinación "Editar"
-            System.out.println("Opción Editar seleccionada");
-            // Realizar acciones específicas para la opción "Editar"
-            // ...
         } catch (Exception e) {
-            System.out.println("error en cargar product para editar datos de la table model : " + e.getMessage());
+            System.out.println("error en cargar product para editar datos de la table model: " + e.getMessage());
         }
-       
+
+        // Devolver la lista de productos creados a partir del modelo
         return ProductPersist;
     }
 
@@ -373,10 +399,10 @@ public class InterfaceService {
         return defaultTableModel;
     }
 
-    public DefaultTableModel DeleteallFromCarrito( DefaultTableModel defaultTableModel) {
+    public DefaultTableModel DeleteallFromCarrito(DefaultTableModel defaultTableModel) {
 
         for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
-                    defaultTableModel.removeRow(i);
+            defaultTableModel.removeRow(i);
         }
         return defaultTableModel;
     }
@@ -403,21 +429,21 @@ public class InterfaceService {
 
     public double calculatePriceFromVenta(DefaultTableModel model1) {
         double Total = 0;
-       List<Double> price = new ArrayList<>();
-       List<Double> amount= new ArrayList<>();
-          for (int i = 0; i < model1.getRowCount(); i++) {
-          price.add( (double)model1.getValueAt(i, 4));
-          amount.add((double) model1.getValueAt(i, 5)) ;
+        List<Double> price = new ArrayList<>();
+        List<Double> amount = new ArrayList<>();
+        for (int i = 0; i < model1.getRowCount(); i++) {
+            price.add((double) model1.getValueAt(i, 4));
+            amount.add((double) model1.getValueAt(i, 5));
         }
-         JOptionPane.showMessageDialog(null, price.toString()+"  "+amount.toString());
-      
+        JOptionPane.showMessageDialog(null, price.toString() + "  " + amount.toString());
+
         return Total;
     }
 
     public List<Product> procesarTablaEnProductForSell(DefaultTableModel modelCarrito) throws Exception {
         List<Product> productService = new ArrayList<>();
         for (int i = 0; i < modelCarrito.getRowCount(); i++) {
-            productService.add(ps.ProductForSell((Integer) modelCarrito.getValueAt(i, 0),(String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
+            productService.add(ps.ProductForSell((Integer) modelCarrito.getValueAt(i, 0), (String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
             ss.StockAdjust(ps.Dao.buscarPorId((Integer) modelCarrito.getValueAt(i, 0)), (Integer) modelCarrito.getValueAt(i, 5));
         }
         return productService;
