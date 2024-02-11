@@ -5,6 +5,7 @@
 package Entidades;
 
 
+import entidades.Usuario;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -51,9 +52,9 @@ public class Sell   implements  Serializable {
 
     @Column(name = "profit")
     private double profit;
-    public Sell() {
-        
-    }
+    public Sell(Usuario u ) {
+        this.usuario = u;
+    } 
 
    
 
@@ -91,8 +92,6 @@ public class Sell   implements  Serializable {
         this.usuario = usuario;
     }
 
-
-    
     public int getId() {
         return id;
     }
