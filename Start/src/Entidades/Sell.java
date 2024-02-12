@@ -7,7 +7,7 @@ package Entidades;
 
 import entidades.Usuario;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -55,10 +55,17 @@ public class Sell   implements  Serializable {
     public Sell(Usuario u ) {
         this.usuario = u;
     } 
+     @Column(name = "date")
+    private LocalDateTime Date;
 
-   
+    // Otros atributos y métodos
 
-    
+    @PrePersist
+    protected void onCreate() {
+        Date = LocalDateTime.now();
+    }
+    public Sell() {
+    }
 
     public List<Product> getProducts() {
         return products;
@@ -99,5 +106,15 @@ public class Sell   implements  Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public LocalDateTime getDate() {
+        return Date;
+    }
+
+    public void setDate(LocalDateTime Date) {
+        this.Date = Date;
+    }
+
+   
    
 }

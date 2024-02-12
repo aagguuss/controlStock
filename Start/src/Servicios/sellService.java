@@ -7,7 +7,7 @@ package Servicios;
 import Entidades.Product;
 import Entidades.Sell;
 import Persistencia.sellDao;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -30,10 +30,10 @@ public class sellService {
     }
 public void createSell(List products){
         Sell sell = new Sell();
-        sell.setSellingDate(new Date());
+        sell.setDate(LocalDateTime.MAX);
         sell.setProducts(products);
         sell.setTotalAmount(totalAmount(products));
-        sell.setWinning(totalWining(products));
+        sell.setProfit(totalWining(products));
         dao.guardar(sell);
         
 }

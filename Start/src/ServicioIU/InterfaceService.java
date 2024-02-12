@@ -430,13 +430,15 @@ public class InterfaceService {
     public double calculatePriceFromVenta(DefaultTableModel model1) {
         double Total = 0;
         List<Double> price = new ArrayList<>();
-        List<Double> amount = new ArrayList<>();
+        List<Integer> amount = new ArrayList<>();
         for (int i = 0; i < model1.getRowCount(); i++) {
             price.add((double) model1.getValueAt(i, 4));
-            amount.add((double) model1.getValueAt(i, 5));
+            amount.add((Integer) model1.getValueAt(i, 5));
         }
-        JOptionPane.showMessageDialog(null, price.toString() + "  " + amount.toString());
-
+        JOptionPane.showMessageDialog(null, price + "  " + amount);
+        for (int j = 0; j < model1.getRowCount(); j++) {  
+            Total = Total + price.get(j) * amount.get(j);
+        }
         return Total;
     }
 
