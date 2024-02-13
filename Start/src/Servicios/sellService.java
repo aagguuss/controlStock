@@ -7,6 +7,7 @@ package Servicios;
 import Entidades.Product;
 import Entidades.Sell;
 import Persistencia.sellDao;
+import entidades.Usuario;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -22,18 +23,24 @@ public class sellService {
 // declarar daoservice 
     sellDao dao;
     ProductService ps;
+    usuarioService us;
     public sellService() {
         this.ps = new ProductService();
         this.dao= new sellDao();
-                
+        this.us = new usuarioService();
         //inicializar daoservice
     }
-public void createSell(List products){
+public void createSell(List products) throws Exception{
         Sell sell = new Sell();
         sell.setDate(LocalDateTime.MAX);
         sell.setProducts(products);
         sell.setTotalAmount(totalAmount(products));
         sell.setProfit(totalWining(products));
+        // esto no deberia ser necesesario en producion solo util para poder cargar un usuario desde venta directamente 
+        Usuario u = us.BuscarUsuarioInicial();
+        u.setAlta(true);
+        us.editarUsuario(u);
+        sell.setUsuario(us.buscarUsuarioActivo());
         dao.guardar(sell);
         
 }

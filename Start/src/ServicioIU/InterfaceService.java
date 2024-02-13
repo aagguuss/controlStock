@@ -443,15 +443,15 @@ public class InterfaceService {
     }
 
     public List<Product> procesarTablaEnProductForSell(DefaultTableModel modelCarrito) throws Exception {
-        List<Product> productService = new ArrayList<>();
+        List<Product> productS = new ArrayList<>();
         for (int i = 0; i < modelCarrito.getRowCount(); i++) {
-            productService.add(ps.ProductForSell((Integer) modelCarrito.getValueAt(i, 0), (String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
+            productS.add(ps.ProductForSell((Integer) modelCarrito.getValueAt(i, 0), (String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
             ss.StockAdjust(ps.Dao.buscarPorId((Integer) modelCarrito.getValueAt(i, 0)), (Integer) modelCarrito.getValueAt(i, 5));
         }
-        return productService;
+        return productS;
     }
 
-    public void GestionarVenta(List<Product> producto) {
+    public void GestionarVenta(List<Product> producto) throws Exception {
         ss.createSell(producto);
     }
 
