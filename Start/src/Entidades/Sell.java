@@ -43,35 +43,36 @@ public class Sell   implements  Serializable {
     @JoinTable(
         name = "sell_product",
         joinColumns = @JoinColumn(name = "sell_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
+        inverseJoinColumns = @JoinColumn(name = "sell_product_id")
     )
-    private List<Product> products;
+    protected List<SellProduct> products;
 
     @Column(name = "total_amount")
-    private double totalAmount;
+    protected double totalAmount;
 
     @Column(name = "profit")
-    private double profit;
-    public Sell(Usuario u ) {
-        this.usuario = u;
-    } 
-     @Column(name = "date")
-    private LocalDateTime Date;
+    protected double profit;
 
-    // Otros atributos y métodos
+     @Column(name = "date")
+    protected LocalDateTime Date;
 
     @PrePersist
     protected void onCreate() {
         Date = LocalDateTime.now();
     }
+    
+        public Sell(Usuario u ) {
+        this.usuario = u;
+    } 
+        
     public Sell() {
     }
 
-    public List<Product> getProducts() {
+    public List<SellProduct> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<SellProduct> products) {
         this.products = products;
     }
 

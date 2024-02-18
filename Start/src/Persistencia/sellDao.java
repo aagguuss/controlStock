@@ -7,6 +7,7 @@ package Persistencia;
 import Entidades.Sell;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
 /**
@@ -101,4 +102,32 @@ public class sellDao {
         desconectar();
         return Sells;
     }
-}
+
+    public List<Sell> listarEspecificados(List<String> column, List<String> products) throws Exception {
+      
+        conectar();
+        List<Sell> buscados = null;
+        try {
+            StringBuilder queryString = new StringBuilder("SELECT p FROM Product p WHERE");
+            for (int i = 0; i < column.size(); i++) {
+                if (i > 0) {
+                    queryString.append(" AND");
+                }
+                queryString.append(" p.").append(column.get(i)).append(" LIKE :param").append(i);
+            }
+            Query query = em.createQuery(queryString.toString());
+            for (int i = 0; i < column.size(); i++) {
+                query.setParameter("param" + i, "%" + products.get(i) + "%");
+            }
+            System.out.println(queryString.toString());
+            System.out.println(query.toString());
+            buscados = query.getResultList();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en listar especificados: " + e.getMessage());
+            return listarTodos();
+        }
+        desconectar();
+        return buscados;
+    }
+    }
+

@@ -5,7 +5,10 @@
 package ServicioIU;
 
 import Entidades.Product;
+import Entidades.Sell;
+import Entidades.SellProduct;
 import Servicios.ProductService;
+import Servicios.SellProductService;
 import Servicios.sellService;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,12 +23,13 @@ import javax.swing.table.DefaultTableModel;
  * @author agust
  */
 public class InterfaceService {
-
+    SellProductService sps;
     sellService ss;
     ProductService ps;
     DefaultTableModel internModel;
 
     public InterfaceService() {
+        this.sps = new SellProductService();
         this.ps = new ProductService();
         this.ss = new sellService();
         this.internModel = new DefaultTableModel();
@@ -250,6 +254,7 @@ public class InterfaceService {
         }
         return internModel;
     }
+
     // ver si los datos de la tabla se estan tomando 
     // editar no esta funcionando
     public List<Product> EditaleData(DefaultTableModel model) {
@@ -278,10 +283,10 @@ public class InterfaceService {
                     if (j == 1) {
                         product.setProductName((String) model.getValueAt(i, j));
                     }
-                    if (j==2){
-                        product.setProductBlend((String) model.getValueAt(i, j) );
+                    if (j == 2) {
+                        product.setProductBlend((String) model.getValueAt(i, j));
                     }
-                    if (j==3) {
+                    if (j == 3) {
                         product.setCategory((String) model.getValueAt(i, j));
                     }
                     if (j == 4) {
@@ -436,23 +441,63 @@ public class InterfaceService {
             amount.add((Integer) model1.getValueAt(i, 5));
         }
         JOptionPane.showMessageDialog(null, price + "  " + amount);
-        for (int j = 0; j < model1.getRowCount(); j++) {  
+        for (int j = 0; j < model1.getRowCount(); j++) {
             Total = Total + price.get(j) * amount.get(j);
         }
         return Total;
     }
 
-    public List<Product> procesarTablaEnProductForSell(DefaultTableModel modelCarrito) throws Exception {
-        List<Product> productS = new ArrayList<>();
+    public List<SellProduct> procesarTablaEnProductForSell(DefaultTableModel modelCarrito) throws Exception {
+        List<SellProduct> productS = new ArrayList<>();
         for (int i = 0; i < modelCarrito.getRowCount(); i++) {
-            productS.add(ps.ProductForSell((Integer) modelCarrito.getValueAt(i, 0), (String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
+            productS.add(sps.createProduct((Integer) modelCarrito.getValueAt(i, 0), (String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
             ss.StockAdjust(ps.Dao.buscarPorId((Integer) modelCarrito.getValueAt(i, 0)), (Integer) modelCarrito.getValueAt(i, 5));
         }
         return productS;
     }
 
-    public void GestionarVenta(List<Product> producto) throws Exception {
+    public void GestionarVenta(List<SellProduct> producto) throws Exception {
         ss.createSell(producto);
+    }
+
+    public void GestionarDevolucion(List<SellProduct> producto) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public DefaultTableModel DisplaySell(DefaultTableModel defaultTableModel, Sell sell) {
+        defaultTableModel.setRowCount(0);
+        Object[] row = {
+            sell.getId(),
+            sell.getDate(),
+            sell.getTotalAmount(),
+            procesarProductsofSell(sell.getProducts()),
+            sell.getUsuario(),};
+
+        defaultTableModel.addRow(row);
+        return defaultTableModel;
+
+    }
+
+    @SuppressWarnings("empty-statement")
+    public DefaultTableModel DisplaySells(DefaultTableModel model, List<Sell> sell) {
+        model.setRowCount(0); // Eliminar contenido existente
+        for (Sell sellf : sell) {
+            Object[] row = {
+                sellf.getId(),
+                sellf.getDate(),
+                sellf.getTotalAmount(),
+                procesarProductsofSell(sellf.getProducts()),
+                sellf.getUsuario().getName(),};
+       model.addRow(row);
+    }
+    return model ;
+}
+
+    private String procesarProductsofSell(List<SellProduct> products) {
+        for (SellProduct product : products) {
+            String response = product.getProductName()+"---cantidad:"+product.getCuantity()+"---Precio:"+product.getSellingPRice();
+        }
+        return null;
     }
 
 }

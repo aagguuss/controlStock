@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class sellService {
 // declarar daoservice 
-    sellDao dao;
+    public sellDao dao;
     ProductService ps;
     usuarioService us;
     public sellService() {
@@ -35,14 +35,11 @@ public void createSell(List products) throws Exception{
         sell.setDate(LocalDateTime.MAX);
         sell.setProducts(products);
         sell.setTotalAmount(totalAmount(products));
-        sell.setProfit(totalWining(products));
-        // esto no deberia ser necesesario en producion solo util para poder cargar un usuario desde venta directamente 
-        Usuario u = us.BuscarUsuarioInicial();
-        u.setAlta(true);
-        us.editarUsuario(u);
+        sell.setProfit(totalWining(products));    
+        Usuario u = us.buscarUsuarioActivo();
         sell.setUsuario(us.buscarUsuarioActivo());
-        dao.guardar(sell);
-        
+        dao.guardar(sell); 
+        // iterar y restar al stock la cantidad de productos.
 }
 public double totalAmount(List<Product> products) {
     double total = 0;

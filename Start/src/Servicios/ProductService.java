@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class ProductService {
     public productDao Dao;
+    
     public ProductService() {
       this.Dao = new productDao();
     }
