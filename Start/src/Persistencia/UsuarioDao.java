@@ -20,7 +20,7 @@ public class UsuarioDao {
 
     public UsuarioDao() {
         this.DAO = new dao();
-        this.em = dao.EMF.createEntityManager();
+        this.em = DAO.EMF.createEntityManager();
     }
 
     public void conectar() {

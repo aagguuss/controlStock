@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ public class SellProduct implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="sell_product_id")
     int Id;
     @Column(name = "product_name")
     String ProductName;
@@ -48,6 +50,7 @@ public class SellProduct implements Serializable {
     @Column(name = "reference_Actual_Product")
     int referenceActualProduct;
     public SellProduct() {
+        this.sells= new ArrayList<>();
     }
 
     public int getId() {
@@ -118,8 +121,8 @@ public class SellProduct implements Serializable {
         return sells;
     }
 
-    public void setSells(List<Sell> sells) {
-        this.sells = sells;
+    public void setSells(Sell sells) {
+        this.sells.add( sells) ;
     }
 
     public int getReferenceActualProduct() {

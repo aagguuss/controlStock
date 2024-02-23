@@ -6,6 +6,7 @@ package Servicios;
 
 import Entidades.Product;
 import Entidades.Sell;
+import Entidades.SellProduct;
 import Persistencia.sellDao;
 import entidades.Usuario;
 import java.time.LocalDateTime;
@@ -24,34 +25,43 @@ public class sellService {
     public sellDao dao;
     ProductService ps;
     usuarioService us;
+    SellProductService sps;
     public sellService() {
+        this.sps = new SellProductService();
         this.ps = new ProductService();
         this.dao= new sellDao();
         this.us = new usuarioService();
         //inicializar daoservice
     }
-public void createSell(List products) throws Exception{
-        Sell sell = new Sell();
-        sell.setDate(LocalDateTime.MAX);
-        sell.setProducts(products);
-        sell.setTotalAmount(totalAmount(products));
-        sell.setProfit(totalWining(products));    
-        Usuario u = us.buscarUsuarioActivo();
-        sell.setUsuario(us.buscarUsuarioActivo());
-        dao.guardar(sell); 
+    public void createSell(List<SellProduct> productsell) throws Exception{
+            Sell sell = new Sell();
+            sell.setDate(LocalDateTime.MAX);
+            sell.setTotalAmount(totalAmount(productsell));
+            sell.setProfit(totalWining(productsell));    
+            Usuario u = us.buscarUsuarioActivo();
+            sell.setUsuario(us.buscarUsuarioActivo());
+            dao.guardar(sell); 
+            sell = dao.buscarUltimo();
+            for (SellProduct object : productsell) {
+            object.setSells(sell);
+            sps.Dao.guardar(object);
+        }
+            sell.setProducts(productsell);
+            dao.editar(sell); 
+            
         // iterar y restar al stock la cantidad de productos.
 }
-public double totalAmount(List<Product> products) {
+public double totalAmount(List<SellProduct> products) {
     double total = 0;
-    for (Product product : products) {
-        total = total + product.getSellingPRice()*product.getStock();
+    for (SellProduct product : products) {
+        total = total + product.getSellingPRice()*product.getCuantity();
     }
     return total;
 }
-public double totalWining(List<Product> products) {
+public double totalWining(List<SellProduct> products) {
     double total = 0;
-    for (Product product : products) {
-        total = total + (product.getSellingPRice()-product.getBuyingPrice())*product.getStock();
+    for (SellProduct product : products) {
+        total = total + (product.getSellingPRice()-product.getBuyingPrice())*product.getCuantity();
     }
     return total;
 }

@@ -20,8 +20,8 @@ public class Start {
     //Mi.setVisible(true);
    //Stock s = new Stock();
    //s.setVisible(true);
-   Venta v = new Venta();
-   v.setVisible(true);
-   //Devoluciones d = new Devoluciones();
-   //d.setVisible(true);
+   //Venta v = new Venta();
+   //v.setVisible(true);
+  Devoluciones d = new Devoluciones();
+   d.setVisible(true);
 }}

@@ -8,6 +8,7 @@ package Entidades;
 import entidades.Usuario;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,9 +40,9 @@ public class Sell   implements  Serializable {
     @JoinColumn(name = "user_id")
     protected Usuario usuario;
 
-    @ManyToMany
+     @ManyToMany
     @JoinTable(
-        name = "sell_product",
+        name = "sell_sell_product",
         joinColumns = @JoinColumn(name = "sell_id"),
         inverseJoinColumns = @JoinColumn(name = "sell_product_id")
     )
@@ -66,6 +67,7 @@ public class Sell   implements  Serializable {
     } 
         
     public Sell() {
+        this.products=new ArrayList<>();
     }
 
     public List<SellProduct> getProducts() {

@@ -27,7 +27,7 @@ public class SellProductDao {
     
      public void conectar() {
         if (!em.isOpen()) {
-            em = DAO.EMF.createEntityManager();
+            em = dao.EMF.createEntityManager();
         }
     }
 

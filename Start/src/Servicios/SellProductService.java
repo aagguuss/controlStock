@@ -19,7 +19,7 @@ public class SellProductService {
     public SellProductService() {
         this.Dao= new SellProductDao();
     }
-    public SellProduct createProduct(int Id ,String ProductName, String ProductBlend,String Category, double buyingPrice, double sellingPrice ,int howManyProducts) {
+    public SellProduct createProduct(int referenceID, String ProductName, String ProductBlend,String Category, double buyingPrice, double sellingPrice ,int howManyProducts) {
         try {
             SellProduct product = new SellProduct();
             product.setProductName(ProductName);
@@ -28,8 +28,8 @@ public class SellProductService {
             product.setBuyingPrice(buyingPrice);
             product.setCuantity(howManyProducts);
             product.setSellingPRice(sellingPrice);
-            product.getReferenceActualProduct();
-            Dao.guardar(product);
+            product.setReferenceActualProduct(referenceID);
+            
             return product;
         } catch (Exception e) {
             System.out.println(e.getMessage());

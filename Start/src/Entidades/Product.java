@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 /**
  *
@@ -36,8 +35,7 @@ public class Product implements Serializable {
      int    stockWarning;
     @Column (name="interest")
     double interest;
-    @ManyToMany(mappedBy = "products")
-    List<Sell> sells;
+    
     
 
  
@@ -76,14 +74,6 @@ public class Product implements Serializable {
 
     public void setBuyingPrice(double buyingPrice) {
         this.buyingPrice = buyingPrice;
-    }
-
-    public List<Sell> getSells() {
-        return sells;
-    }
-
-    public void setSells(List<Sell> sells) {
-        this.sells = sells;
     }
 
     public double getSellingPRice() {
@@ -128,7 +118,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" + "Id=" + Id + ", ProductName=" + ProductName + ", ProductBlend=" + ProductBlend + ", category=" + category + ", buyingPrice=" + buyingPrice + ", sellingPRice=" + sellingPRice + ", Stock=" + Stock + ", stockWarning=" + stockWarning + ", interest=" + interest + ", sells=" + sells + '}';
+        return "Product{" + "Id=" + Id + ", ProductName=" + ProductName + ", ProductBlend=" + ProductBlend + ", category=" + category + ", buyingPrice=" + buyingPrice + ", sellingPRice=" + sellingPRice + ", Stock=" + Stock + ", stockWarning=" + stockWarning + ", interest=" + interest +   '}';
     }
     
     

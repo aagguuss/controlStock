@@ -5,6 +5,7 @@
 package ServicioIU;
 
 import Entidades.Product;
+import Entidades.CheckBoxRenderer;
 import Entidades.Sell;
 import Entidades.SellProduct;
 import Servicios.ProductService;
@@ -14,15 +15,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author agust
  */
 public class InterfaceService {
+
     SellProductService sps;
     sellService ss;
     ProductService ps;
@@ -105,6 +110,23 @@ public class InterfaceService {
                 product.getCategory(),
                 product.getSellingPRice(),
                 product.getStock(),};
+            model.addRow(row);
+        }
+        return model;
+    }
+
+    public DefaultTableModel DisplayVentaCarritoSell(DefaultTableModel model, List<SellProduct> products2) {
+        model.setRowCount(0); // Eliminar contenido existente
+        for (SellProduct product : products2) {
+            Object[] row = {
+                product.getReferenceActualProduct(),
+                product.getProductName(),
+                product.getProductBlend(),
+                product.getCategory(),
+                product.getSellingPRice(),
+                product.getCuantity(),
+                 new JCheckBox() ,
+                };
             model.addRow(row);
         }
         return model;
@@ -409,6 +431,7 @@ public class InterfaceService {
         for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
             defaultTableModel.removeRow(i);
         }
+        defaultTableModel.removeRow(0);
         return defaultTableModel;
     }
 
@@ -448,16 +471,16 @@ public class InterfaceService {
     }
 
     public List<SellProduct> procesarTablaEnProductForSell(DefaultTableModel modelCarrito) throws Exception {
-        List<SellProduct> productS = new ArrayList<>();
+        List<SellProduct> productSell = new ArrayList<>();
         for (int i = 0; i < modelCarrito.getRowCount(); i++) {
-            productS.add(sps.createProduct((Integer) modelCarrito.getValueAt(i, 0), (String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
+            productSell.add(sps.createProduct((Integer) modelCarrito.getValueAt(i, 0), (String) modelCarrito.getValueAt(i, 1), (String) modelCarrito.getValueAt(i, 2), (String) modelCarrito.getValueAt(i, 3), ps.Dao.GetPrecioDeCopmra((Integer) modelCarrito.getValueAt(i, 0)), (Double) modelCarrito.getValueAt(i, 4), (Integer) modelCarrito.getValueAt(i, 5)));
             ss.StockAdjust(ps.Dao.buscarPorId((Integer) modelCarrito.getValueAt(i, 0)), (Integer) modelCarrito.getValueAt(i, 5));
         }
-        return productS;
+        return productSell;
     }
 
-    public void GestionarVenta(List<SellProduct> producto) throws Exception {
-        ss.createSell(producto);
+    public void GestionarVenta(List<SellProduct> productoSell) throws Exception {
+        ss.createSell(productoSell);
     }
 
     public void GestionarDevolucion(List<SellProduct> producto) {
@@ -471,7 +494,7 @@ public class InterfaceService {
             sell.getDate(),
             sell.getTotalAmount(),
             procesarProductsofSell(sell.getProducts()),
-            sell.getUsuario(),};
+            sell.getUsuario().getName(),};
 
         defaultTableModel.addRow(row);
         return defaultTableModel;
@@ -480,24 +503,39 @@ public class InterfaceService {
 
     @SuppressWarnings("empty-statement")
     public DefaultTableModel DisplaySells(DefaultTableModel model, List<Sell> sell) {
-        model.setRowCount(0); // Eliminar contenido existente
-        for (Sell sellf : sell) {
-            Object[] row = {
-                sellf.getId(),
-                sellf.getDate(),
-                sellf.getTotalAmount(),
-                procesarProductsofSell(sellf.getProducts()),
-                sellf.getUsuario().getName(),};
-       model.addRow(row);
+
+        try {
+            model.setRowCount(0); // Eliminar contenido existente
+            for (Sell sellf : sell) {
+                Object[] row = {
+                    sellf.getId(),
+                    sellf.getDate().toString(),
+                    sellf.getTotalAmount(),
+                    procesarProductsofSell(sellf.getProducts()),
+                    sellf.getUsuario().getName(),};
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return model;
     }
-    return model ;
-}
 
     private String procesarProductsofSell(List<SellProduct> products) {
+        String response = "";
         for (SellProduct product : products) {
-            String response = product.getProductName()+"---cantidad:"+product.getCuantity()+"---Precio:"+product.getSellingPRice();
+            response = response + "/" + product.getProductName() + "/cantidad:" + product.getCuantity();
         }
-        return null;
+
+        return response;
     }
+
+    public void configureCheckBoxColumn(JTable table, int column) {
+        TableColumnModel columnModel = table.getColumnModel();
+        columnModel.getColumn(column).setCellEditor(table.getDefaultEditor(Boolean.class));
+        columnModel.getColumn(column).setCellRenderer(table.getDefaultRenderer(Boolean.class));
+    }
+
 
 }

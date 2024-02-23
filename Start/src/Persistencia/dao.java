@@ -13,11 +13,11 @@ import javax.persistence.Persistence;
  */
 
 public class dao {
- public static EntityManagerFactory EMF =  Persistence.createEntityManagerFactory("StartPU");
+ public static EntityManagerFactory EMF ;
     
 
     public dao() {
-    
+    dao.EMF =  Persistence.createEntityManagerFactory("StartPU");
     }
   
  

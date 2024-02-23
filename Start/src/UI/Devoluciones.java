@@ -12,7 +12,9 @@ import Servicios.sellService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -42,6 +44,7 @@ public class Devoluciones extends javax.swing.JFrame {
         products= new ArrayList<>();
         modelproducto = is.Display((DefaultTableModel) TableStockDevolucion.getModel(), Ps.Dao.listarTodos());
         modelventas = is.DisplaySells((DefaultTableModel) TableVenta.getModel(), ss.dao.listarTodos());
+        modelDevolucion = (DefaultTableModel)TableCarritoDevolucion.getModel();
     }
 
     /**
@@ -207,10 +210,10 @@ public class Devoluciones extends javax.swing.JFrame {
         });
 
         Lblcategoria2.setForeground(new java.awt.Color(255, 255, 255));
-        Lblcategoria2.setText("Producto :");
+        Lblcategoria2.setText("Categoria :");
 
         LblDescripcion2.setForeground(new java.awt.Color(255, 255, 255));
-        LblDescripcion2.setText("Categoria :");
+        LblDescripcion2.setText("Nombre :");
 
         LblMarca2.setForeground(new java.awt.Color(255, 255, 255));
         LblMarca2.setText("Marca :");
@@ -261,14 +264,17 @@ public class Devoluciones extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TxtFieldPrimero, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Lblcategoria2))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtFieldsegundo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblDescripcion2))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BtnBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Lblcategoria2))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(TxtFieldPrimero, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(LblDescripcion2)
+                    .addComponent(TxtFieldsegundo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtFieldtercero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -359,14 +365,14 @@ public class Devoluciones extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Fecha", "Valor Total", "Productos ", "Cantidades", "Vendedor"
+                "Id", "Fecha", "Valor Total", "Productos ", "Vendedor"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -864,16 +870,15 @@ public class Devoluciones extends javax.swing.JFrame {
         getData();
         if (isnull.get(0) ) {
             try {
-                modelventas = is.DisplaySell((DefaultTableModel) TableVenta.getModel(), ss.dao.buscarPorId(Integer.parseInt(TxtFieldIdVenta.getText())));
+                modelventas = is.DisplaySell((DefaultTableModel) TableVenta.getModel(), ss.dao.buscarPorId(Integer.parseInt(TxtFieldID.getText())));
             } catch (Exception ex) {
                  JOptionPane.showMessageDialog(null, "Error en btnBuscatAction:" + ex.getMessage());
+                 System.out.println(ex.getMessage());
             }
         } else {
             try {
                 categoria = is.ConsultasProductos(isnull, categoria);
-                categoria.remove(0);
-                products = is.ConsultasProductos(isnull, products);
-                products.remove(0);
+                products = is.ConsultasProductos(isnull, products); 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error en btnBuscatAction:" + e.getMessage());
             }
@@ -887,7 +892,7 @@ public class Devoluciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnBuscarActionPerformed
 
     private void BtnBuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscar2ActionPerformed
-        
+      
         getDatabis();
         try {
             categoria = is.ConsultasProductos(isnull, categoria);
@@ -896,10 +901,11 @@ public class Devoluciones extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error en btnBuscatAction:" + e.getMessage());
         }
         try {
-            modelproducto = is.DisplayVentaCarrito((DefaultTableModel) TableStockDevolucion.getModel(), Ps.Dao.listarEspecificados(categoria, products));
+            modelproducto = is.DisplayVentaCarrito(modelproducto, Ps.Dao.listarEspecificados(categoria, products));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en la interface venta : " + e.getMessage());
         }
+
 
     }//GEN-LAST:event_BtnBuscar2ActionPerformed
 
@@ -922,6 +928,9 @@ public class Devoluciones extends javax.swing.JFrame {
     private void btnSeleccionarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarVentaActionPerformed
         try {
             s= ss.dao.buscarPorId(Integer.parseInt(TxtFieldIdVenta.getText()));
+            modelDevolucion= is.DisplayVentaCarritoSell(modelDevolucion, s.getProducts());
+            is.configureCheckBoxColumn(TableCarritoDevolucion, modelDevolucion.getColumnCount()-1);
+            // iterar por todas las columnas y renderizar 
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -987,7 +996,7 @@ public class Devoluciones extends javax.swing.JFrame {
             categoria.clear();
             categoria.add("id");
             categoria.add("Date");
-            categoria.add("products");//ver como se hace la consulta para poder hacer la consulta en jpa de la lista de productos
+            categoria.add("products.ProductName");//ver como se hace la consulta para poder hacer la consulta en jpa de la lista de productos
             products.clear();
             products.add(TxtFieldID.getText());
             products.add(TxtFieldFecha.getText());
@@ -1003,22 +1012,23 @@ public class Devoluciones extends javax.swing.JFrame {
     }
 
     private void getDatabis() {
-         try {
+          try {
             categoria.clear();
-            categoria.add("ProductName");
             categoria.add("category");
-            categoria.add("ProductBlend");
+            categoria.add("ProductName");
+            categoria.add(" ProductBlend");
             products.clear();
-            products.add(TxtFieldID.getText());
-            products.add(TxtFieldFecha.getText());
-            products.add(TxtFieldProducto.getText());
+            products.add(TxtFieldPrimero.getText());
+            products.add(TxtFieldsegundo.getText());
+            products.add(TxtFieldtercero.getText());
             isnull.clear();
-            isnull.add(is.BooleanFilter(TxtFieldID.getText()));
-            isnull.add(is.BooleanFilter(TxtFieldFecha.getText()));
-            isnull.add(is.BooleanFilter(TxtFieldProducto.getText()));
+            isnull.add(is.BooleanFilter(TxtFieldPrimero.getText()));
+            isnull.add(is.BooleanFilter(TxtFieldsegundo.getText()));
+            isnull.add(is.BooleanFilter(TxtFieldtercero.getText()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en getData() :" + e.getMessage());
         }
 
     }
+   
 }
