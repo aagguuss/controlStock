@@ -767,6 +767,5 @@ public class Venta extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en getData() :" + e.getMessage());
         }
-
     }
 }

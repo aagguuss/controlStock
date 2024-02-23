@@ -8,7 +8,6 @@ import Entidades.Product;
 import Entidades.Sell;
 import Entidades.SellProduct;
 import Persistencia.sellDao;
-import entidades.Usuario;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -38,7 +37,6 @@ public class sellService {
             sell.setDate(LocalDateTime.MAX);
             sell.setTotalAmount(totalAmount(productsell));
             sell.setProfit(totalWining(productsell));    
-            Usuario u = us.buscarUsuarioActivo();
             sell.setUsuario(us.buscarUsuarioActivo());
             dao.guardar(sell); 
             sell = dao.buscarUltimo();

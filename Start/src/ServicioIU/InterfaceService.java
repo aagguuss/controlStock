@@ -5,12 +5,12 @@
 package ServicioIU;
 
 import Entidades.Product;
-import Entidades.CheckBoxRenderer;
 import Entidades.Sell;
 import Entidades.SellProduct;
 import Servicios.ProductService;
 import Servicios.SellProductService;
 import Servicios.sellService;
+import Servicios.usuarioService;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,15 +19,13 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author agust
  */
 public class InterfaceService {
-
+    usuarioService us;
     SellProductService sps;
     sellService ss;
     ProductService ps;
@@ -449,9 +447,7 @@ public class InterfaceService {
                 }
             }
         } else {
-
         }
-
         return ok;
     }
 
@@ -463,7 +459,7 @@ public class InterfaceService {
             price.add((double) model1.getValueAt(i, 4));
             amount.add((Integer) model1.getValueAt(i, 5));
         }
-        JOptionPane.showMessageDialog(null, price + "  " + amount);
+       
         for (int j = 0; j < model1.getRowCount(); j++) {
             Total = Total + price.get(j) * amount.get(j);
         }
@@ -483,9 +479,7 @@ public class InterfaceService {
         ss.createSell(productoSell);
     }
 
-    public void GestionarDevolucion(List<SellProduct> producto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
 
     public DefaultTableModel DisplaySell(DefaultTableModel defaultTableModel, Sell sell) {
         defaultTableModel.setRowCount(0);
@@ -527,15 +521,34 @@ public class InterfaceService {
         for (SellProduct product : products) {
             response = response + "/" + product.getProductName() + "/cantidad:" + product.getCuantity();
         }
-
         return response;
     }
-
-    public void configureCheckBoxColumn(JTable table, int column) {
-        TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(column).setCellEditor(table.getDefaultEditor(Boolean.class));
-        columnModel.getColumn(column).setCellRenderer(table.getDefaultRenderer(Boolean.class));
+// ubicar producto devuelto sumarlo al stock 
+    public double calcularValor(List<SellProduct> products, DefaultTableModel modelDevolucion) {
+        double valorInicial = 0;
+        for (SellProduct product : products) {
+           valorInicial=valorInicial + product.getCuantity()*product.getSellingPRice();
+        }
+        double Total = 0;
+        List<Double> price = new ArrayList<>();
+        List<Integer> amount = new ArrayList<>();
+        for (int i = 0; i < modelDevolucion.getRowCount(); i++) {
+            price.add((double) modelDevolucion.getValueAt(i, 4));
+            amount.add((Integer) modelDevolucion.getValueAt(i, 5));
+        }
+        for (int j = 0; j < modelDevolucion.getRowCount(); j++) {
+            Total = Total + price.get(j) * amount.get(j);
+        }
+        Total =  Total - valorInicial;
+       return Total;
     }
 
-
+    public void GestionarDevolucion(List<SellProduct> producto, Sell s) {
+        s.setProducts(producto);
+        s.setTotalAmount(ss.totalAmount(producto));
+        s.setProfit(ss.totalWining(producto));
+        s.setUsuario(us.buscarUsuarioActivo());
+        ss.dao.editar(s);
+    }
+    
 }
