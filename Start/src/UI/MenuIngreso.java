@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  * @author agust
  */
 public class MenuIngreso extends javax.swing.JFrame {
-
+    
     usuarioService us = new usuarioService();
     rolServicio rs = new rolServicio();
 
@@ -45,7 +45,7 @@ public class MenuIngreso extends javax.swing.JFrame {
         txtUsuario.setText("Usuario");
         txtPassword.setText("Contraseña");
         txtPassword.setEchoChar('\u0000');
-
+   
     }
 
     public void addPlaceHolderStyle(JTextField textfield) {
@@ -159,7 +159,7 @@ public class MenuIngreso extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(170, 270, 37, 20);
+        btnAceptar.setBounds(160, 270, 60, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,19 +239,21 @@ public class MenuIngreso extends javax.swing.JFrame {
             }
             if (mensaje.equalsIgnoreCase("Entrando 4l $istema")) {
                 try {
-                    JOptionPane.showMessageDialog(null, "Entrando al Programa");
+                    
                     mensaje = us.validarRol(nombre, concatpas);
 
                     if (mensaje.equalsIgnoreCase("Permisos4dministrador")) {
                         //llamar interfaz administrador
-                        MenuInicio adminMenu = new MenuInicio();
-                        // Cierra el menú de inicio de sesión actual
+                        UsuarioAdmin adminMenu = new UsuarioAdmin();
                         adminMenu.setVisible(true);
-
+                        adminMenu.setLocationRelativeTo(null);
+                         // Cierra el menú de inicio de sesión actual
                         // cerrar panel ;de log in 
                     }
                     if (mensaje.equalsIgnoreCase("Permisos5imples")) {
-                        //llamar interfaz vendedor 
+                        ventasVendedor vV = new ventasVendedor();
+                        vV.setVisible(true);
+                        vV.setLocationRelativeTo(null);
                         // cerrar panel de log in 
                     }
                 } catch (Exception e) {

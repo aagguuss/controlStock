@@ -7,6 +7,7 @@ package Servicios;
 
 import entidades.Usuario;
 import Persistencia.UsuarioDao;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -114,6 +115,41 @@ public class usuarioService {
     
     public void desactivarUsuario(Usuario u ){
     dao.desactivarUsuario(u);
+    }
+
+    public Usuario BuscarUsuarioid(int IdRef) throws Exception {
+       return dao.buscarPorId(IdRef);
+       
+    }
+
+    public Boolean AdminControl(int Id) throws Exception {
+        List<Usuario>userList=dao.listarTodos();
+        System.out.println(userList.toString());
+        boolean permitir =false;
+        int adminCount=0;
+        for (Usuario usuario : userList) {
+            System.out.println(usuario);
+            switch (usuario.getRol().getNombre()) {
+                case "Administrador" -> adminCount++;
+                default -> {
+                }
+                   
+            }
+        }
+        if (adminCount>1) {
+            permitir = true;
+            //control de contraseña si es admin
+        }else {
+        Usuario u =BuscarUsuarioid(Id);
+            System.out.println(u.toString());
+        if(u.getRol().getNombre().equals("Administrador")){
+           
+        JOptionPane.showMessageDialog(null , "No se puede eliminar el unico usuario administrador");
+        }else{
+        permitir = true;
+        }
+        }
+        return permitir;
     }
     
 }

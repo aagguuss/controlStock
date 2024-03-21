@@ -53,6 +53,7 @@ public class UsuarioDao {
 
     }
 
+    
     public void eliminar(Usuario usuario) {
         conectar();
         try {
@@ -177,7 +178,7 @@ public class UsuarioDao {
                 em.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Usuario activo");
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo activar el ususaio  ");
+                JOptionPane.showMessageDialog(null, "No se pudo desactivar el ususaio ya que upersist no esta en base de datos");
             }
 
         } catch (Exception e) {

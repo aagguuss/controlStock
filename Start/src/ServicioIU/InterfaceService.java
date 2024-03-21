@@ -163,7 +163,7 @@ public class InterfaceService {
         Double precio = 0.0;
 
         for (int i = 0; i < model.getRowCount(); i++) {
-            for (int j = 0; j < model.getColumnCount(); j++) {
+            
                 precioCompra = (Double) model.getValueAt(i, 4);
                 interes = (Double) model.getValueAt(i, 8);
 
@@ -171,7 +171,7 @@ public class InterfaceService {
 
                 if (precio != precioCompra * (interes + 1)) {
                     Object[] opciones = {"Precio final", "Interes"};
-                    int seleccion = JOptionPane.showOptionDialog(null, "El precio final no coincide con el interes. ¿Cual es el correcto?", "Selecciona una opción", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
+                    int seleccion = JOptionPane.showOptionDialog(null, "El precio final no coincide con el interes en la linea : "+model.getValueAt(i, 0)+" . ¿Cual es el correcto?", "Selecciona una opción", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
 
                     if (seleccion == 0) {
                         interes = (precio / precioCompra) - 1;
@@ -183,7 +183,7 @@ public class InterfaceService {
                         model.setValueAt(precio, i, 5);
                     }
                 }
-            }
+            
 
         }
         printmodelContents(model);
@@ -296,7 +296,7 @@ public class InterfaceService {
                     // Si la columna es la primera (índice 0), establecer el ID del producto
                     if (j == 0) {
                         product.setId((Integer) model.getValueAt(i, j));
-                        System.out.println("ID: " + model.getValueAt(i, j));
+                        
                     }
 
                     // Si la columna es la segunda (índice 1), establecer el nombre del producto

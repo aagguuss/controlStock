@@ -10,7 +10,8 @@ import Servicios.ProductService;
 import Servicios.usuarioService;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author agust
  */
-public class Venta extends javax.swing.JFrame {
+public class ventasVendedor extends javax.swing.JFrame {
 
     DefaultTableModel model;
     DefaultTableModel modelCarrito;
@@ -28,14 +29,13 @@ public class Venta extends javax.swing.JFrame {
     List<Boolean> isnull;
     List<String> categoria;
     List<String> products;
-    private Object e;
+    Object e;
 
     /**
-     * Creates new form NewJFrame
-     *
+     * Creates new form ventasVendedor
      * @throws java.lang.Exception
      */
-    public Venta() throws Exception {
+    public ventasVendedor() throws Exception {
         this.Us = new usuarioService();
         this.Ss = new InterfaceService();
         this.Ps = new ProductService();
@@ -85,17 +85,15 @@ public class Venta extends javax.swing.JFrame {
         TableStockVenta = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        JMenuPrincipal = new javax.swing.JMenu();
+        JMenuPrincipalVendedor = new javax.swing.JMenu();
         MitmVenta = new javax.swing.JMenuItem();
-        MimtStock = new javax.swing.JMenuItem();
-        MitmEditar = new javax.swing.JMenuItem();
+        MitmAgregarStock = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         MitmDevolucion = new javax.swing.JMenuItem();
-        jMenuUsuario = new javax.swing.JMenuItem();
         MitmCesion = new javax.swing.JMenuItem();
         MitmSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(33, 33, 33));
 
         jPanel1.setBackground(new java.awt.Color(33, 33, 33));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -213,10 +211,6 @@ public class Venta extends javax.swing.JFrame {
                 .addGap(94, 94, 94))
         );
 
-        BtnCalcular.getAccessibleContext().setAccessibleName("BtnCalcular");
-        BtnCalcular.getAccessibleContext().setAccessibleDescription("");
-        BtnVender.getAccessibleContext().setAccessibleName("BtnVender");
-
         jScrollPane2.setBackground(new java.awt.Color(33, 33, 33));
         jScrollPane2.setBorder(null);
         jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
@@ -260,13 +254,13 @@ public class Venta extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1083, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,7 +425,7 @@ public class Venta extends javax.swing.JFrame {
                 .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1072, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addGap(39, 39, 39))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -490,7 +484,7 @@ public class Venta extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1029, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,12 +500,9 @@ public class Venta extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1033, 1033, 1033))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,9 +514,14 @@ public class Venta extends javax.swing.JFrame {
                 .addGap(137, 137, 137))
         );
 
-        JMenuPrincipal.setText("Panel de Opciones");
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(114, 23));
 
-        MitmVenta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        JMenuPrincipalVendedor.setText("Panel de Opciones");
+        JMenuPrincipalVendedor.setMinimumSize(new java.awt.Dimension(120, 22));
+        JMenuPrincipalVendedor.setPreferredSize(new java.awt.Dimension(114, 30));
+        JMenuPrincipalVendedor.setRolloverEnabled(false);
+
+        MitmVenta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MitmVenta.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
         MitmVenta.setText("Venta");
         MitmVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
@@ -535,27 +531,28 @@ public class Venta extends javax.swing.JFrame {
                 MitmVentaActionPerformed(evt);
             }
         });
-        JMenuPrincipal.add(MitmVenta);
+        JMenuPrincipalVendedor.add(MitmVenta);
+        MitmVenta.getAccessibleContext().setAccessibleDescription("");
 
-        MimtStock.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        MimtStock.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        MimtStock.setText("Stock Agrgar");
-        MimtStock.addActionListener(new java.awt.event.ActionListener() {
+        MitmAgregarStock.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MitmAgregarStock.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
+        MitmAgregarStock.setText("Agregar Stock");
+        MitmAgregarStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MimtStockActionPerformed(evt);
+                MitmAgregarStockActionPerformed(evt);
             }
         });
-        JMenuPrincipal.add(MimtStock);
+        JMenuPrincipalVendedor.add(MitmAgregarStock);
 
-        MitmEditar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        MitmEditar.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        MitmEditar.setText("Stock Editar");
-        MitmEditar.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
+        jMenuItem1.setText("Editar Stock");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MitmEditarActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        JMenuPrincipal.add(MitmEditar);
+        JMenuPrincipalVendedor.add(jMenuItem1);
 
         MitmDevolucion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MitmDevolucion.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
@@ -565,27 +562,17 @@ public class Venta extends javax.swing.JFrame {
                 MitmDevolucionActionPerformed(evt);
             }
         });
-        JMenuPrincipal.add(MitmDevolucion);
-
-        jMenuUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuUsuario.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        jMenuUsuario.setText("Usuarios");
-        jMenuUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuUsuarioActionPerformed(evt);
-            }
-        });
-        JMenuPrincipal.add(jMenuUsuario);
+        JMenuPrincipalVendedor.add(MitmDevolucion);
 
         MitmCesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MitmCesion.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        MitmCesion.setText("Cesion");
+        MitmCesion.setText("Sesion");
         MitmCesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MitmCesionActionPerformed(evt);
             }
         });
-        JMenuPrincipal.add(MitmCesion);
+        JMenuPrincipalVendedor.add(MitmCesion);
 
         MitmSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         MitmSalir.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
@@ -595,9 +582,9 @@ public class Venta extends javax.swing.JFrame {
                 MitmSalirActionPerformed(evt);
             }
         });
-        JMenuPrincipal.add(MitmSalir);
+        JMenuPrincipalVendedor.add(MitmSalir);
 
-        jMenuBar1.add(JMenuPrincipal);
+        jMenuBar1.add(JMenuPrincipalVendedor);
 
         setJMenuBar(jMenuBar1);
 
@@ -609,51 +596,19 @@ public class Venta extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TxtFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldMarcaActionPerformed
+    private void TxtFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TxtFieldMarcaActionPerformed
+    }//GEN-LAST:event_TxtFieldIdActionPerformed
 
-    private void TxtFieldDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldDescripcionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtFieldDescripcionActionPerformed
-
-    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-
-        getData();
-        try {
-            categoria = Ss.ConsultasProductos(isnull, categoria);
-            products = Ss.ConsultasProductos(isnull, products);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error en btnBuscatAction:" + e.getMessage());
-        }
-        try {
-            model = Ss.DisplayVentaCarrito((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarEspecificados(categoria, products));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error en la interface venta : " + e.getMessage());
-        }
-
-
-    }//GEN-LAST:event_BtnBuscarActionPerformed
-
-    private void TxtFieldCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtFieldCategoriaActionPerformed
-
-    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
-
-        try {
-            String intString = TxtFieldId.getText();
-            modelCarrito = Ss.removeOneFromCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en el boton eliminar al carrito :" + ex.getMessage());
-        }
-    }//GEN-LAST:event_BtnEliminarActionPerformed
+    private void BtnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCalcularActionPerformed
+        LblValor.setText("Valor Total :" + Ss.calculatePriceFromVenta(modelCarrito));
+    }//GEN-LAST:event_BtnCalcularActionPerformed
 
     private void BtnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVenderActionPerformed
         List<SellProduct> productosSell = new ArrayList<>();
@@ -672,9 +627,15 @@ public class Venta extends javax.swing.JFrame {
         TableCarrito.setModel(modelCarrito);
     }//GEN-LAST:event_BtnVenderActionPerformed
 
-    private void BtnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCalcularActionPerformed
-        LblValor.setText("Valor Total :" + Ss.calculatePriceFromVenta(modelCarrito));
-    }//GEN-LAST:event_BtnCalcularActionPerformed
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+
+        try {
+            String intString = TxtFieldId.getText();
+            modelCarrito = Ss.removeOneFromCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en el boton eliminar al carrito :" + ex.getMessage());
+        }
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         // TODO add your handling code here:
@@ -686,14 +647,39 @@ public class Venta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
-    private void TxtFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldIdActionPerformed
+    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
+
+        getData();
+        try {
+            categoria = Ss.ConsultasProductos(isnull, categoria);
+            products = Ss.ConsultasProductos(isnull, products);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en btnBuscatAction:" + e.getMessage());
+        }
+        try {
+            model = Ss.DisplayVentaCarrito((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarEspecificados(categoria, products));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en la interface venta : " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_BtnBuscarActionPerformed
+
+    private void TxtFieldDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldDescripcionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TxtFieldIdActionPerformed
+    }//GEN-LAST:event_TxtFieldDescripcionActionPerformed
+
+    private void TxtFieldCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtFieldCategoriaActionPerformed
+
+    private void TxtFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldMarcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtFieldMarcaActionPerformed
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-        Venta V;
+        ventasVendedor V;
         try {
-            V = new Venta();
+            V = new ventasVendedor();
             V.setVisible(true);
             V.setLocationRelativeTo(null);
             this.dispose();
@@ -701,50 +687,6 @@ public class Venta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al abrir ventas" + e.getMessage());
         }
     }//GEN-LAST:event_MitmVentaActionPerformed
-
-    private void MimtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MimtStockActionPerformed
-        stockAgregarAdmin s1;
-        try {
-            s1 = new stockAgregarAdmin();
-            s1.setVisible(true);
-            s1.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir Stock Agregar : " + ex.getMessage());
-        }
-
-    }//GEN-LAST:event_MimtStockActionPerformed
-
-    private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-        stockEditarAdmin S1;
-        try {
-            S1 = new stockEditarAdmin();
-            S1.setVisible(true);
-            S1.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir Stock editar . " + ex.getMessage());
-        }
-    }//GEN-LAST:event_MitmEditarActionPerformed
-
-    private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
-        try {
-            DevolucionesAdmin d = new DevolucionesAdmin();
-            d.setVisible(true);
-            d.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir devolucion : " + ex.getMessage());
-        }
-    }//GEN-LAST:event_MitmDevolucionActionPerformed
-
-    private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
-        UsuarioAdmin mi = new UsuarioAdmin();
-        mi.setVisible(true);
-        mi.setLocationRelativeTo(null);
-        this.dispose();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuUsuarioActionPerformed
 
     private void MitmCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmCesionActionPerformed
         MenuIngreso mi;
@@ -754,34 +696,72 @@ public class Venta extends javax.swing.JFrame {
             mi.setLocationRelativeTo(null);
             this.dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion : " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion " + e.getMessage());
         }
     }//GEN-LAST:event_MitmCesionActionPerformed
+
+    private void MitmAgregarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmAgregarStockActionPerformed
+      stockAgregarVendedor s1;
+        try {
+            s1 = new stockAgregarVendedor();
+            s1.setVisible(true);
+            s1.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al abrir menu de AgregarStock : " + e.getMessage());
+        }
+    }//GEN-LAST:event_MitmAgregarStockActionPerformed
 
     private void MitmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_MitmSalirActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        stockEditarVendedor S1;
+        try {
+            S1 = new stockEditarVendedor();
+            S1.setVisible(true);
+            S1.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al abrir Stock Editar : " + ex.getMessage());
+
+            ex.getStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
+        DevolucionesVendedores dv;
+        try {
+            dv = new DevolucionesVendedores();
+            dv.setVisible(true);
+        dv.setLocationRelativeTo(null);
+        this.dispose();
+        } catch (Exception ex) {
+             JOptionPane.showMessageDialog(null, "Error al abrir Devoluciones : " + ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_MitmDevolucionActionPerformed
+
     /**
      * @param args the command line arguments
      */
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAgregar;
     private javax.swing.JButton BtnBuscar;
     private javax.swing.JButton BtnCalcular;
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnVender;
-    private javax.swing.JMenu JMenuPrincipal;
+    private javax.swing.JMenu JMenuPrincipalVendedor;
     private javax.swing.JLabel LblDescripcion;
     private javax.swing.JLabel LblId;
     private javax.swing.JLabel LblMarca;
     private javax.swing.JLabel LblValor;
     private javax.swing.JLabel Lblcategoria;
-    private javax.swing.JMenuItem MimtStock;
+    private javax.swing.JMenuItem MitmAgregarStock;
     private javax.swing.JMenuItem MitmCesion;
     private javax.swing.JMenuItem MitmDevolucion;
-    private javax.swing.JMenuItem MitmEditar;
     private javax.swing.JMenuItem MitmSalir;
     private javax.swing.JMenuItem MitmVenta;
     private javax.swing.JTable TableCarrito;
@@ -794,7 +774,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuUsuario;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -805,8 +785,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
-
-    private void getData() {
+private void getData() {
         try {
             categoria.clear();
             categoria.add("category");
@@ -825,3 +804,4 @@ public class Venta extends javax.swing.JFrame {
         }
     }
 }
+

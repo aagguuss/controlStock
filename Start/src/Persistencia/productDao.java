@@ -83,7 +83,6 @@ public class productDao {
                 p = product;
                 em.merge(product);
                 em.getTransaction().commit();
-                JOptionPane.showMessageDialog(null, "Modificacion producida con exito");
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo modificar correctamente ");
             }

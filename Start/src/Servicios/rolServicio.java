@@ -76,4 +76,9 @@ public class rolServicio {
 
     public void EliminarUsuarioAdministradorList(Usuario usuarioAEditar) {
         dao.eliminarUsuarioAdministradorList(usuarioAEditar); 
-}}
+}
+
+    public Rol buscarPorId(int id) throws Exception {
+        return dao.buscarPorId(id);
+    }
+}

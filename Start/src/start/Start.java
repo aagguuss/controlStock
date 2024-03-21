@@ -4,11 +4,7 @@
  */
 package start;
 
-import UI.Devoluciones;
 import UI.MenuIngreso;
-import UI.Stock;
-import UI.Stock1;
-import UI.Venta;
 
 /**
  *
@@ -16,12 +12,16 @@ import UI.Venta;
  */
 public class Start {
     public static void main(String[] args) throws Exception {
-    //MenuIngreso Mi = new MenuIngreso();
-    //Mi.setVisible(true);
+   MenuIngreso Mi = new MenuIngreso();
+    Mi.setLocationRelativeTo(null); // Centra el JFrame en la pantalla
+    Mi.setVisible(true);
+   // MenuInicio Mein = new MenuInicio();
+   // Mein.setVisible(true);
+   
    //Stock s = new Stock();
    //s.setVisible(true);
    //Venta v = new Venta();
    //v.setVisible(true);
-  Devoluciones d = new Devoluciones();
-   d.setVisible(true);
+  //Devoluciones d = new Devoluciones();
+  // d.setVisible(true);
 }}

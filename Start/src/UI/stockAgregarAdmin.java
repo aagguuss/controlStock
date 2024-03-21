@@ -21,7 +21,7 @@ import javax.swing.table.TableModel;
 /**
  * @author agust
  */
-public class Stock extends javax.swing.JFrame {
+public class stockAgregarAdmin extends javax.swing.JFrame {
     String selectionMarca;
     String selectionCategoria; 
     DefaultTableModel model;
@@ -31,7 +31,7 @@ public class Stock extends javax.swing.JFrame {
     //checkear que hace bottongroup
     ButtonGroup groupButtons;
     
-    public Stock() throws Exception {
+    public stockAgregarAdmin() throws Exception {
         this.Ss = new InterfaceService();
         this.Ps = new ProductService(); 
         this.selectionCategoria="";
@@ -75,16 +75,18 @@ public class Stock extends javax.swing.JFrame {
         LabelCategoria = new javax.swing.JLabel();
         ComboMarca = new javax.swing.JComboBox<>();
         LabelMarca = new javax.swing.JLabel();
-        BtnBuscar = new javax.swing.JButton();
+        BtnBuscarPructos = new javax.swing.JButton();
+        BtnAgregarProuctos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableVenta = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         JMenuPrincipal = new javax.swing.JMenu();
         MitmVenta = new javax.swing.JMenuItem();
         MimtStock = new javax.swing.JMenuItem();
-        MitmCesion = new javax.swing.JMenuItem();
+        MitmEditar = new javax.swing.JMenuItem();
         MitmDevolucion = new javax.swing.JMenuItem();
-        MitmConsultas = new javax.swing.JMenuItem();
+        jMenuUsuario = new javax.swing.JMenuItem();
+        MitmCesion = new javax.swing.JMenuItem();
         MitmSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -92,13 +94,14 @@ public class Stock extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(33, 33, 33));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setAutoscrolls(true);
+        jPanel1.setPreferredSize(new java.awt.Dimension(1500, 800));
 
         jPanel2.setBackground(new java.awt.Color(33, 33, 33));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
         BtnAceptar.setBackground(new java.awt.Color(51, 51, 51));
         BtnAceptar.setForeground(new java.awt.Color(255, 255, 255));
-        BtnAceptar.setText("Hacer Edicion");
+        BtnAceptar.setText("Aceptar");
         BtnAceptar.setBorder(null);
         BtnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,13 +134,23 @@ public class Stock extends javax.swing.JFrame {
         LabelMarca.setForeground(new java.awt.Color(255, 255, 255));
         LabelMarca.setText("Seleccione marca buscada: ");
 
-        BtnBuscar.setBackground(new java.awt.Color(51, 51, 51));
-        BtnBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        BtnBuscar.setText("Buscar");
-        BtnBuscar.setBorder(null);
-        BtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        BtnBuscarPructos.setBackground(new java.awt.Color(51, 51, 51));
+        BtnBuscarPructos.setForeground(new java.awt.Color(255, 255, 255));
+        BtnBuscarPructos.setText("Consultar Productos");
+        BtnBuscarPructos.setBorder(null);
+        BtnBuscarPructos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnBuscarActionPerformed(evt);
+                BtnBuscarPructosActionPerformed(evt);
+            }
+        });
+
+        BtnAgregarProuctos.setBackground(new java.awt.Color(51, 51, 51));
+        BtnAgregarProuctos.setForeground(new java.awt.Color(204, 204, 204));
+        BtnAgregarProuctos.setText("Agregar Productos");
+        BtnAgregarProuctos.setBorder(null);
+        BtnAgregarProuctos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAgregarProuctosActionPerformed(evt);
             }
         });
 
@@ -148,32 +161,33 @@ public class Stock extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LabelCategoria)
+                    .addComponent(ComboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelMarca)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ComboCategoria, 0, 123, Short.MAX_VALUE)
-                                .addComponent(ComboMarca, 0, 123, Short.MAX_VALUE)
-                                .addComponent(BtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(BtnAgregarProuctos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnBuscarPructos, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addComponent(LabelCategoria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LabelMarca)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ComboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(BtnBuscarPructos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnAgregarProuctos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
                 .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
@@ -224,23 +238,21 @@ public class Stock extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1062, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1122, Short.MAX_VALUE)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         JMenuPrincipal.setText("Panel de Opciones");
 
@@ -258,7 +270,7 @@ public class Stock extends javax.swing.JFrame {
 
         MimtStock.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MimtStock.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        MimtStock.setText("Stock");
+        MimtStock.setText("Stock Agrgar");
         MimtStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MimtStockActionPerformed(evt);
@@ -266,9 +278,39 @@ public class Stock extends javax.swing.JFrame {
         });
         JMenuPrincipal.add(MimtStock);
 
+        MitmEditar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MitmEditar.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
+        MitmEditar.setText("Stock Editar");
+        MitmEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MitmEditarActionPerformed(evt);
+            }
+        });
+        JMenuPrincipal.add(MitmEditar);
+
+        MitmDevolucion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        MitmDevolucion.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
+        MitmDevolucion.setText("Devolucion");
+        MitmDevolucion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MitmDevolucionActionPerformed(evt);
+            }
+        });
+        JMenuPrincipal.add(MitmDevolucion);
+
+        jMenuUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuUsuario.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
+        jMenuUsuario.setText("Usuarios");
+        jMenuUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUsuarioActionPerformed(evt);
+            }
+        });
+        JMenuPrincipal.add(jMenuUsuario);
+
         MitmCesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         MitmCesion.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        MitmCesion.setText("Sesion");
+        MitmCesion.setText("Cesion");
         MitmCesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MitmCesionActionPerformed(evt);
@@ -276,38 +318,110 @@ public class Stock extends javax.swing.JFrame {
         });
         JMenuPrincipal.add(MitmCesion);
 
-        MitmDevolucion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        MitmDevolucion.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        MitmDevolucion.setText("Devolucion");
-        JMenuPrincipal.add(MitmDevolucion);
-
-        MitmConsultas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        MitmConsultas.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
-        MitmConsultas.setText("Consultas");
-        MitmConsultas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MitmConsultasActionPerformed(evt);
-            }
-        });
-        JMenuPrincipal.add(MitmConsultas);
-
         MitmSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         MitmSalir.setFont(new java.awt.Font("SimSun", 0, 18)); // NOI18N
         MitmSalir.setText("Salir");
+        MitmSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MitmSalirActionPerformed(evt);
+            }
+        });
         JMenuPrincipal.add(MitmSalir);
 
         jMenuBar1.add(JMenuPrincipal);
 
         setJMenuBar(jMenuBar1);
 
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+//TODO
+    private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
+
+            // comprobar que no esten repetidos nombre marca y categoria 
+            ///TODO checkear comprobar precios    
+            //adaptas metodo vijeo si es que editar fincona 
+            try {
+                Ss.Add(Ss.comprobarPrecios(Ss.comprobarRepetidos(model)));
+                products2 = Ps.Dao.listarTodos();
+            } catch (Exception ex) {
+                Logger.getLogger(stockAgregarAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Error al  cargar productos " + ex.getMessage());
+            }
+        
+    }//GEN-LAST:event_BtnAceptarActionPerformed
+
+    private void ComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboCategoriaActionPerformed
+     selectionCategoria = (String) ComboCategoria.getSelectedItem();
+        
+    }//GEN-LAST:event_ComboCategoriaActionPerformed
+
+    private void ComboMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMarcaActionPerformed
+         selectionMarca = (String) ComboMarca.getSelectedItem();
+    }//GEN-LAST:event_ComboMarcaActionPerformed
+
+    private void BtnBuscarPructosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarPructosActionPerformed
+        
+        if (!selectionCategoria.equals("")&& selectionMarca.equals("")) {    
+            try {
+                System.out.println(" condicion 1 true");
+                products2= Ps.Dao.buscarPorCategoria(selectionCategoria);
+                Ss.Display(model, products2);
+            } catch (Exception ex) {
+              JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
+            }
+        } else{
+                System.out.println(" condicion 1 false");
+            }
+        if (selectionCategoria.equals("")&& !selectionMarca.equals("")) {
+            try {
+                System.out.println(" condicion 2 true");
+                products2= Ps.Dao.buscarPorMarca(selectionMarca);
+                Ss.Display(model, products2);
+            } catch (Exception ex) {
+             JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
+            }
+            
+        }else{
+                    System.out.println(" condicion 2 false");
+                    }
+        if (!selectionCategoria.equals("")&& !selectionMarca.equals("")){
+                try {
+                     System.out.println(" condicion 3 true");
+                    products2= Ps.Dao.buscarPorCategoriayMarca(selectionCategoria, selectionMarca);
+                    Ss.Display(model, products2);
+                } catch (Exception ex) {
+                   JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
+                }
+            }else{
+                    System.out.println(" condicion 2 false");
+                    }
+    }//GEN-LAST:event_BtnBuscarPructosActionPerformed
+
+    private void BtnAgregarProuctosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarProuctosActionPerformed
+      String input = (JOptionPane.showInputDialog("Ingrese la cantidad de filas de productos a agregar, el maximo es 100"));
+            if (input != null) {
+                int rows = Integer.parseInt(input);
+                model = Ss.AddSelected(model, rows);
+            }            
+    }//GEN-LAST:event_BtnAgregarProuctosActionPerformed
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
         Venta V;
         try {
             V = new Venta();
             V.setVisible(true);
+            V.setLocationRelativeTo(null);
             this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al abrir ventas" + e.getMessage());
@@ -315,85 +429,64 @@ public class Stock extends javax.swing.JFrame {
     }//GEN-LAST:event_MitmVentaActionPerformed
 
     private void MimtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MimtStockActionPerformed
-        Stock S1;
+        stockAgregarAdmin s1;
         try {
-            S1 = new Stock();
-            S1.setVisible(true);
+            s1 = new stockAgregarAdmin();
+            s1.setVisible(true);
+            s1.setLocationRelativeTo(null);
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir Stock" + ex.getMessage());
-            ex.getCause();
-            ex.getStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al abrir Stock Agregar : " + ex.getMessage());
         }
+
     }//GEN-LAST:event_MimtStockActionPerformed
+
+    private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
+        stockEditarAdmin S1;
+        try {
+            S1 = new stockEditarAdmin();
+            S1.setVisible(true);
+            S1.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al abrir Stock editar . " + ex.getMessage());
+        }
+    }//GEN-LAST:event_MitmEditarActionPerformed
+
+    private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
+        try {
+            DevolucionesAdmin d = new DevolucionesAdmin();
+            d.setVisible(true);
+            d.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al abrir devolucion : " + ex.getMessage());
+        }
+    }//GEN-LAST:event_MitmDevolucionActionPerformed
+
+    private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
+        UsuarioAdmin mi = new UsuarioAdmin();
+        mi.setVisible(true);
+        mi.setLocationRelativeTo(null);
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuUsuarioActionPerformed
 
     private void MitmCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmCesionActionPerformed
         MenuIngreso mi;
         try {
             mi = new MenuIngreso();
             mi.setVisible(true);
+            mi.setLocationRelativeTo(null);
             this.dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion : " + e.getMessage());
         }
     }//GEN-LAST:event_MitmCesionActionPerformed
 
-    private void MitmConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmConsultasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MitmConsultasActionPerformed
-
-    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-        if (!selectionCategoria.equals("")&& selectionMarca.equals("")) {
-            try {
-                products2= Ps.Dao.buscarPorCategoria(selectionCategoria);
-                Ss.Display(model, products2);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
-            }
-        }
-        if (selectionCategoria.equals("")&& !selectionMarca.equals("")) {
-            try {
-                products2= Ps.Dao.buscarPorMarca(selectionMarca);
-                Ss.Display(model, products2);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
-            }
-            if (!selectionCategoria.equals("")&& !selectionMarca.equals("")){
-                try {
-                    products2= Ps.Dao.buscarPorCategoriayMarca(selectionCategoria, selectionMarca);
-                    Ss.Display(model, products2);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
-                }
-            }
-        }
-    }//GEN-LAST:event_BtnBuscarActionPerformed
-
-    private void ComboMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMarcaActionPerformed
-        selectionMarca = (String) ComboMarca.getSelectedItem();
-    }//GEN-LAST:event_ComboMarcaActionPerformed
-
-    private void ComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboCategoriaActionPerformed
-        selectionCategoria = (String) ComboCategoria.getSelectedItem();
-
-    }//GEN-LAST:event_ComboCategoriaActionPerformed
-
-//TODO
-    private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
-            try {
-            //TODO checkear comprobar precios
-            TableModel modelbis = this.TableVenta.getModel();
-            model = (DefaultTableModel) modelbis;
-            products2 = Ss.EditaleData(Ss.comprobarPrecios(model));
-            for (Product product : products2) {
-                Ps.Dao.editar(product);
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "Error en btn aceptar linea 281 Stock : " + ex.getMessage());
-        }
-
-    }//GEN-LAST:event_BtnAceptarActionPerformed
+    private void MitmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_MitmSalirActionPerformed
 
     //esto deberia pasarse a StockService pero hasta no haberlo probado vamos a dejarlo aca
     private void calculatePrice(int row, DefaultTableModel model1) {        
@@ -420,7 +513,8 @@ public class Stock extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAceptar;
-    private javax.swing.JButton BtnBuscar;
+    private javax.swing.JButton BtnAgregarProuctos;
+    private javax.swing.JButton BtnBuscarPructos;
     private javax.swing.JComboBox<String> ComboCategoria;
     private javax.swing.JComboBox<String> ComboMarca;
     private javax.swing.JMenu JMenuPrincipal;
@@ -428,12 +522,13 @@ public class Stock extends javax.swing.JFrame {
     private javax.swing.JLabel LabelMarca;
     private javax.swing.JMenuItem MimtStock;
     private javax.swing.JMenuItem MitmCesion;
-    private javax.swing.JMenuItem MitmConsultas;
     private javax.swing.JMenuItem MitmDevolucion;
+    private javax.swing.JMenuItem MitmEditar;
     private javax.swing.JMenuItem MitmSalir;
     private javax.swing.JMenuItem MitmVenta;
     private javax.swing.JTable TableVenta;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
