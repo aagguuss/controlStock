@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -30,8 +31,12 @@ public class InterfaceService {
     sellService ss;
     ProductService ps;
     DefaultTableModel internModel;
+    ImageIcon icon1;
+    ImageIcon icon2;
 
     public InterfaceService() {
+        this.icon1 = new ImageIcon("/icons/warningSignalIcon.png");
+        this.icon2 = new ImageIcon("/icons/checklistCircleIcon.png");
         this.sps = new SellProductService();
         this.ps = new ProductService();
         this.ss = new sellService();
@@ -81,7 +86,14 @@ public class InterfaceService {
 
     public DefaultTableModel Display(DefaultTableModel model, List<Product> products2) {
         model.setRowCount(0); // Eliminar contenido existente
+        boolean iconDrop ;
         for (Product product : products2) {
+            
+            if(product.getStock()<=product.getStockWarning()){
+                 iconDrop = true;
+             }else {
+                iconDrop = false ;
+            }
             Object[] row = {
                 product.getId(),
                 product.getProductName(),
@@ -91,8 +103,10 @@ public class InterfaceService {
                 product.getSellingPRice(),
                 product.getStock(),
                 product.getStockWarning(),
-                product.getInterest()
+                product.getInterest(),
+                drop(iconDrop),
             };
+             
             model.addRow(row);
         }
         return model;
@@ -549,6 +563,16 @@ public class InterfaceService {
         s.setProfit(ss.totalWining(producto));
         s.setUsuario(us.buscarUsuarioActivo());
         ss.dao.editar(s);
+    }
+
+    private ImageIcon drop(boolean iconDrop) {
+        ImageIcon i;
+       if (iconDrop) {
+             i = icon1;
+       }else {
+            i = icon2;
+       }
+       return i ;
     }
     
 }

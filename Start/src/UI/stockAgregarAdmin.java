@@ -202,11 +202,11 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes", "Indice"
+                "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes", "Alerta Stock"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, true, true, true, true, true, true, true, true, false
@@ -229,6 +229,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
         TableVenta.setMinimumSize(new java.awt.Dimension(800, 600));
         TableVenta.setName(""); // NOI18N
         TableVenta.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        TableVenta.setShowGrid(false);
         TableVenta.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TableVenta);
         TableVenta.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -549,4 +550,5 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
         }
     }
     
+  
 }

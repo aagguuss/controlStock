@@ -512,5 +512,6 @@ public class stockEditarAdmin extends javax.swing.JFrame {
             }
         }
     }
-    
+     
+   
 }
