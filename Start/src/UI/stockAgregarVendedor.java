@@ -4,6 +4,7 @@
  */
 package UI;
 
+import Entidades.ImgTabla;
 import Entidades.Product;
 import ServicioIU.InterfaceService;
 import Servicios.ProductService;
@@ -45,7 +46,8 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
         initComponents();
         ComboCategoria.addItem("");
         ComboMarca.addItem("");
-        this.model = Ss.Display((DefaultTableModel) TableVenta.getModel(), products2);
+        TableVenta.setDefaultRenderer(Object.class, new ImgTabla());
+        this.model = Ss.Display((DefaultTableModel) TableVenta.getModel(), products2, TableVenta.getDefaultRenderer(Object.class));
         // Agregar eventos de cambio de valor a las celdas
         model.addTableModelListener((TableModelEvent e) -> {
             if (e.getType() == TableModelEvent.UPDATE) {
@@ -94,6 +96,7 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(33, 33, 33));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(33, 33, 33));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,12 +175,12 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
                         .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnBuscarPructos, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(1, 1, 1)
                 .addComponent(LabelCategoria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,7 +206,7 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
         TableVenta.setForeground(new java.awt.Color(255, 255, 255));
         TableVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes"
@@ -227,12 +230,13 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
         TableVenta.setAutoscrolls(false);
         TableVenta.setCellSelectionEnabled(true);
         TableVenta.setFillsViewportHeight(true);
-        TableVenta.setGridColor(new java.awt.Color(0, 0, 0));
+        TableVenta.setGridColor(new java.awt.Color(204, 204, 204));
         TableVenta.setInheritsPopupMenu(true);
         TableVenta.setMaximumSize(new java.awt.Dimension(2147483647, 555555555));
         TableVenta.setMinimumSize(new java.awt.Dimension(800, 600));
         TableVenta.setName(""); // NOI18N
         TableVenta.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        TableVenta.setShowGrid(true);
         TableVenta.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TableVenta);
 
@@ -244,8 +248,8 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,8 +257,8 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(114, 23));
@@ -334,11 +338,11 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1512, Short.MAX_VALUE)
+            .addGap(0, 1526, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 6, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,7 +386,7 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
             try {
                 System.out.println(" condicion 1 true");
                 products2= Ps.Dao.buscarPorCategoria(selectionCategoria);
-                Ss.Display(model, products2);
+                Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
             }
@@ -393,7 +397,7 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
             try {
                 System.out.println(" condicion 2 true");
                 products2= Ps.Dao.buscarPorMarca(selectionMarca);
-                Ss.Display(model, products2);
+                Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
             }
@@ -405,7 +409,7 @@ public class stockAgregarVendedor extends javax.swing.JFrame {
             try {
                 System.out.println(" condicion 3 true");
                 products2= Ps.Dao.buscarPorCategoriayMarca(selectionCategoria, selectionMarca);
-                Ss.Display(model, products2);
+                Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
             }

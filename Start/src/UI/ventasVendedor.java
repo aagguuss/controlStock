@@ -4,6 +4,7 @@
  */
 package UI;
 
+import Entidades.ImgTabla;
 import Entidades.SellProduct;
 import ServicioIU.InterfaceService;
 import Servicios.ProductService;
@@ -43,7 +44,8 @@ public class ventasVendedor extends javax.swing.JFrame {
         this.categoria = new ArrayList<>();
         this.products = new ArrayList<>();
         initComponents();
-        this.model = Ss.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarTodos());
+        TableStockVenta.setDefaultRenderer(Object.class, new ImgTabla());
+        this.model = Ss.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarTodos(), TableStockVenta.getDefaultRenderer(Object.class));
         this.modelCarrito = (DefaultTableModel) TableCarrito.getModel();
     }
 
@@ -206,9 +208,9 @@ public class ventasVendedor extends javax.swing.JFrame {
                 .addComponent(BtnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnVender, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(125, 125, 125)
                 .addComponent(LblValor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94))
+                .addContainerGap())
         );
 
         jScrollPane2.setBackground(new java.awt.Color(33, 33, 33));
@@ -220,7 +222,7 @@ public class ventasVendedor extends javax.swing.JFrame {
         TableCarrito.setForeground(new java.awt.Color(255, 255, 255));
         TableCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio", "Cantidad"
@@ -243,9 +245,10 @@ public class ventasVendedor extends javax.swing.JFrame {
         });
         TableCarrito.setCellSelectionEnabled(true);
         TableCarrito.setFillsViewportHeight(true);
-        TableCarrito.setGridColor(new java.awt.Color(153, 255, 153));
+        TableCarrito.setGridColor(new java.awt.Color(204, 204, 204));
         TableCarrito.setInheritsPopupMenu(true);
         TableCarrito.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableCarrito.setShowGrid(true);
         TableCarrito.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(TableCarrito);
 
@@ -267,10 +270,12 @@ public class ventasVendedor extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel5.setBackground(new java.awt.Color(33, 33, 33));
@@ -373,7 +378,7 @@ public class ventasVendedor extends javax.swing.JFrame {
         TableStockVenta.setForeground(new java.awt.Color(255, 255, 255));
         TableStockVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio", "Stock"
@@ -396,9 +401,10 @@ public class ventasVendedor extends javax.swing.JFrame {
         });
         TableStockVenta.setCellSelectionEnabled(true);
         TableStockVenta.setFillsViewportHeight(true);
-        TableStockVenta.setGridColor(new java.awt.Color(153, 255, 153));
+        TableStockVenta.setGridColor(new java.awt.Color(204, 204, 204));
         TableStockVenta.setInheritsPopupMenu(true);
         TableStockVenta.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableStockVenta.setShowGrid(true);
         TableStockVenta.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(TableStockVenta);
 
@@ -458,21 +464,21 @@ public class ventasVendedor extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(410, 410, 410)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(157, 157, 157))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(1, 1, 1)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -490,8 +496,8 @@ public class ventasVendedor extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(14, 14, 14))
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -508,10 +514,10 @@ public class ventasVendedor extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(137, 137, 137))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(114, 23));
@@ -596,7 +602,7 @@ public class ventasVendedor extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
         );
 
         pack();

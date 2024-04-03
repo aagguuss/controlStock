@@ -545,9 +545,9 @@ public class UsuarioAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_MitmVentaActionPerformed
 
     private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-        stockEditarAdmin S1;
+        StockEditarAdminR S1;
         try {
-            S1 = new stockEditarAdmin();
+            S1 = new StockEditarAdminR();
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();

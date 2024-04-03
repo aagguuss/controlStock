@@ -4,8 +4,9 @@
  */
 package UI;
 
+import Entidades.ImgTabla;
 import Entidades.Product;
-import ServicioIU.InterfaceService;
+import ServicioIU.InterfaceService; 
 import Servicios.ProductService;
 import java.util.List;
 import javax.swing.ButtonGroup;
@@ -34,16 +35,24 @@ public class stockEditarVendedor extends javax.swing.JFrame {
      * Creates new form stockEditarVentas
      */
     public stockEditarVendedor() throws Exception {
-             this.Ss = new InterfaceService();
+        //inicializaciones
+        this.Ss = new InterfaceService();
         this.Ps = new ProductService(); 
         this.selectionCategoria="";
-        this.selectionMarca="";
-        products2 = Ps.Dao.listarTodos();        
+        this.selectionMarca="";    
         this.groupButtons = new ButtonGroup();
+        //Carga de lista de productos
+        products2 = Ps.Dao.listarTodos();
+        //inicializacion de componentes del Jframe
         initComponents();
         ComboMarca.addItem("");
-        this.model = Ss.Display((DefaultTableModel) TableVenta.getModel(), products2);
-        // Agregar eventos de cambio de valor a las celdas
+        //
+        // metodo para poder colocar los iconos usando el objeto imgTabla que por herencia posee un cellrender
+        TableVenta.setDefaultRenderer(Object.class, new ImgTabla());
+        //inicializamos el modelo que manipulara la informacion de los productos 
+        this.model = Ss.Display((DefaultTableModel) TableVenta.getModel(), products2,TableVenta.getDefaultRenderer(Object.class));
+        // Evento que escucha los valores modificados relativos al precio de forma tal que los complete  cooerentemente a los tres 
+        // usando la regla de tres simple excluyendo al precio de compra este debe ser completado por el usuario 
         model.addTableModelListener((TableModelEvent e) -> {
             if (e.getType() == TableModelEvent.UPDATE) {
                 int row = e.getFirstRow();
@@ -56,8 +65,9 @@ public class stockEditarVendedor extends javax.swing.JFrame {
             }     
             
         });
-           FillComboBox(ComboCategoria,(List<String>) Ps.Dao.TraerTodasCategorias());
-            FillComboBox(ComboMarca,(List<String>) Ps.Dao.TraerTodasMarcas());
+        // se llenan las consultas posibles del combo box los metodos solo traen la informacion en fromato string no es la clace producto
+        FillComboBox(ComboCategoria,(List<String>) Ps.Dao.TraerTodasCategorias());
+        FillComboBox(ComboMarca,(List<String>) Ps.Dao.TraerTodasMarcas());
         
     }
 
@@ -188,7 +198,7 @@ public class stockEditarVendedor extends javax.swing.JFrame {
         TableVenta.setForeground(new java.awt.Color(255, 255, 255));
         TableVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes", "Icono de Stock"
@@ -212,34 +222,36 @@ public class stockEditarVendedor extends javax.swing.JFrame {
         TableVenta.setAutoscrolls(false);
         TableVenta.setCellSelectionEnabled(true);
         TableVenta.setFillsViewportHeight(true);
-        TableVenta.setGridColor(new java.awt.Color(0, 0, 0));
+        TableVenta.setGridColor(new java.awt.Color(204, 204, 204));
         TableVenta.setInheritsPopupMenu(true);
         TableVenta.setMaximumSize(new java.awt.Dimension(2147483647, 555555555));
         TableVenta.setMinimumSize(new java.awt.Dimension(800, 600));
         TableVenta.setName(""); // NOI18N
         TableVenta.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        TableVenta.setShowGrid(true);
         TableVenta.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TableVenta);
+        TableVenta.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1109, Short.MAX_VALUE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(1, 1, 1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1097, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(45, 45, 45))
+                .addGap(20, 20, 20))
         );
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(114, 23));
@@ -331,7 +343,6 @@ public class stockEditarVendedor extends javax.swing.JFrame {
 
     private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
         try {
-            //TODO checkear comprobar precios
             TableModel modelbis = this.TableVenta.getModel();
             model = (DefaultTableModel) modelbis;
             products2 = Ss.EditaleData(Ss.comprobarPrecios(model));
@@ -356,7 +367,7 @@ public class stockEditarVendedor extends javax.swing.JFrame {
         if (!selectionCategoria.equals("")&& selectionMarca.equals("")) {
             try {
                 products2= Ps.Dao.buscarPorCategoria(selectionCategoria);
-                Ss.Display(model, products2);
+                Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
             }
@@ -364,14 +375,14 @@ public class stockEditarVendedor extends javax.swing.JFrame {
         if (selectionCategoria.equals("")&& !selectionMarca.equals("")) {
             try {
                 products2= Ps.Dao.buscarPorMarca(selectionMarca);
-                Ss.Display(model, products2);
+                Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
             }
             if (!selectionCategoria.equals("")&& !selectionMarca.equals("")){
                 try {
                     products2= Ps.Dao.buscarPorCategoriayMarca(selectionCategoria, selectionMarca);
-                    Ss.Display(model, products2);
+                    Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
                 }

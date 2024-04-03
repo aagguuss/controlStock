@@ -4,6 +4,7 @@
  */
 package UI;
 
+import Entidades.ImgTabla;
 import Entidades.SellProduct;
 import ServicioIU.InterfaceService;
 import Servicios.ProductService;
@@ -24,7 +25,7 @@ public class Venta extends javax.swing.JFrame {
     DefaultTableModel modelCarrito;
     ProductService Ps;
     usuarioService Us;
-    InterfaceService Ss;
+    InterfaceService is;
     List<Boolean> isnull;
     List<String> categoria;
     List<String> products;
@@ -37,14 +38,19 @@ public class Venta extends javax.swing.JFrame {
      */
     public Venta() throws Exception {
         this.Us = new usuarioService();
-        this.Ss = new InterfaceService();
+        this.is = new InterfaceService();
         this.Ps = new ProductService();
         this.isnull = new ArrayList<>();
         this.categoria = new ArrayList<>();
         this.products = new ArrayList<>();
         initComponents();
-        this.model = Ss.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarTodos());
+       
+        TableStockVenta.setDefaultRenderer(Object.class, new ImgTabla());
+        this.model = is.Display((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarTodos(), TableStockVenta.getDefaultRenderer(Object.class));
         this.modelCarrito = (DefaultTableModel) TableCarrito.getModel();
+         TableCarrito = is.configuraciondeTablas(TableCarrito);
+        TableStockVenta= is.configuraciondeTablas(TableStockVenta);
+        TableStockVenta1= is.configuraciondeTablas(TableStockVenta1);
     }
 
     /**
@@ -226,7 +232,7 @@ public class Venta extends javax.swing.JFrame {
         TableCarrito.setForeground(new java.awt.Color(255, 255, 255));
         TableCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio", "Cantidad"
@@ -249,9 +255,10 @@ public class Venta extends javax.swing.JFrame {
         });
         TableCarrito.setCellSelectionEnabled(true);
         TableCarrito.setFillsViewportHeight(true);
-        TableCarrito.setGridColor(new java.awt.Color(153, 255, 153));
+        TableCarrito.setGridColor(new java.awt.Color(204, 204, 204));
         TableCarrito.setInheritsPopupMenu(true);
         TableCarrito.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableCarrito.setShowGrid(true);
         TableCarrito.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(TableCarrito);
 
@@ -379,7 +386,7 @@ public class Venta extends javax.swing.JFrame {
         TableStockVenta.setForeground(new java.awt.Color(255, 255, 255));
         TableStockVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio", "Stock"
@@ -402,11 +409,14 @@ public class Venta extends javax.swing.JFrame {
         });
         TableStockVenta.setCellSelectionEnabled(true);
         TableStockVenta.setFillsViewportHeight(true);
-        TableStockVenta.setGridColor(new java.awt.Color(153, 255, 153));
+        TableStockVenta.setFocusable(false);
+        TableStockVenta.setGridColor(new java.awt.Color(204, 204, 204));
         TableStockVenta.setInheritsPopupMenu(true);
         TableStockVenta.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableStockVenta.setShowGrid(true);
         TableStockVenta.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(TableStockVenta);
+        TableStockVenta.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -425,12 +435,12 @@ public class Venta extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TxtFieldCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TxtFieldMarca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(15, 15, 15)
+                            .addComponent(TxtFieldCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtFieldMarca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(16, 16, 16)
                 .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1072, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jPanel2Layout.setVerticalGroup(
@@ -478,9 +488,9 @@ public class Venta extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -627,13 +637,13 @@ public class Venta extends javax.swing.JFrame {
 
         getData();
         try {
-            categoria = Ss.ConsultasProductos(isnull, categoria);
-            products = Ss.ConsultasProductos(isnull, products);
+            categoria = is.ConsultasProductos(isnull, categoria);
+            products = is.ConsultasProductos(isnull, products);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en btnBuscatAction:" + e.getMessage());
         }
         try {
-            model = Ss.DisplayVentaCarrito((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarEspecificados(categoria, products));
+            model = is.DisplayVentaCarrito((DefaultTableModel) TableStockVenta.getModel(), Ps.Dao.listarEspecificados(categoria, products));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en la interface venta : " + e.getMessage());
         }
@@ -649,7 +659,7 @@ public class Venta extends javax.swing.JFrame {
 
         try {
             String intString = TxtFieldId.getText();
-            modelCarrito = Ss.removeOneFromCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
+            modelCarrito = is.removeOneFromCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en el boton eliminar al carrito :" + ex.getMessage());
         }
@@ -658,29 +668,29 @@ public class Venta extends javax.swing.JFrame {
     private void BtnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVenderActionPerformed
         List<SellProduct> productosSell = new ArrayList<>();
         try {
-            productosSell = Ss.procesarTablaEnProductForSell(modelCarrito);
+            productosSell = is.procesarTablaEnProductForSell(modelCarrito);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         try {
-            Ss.GestionarVenta(productosSell);
+            is.GestionarVenta(productosSell);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en boton vender :" + e.getMessage());
             System.out.println(e.getMessage());
         }
-        modelCarrito = Ss.DeleteallFromCarrito(modelCarrito);
+        modelCarrito = is.DeleteallFromCarrito(modelCarrito);
         TableCarrito.setModel(modelCarrito);
     }//GEN-LAST:event_BtnVenderActionPerformed
 
     private void BtnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCalcularActionPerformed
-        LblValor.setText("Valor Total :" + Ss.calculatePriceFromVenta(modelCarrito));
+        LblValor.setText("Valor Total :" + is.calculatePriceFromVenta(modelCarrito));
     }//GEN-LAST:event_BtnCalcularActionPerformed
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         // TODO add your handling code here:
         try {
             String intString = TxtFieldId.getText();
-            modelCarrito = Ss.AddCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
+            modelCarrito = is.AddCarrito(Ps.Dao.buscarPorId(Integer.parseInt(intString)), ((DefaultTableModel) TableCarrito.getModel()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en el boton agregar al carrito :" + e.getMessage() + "    " + e.toString());
         }
@@ -716,9 +726,9 @@ public class Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_MimtStockActionPerformed
 
     private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-        stockEditarAdmin S1;
+        StockEditarAdminR S1;
         try {
-            S1 = new stockEditarAdmin();
+            S1 = new StockEditarAdminR();
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();
@@ -817,9 +827,9 @@ public class Venta extends javax.swing.JFrame {
             products.add(TxtFieldDescripcion.getText());
             products.add(TxtFieldMarca.getText());
             isnull.clear();
-            isnull.add(Ss.BooleanFilter(TxtFieldCategoria.getText()));
-            isnull.add(Ss.BooleanFilter(TxtFieldDescripcion.getText()));
-            isnull.add(Ss.BooleanFilter(TxtFieldMarca.getText()));
+            isnull.add(is.BooleanFilter(TxtFieldCategoria.getText()));
+            isnull.add(is.BooleanFilter(TxtFieldDescripcion.getText()));
+            isnull.add(is.BooleanFilter(TxtFieldMarca.getText()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en getData() :" + e.getMessage());
         }

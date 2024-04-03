@@ -34,7 +34,7 @@ Sell s;
         isnull= new ArrayList<>();
         categoria= new ArrayList<>();
         products= new ArrayList<>();
-        modelproducto = is.Display((DefaultTableModel) TableStockDevolucion.getModel(), Ps.Dao.listarTodos());
+        modelproducto = is.Display((DefaultTableModel) TableStockDevolucion.getModel(), Ps.Dao.listarTodos(), TableVenta.getDefaultRenderer(Object.class));
         modelventas = is.DisplaySells((DefaultTableModel) TableVenta.getModel(), ss.dao.listarTodos());
         modelDevolucion = (DefaultTableModel)TableCarritoDevolucion.getModel();
     }

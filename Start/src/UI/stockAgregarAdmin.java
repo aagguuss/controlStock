@@ -5,6 +5,7 @@
 package UI;
 
 
+import Entidades.ImgTabla;
 import Entidades.Product;
 import ServicioIU.InterfaceService;
 import Servicios.ProductService;
@@ -22,27 +23,31 @@ import javax.swing.table.TableModel;
  * @author agust
  */
 public class stockAgregarAdmin extends javax.swing.JFrame {
+    Boolean sePudeAgregar=false;
     String selectionMarca;
     String selectionCategoria; 
     DefaultTableModel model;
     ProductService Ps;
-    InterfaceService Ss;    
+    InterfaceService is;    
     private List<Product> products2;
     //checkear que hace bottongroup
     ButtonGroup groupButtons;
     
     public stockAgregarAdmin() throws Exception {
-        this.Ss = new InterfaceService();
+        this.is = new InterfaceService();
         this.Ps = new ProductService(); 
         this.selectionCategoria="";
         this.selectionMarca="";
         products2 = Ps.Dao.listarTodos();        
         this.groupButtons = new ButtonGroup();
         initComponents();
+       
         ComboCategoria.addItem("");
         ComboMarca.addItem("");
-        this.model = Ss.Display((DefaultTableModel) TableVenta.getModel(), products2);
+        TableAgregar.setDefaultRenderer(Object.class, new ImgTabla());
+        this.model = is.Display((DefaultTableModel) TableAgregar.getModel(), products2, TableAgregar.getDefaultRenderer(Object.class));
         // Agregar eventos de cambio de valor a las celdas
+         TableAgregar = is.configuraciondeTablas(TableAgregar);
         model.addTableModelListener((TableModelEvent e) -> {
             if (e.getType() == TableModelEvent.UPDATE) {
                 int row = e.getFirstRow();
@@ -78,7 +83,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
         BtnBuscarPructos = new javax.swing.JButton();
         BtnAgregarProuctos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableVenta = new javax.swing.JTable();
+        TableAgregar = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         JMenuPrincipal = new javax.swing.JMenu();
         MitmVenta = new javax.swing.JMenuItem();
@@ -173,7 +178,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(1, 1, 1)
                 .addComponent(LabelCategoria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ComboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,12 +199,12 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setMaximumSize(new java.awt.Dimension(555555555, 555555555));
 
-        TableVenta.setBackground(new java.awt.Color(51, 51, 51));
-        TableVenta.setFont(new java.awt.Font("SimSun", 1, 12)); // NOI18N
-        TableVenta.setForeground(new java.awt.Color(255, 255, 255));
-        TableVenta.setModel(new javax.swing.table.DefaultTableModel(
+        TableAgregar.setBackground(new java.awt.Color(51, 51, 51));
+        TableAgregar.setFont(new java.awt.Font("SimSun", 1, 12)); // NOI18N
+        TableAgregar.setForeground(new java.awt.Color(255, 255, 255));
+        TableAgregar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes", "Alerta Stock"
@@ -220,19 +225,19 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TableVenta.setAutoscrolls(false);
-        TableVenta.setCellSelectionEnabled(true);
-        TableVenta.setFillsViewportHeight(true);
-        TableVenta.setGridColor(new java.awt.Color(0, 0, 0));
-        TableVenta.setInheritsPopupMenu(true);
-        TableVenta.setMaximumSize(new java.awt.Dimension(2147483647, 555555555));
-        TableVenta.setMinimumSize(new java.awt.Dimension(800, 600));
-        TableVenta.setName(""); // NOI18N
-        TableVenta.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        TableVenta.setShowGrid(false);
-        TableVenta.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(TableVenta);
-        TableVenta.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        TableAgregar.setAutoscrolls(false);
+        TableAgregar.setCellSelectionEnabled(true);
+        TableAgregar.setFillsViewportHeight(true);
+        TableAgregar.setGridColor(new java.awt.Color(204, 204, 204));
+        TableAgregar.setInheritsPopupMenu(true);
+        TableAgregar.setMaximumSize(new java.awt.Dimension(2147483647, 555555555));
+        TableAgregar.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableAgregar.setName(""); // NOI18N
+        TableAgregar.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        TableAgregar.setShowGrid(true);
+        TableAgregar.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(TableAgregar);
+        TableAgregar.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -251,8 +256,8 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         JMenuPrincipal.setText("Panel de Opciones");
@@ -348,12 +353,11 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //TODO
     private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
-
-            // comprobar que no esten repetidos nombre marca y categoria 
-            ///TODO checkear comprobar precios    
+      
+            ///TODO tenemos que controlar que solo se pueda agregar cuando esta seleccinado  BtnAgregarProuctos
             //adaptas metodo vijeo si es que editar fincona 
             try {
-                Ss.Add(Ss.comprobarPrecios(Ss.comprobarRepetidos(model)));
+                is.Add(is.comprobarPrecios(is.comprobarRepetidos(model)));
                 products2 = Ps.Dao.listarTodos();
             } catch (Exception ex) {
                 Logger.getLogger(stockAgregarAdmin.class.getName()).log(Level.SEVERE, null, ex);
@@ -375,20 +379,20 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
         
         if (!selectionCategoria.equals("")&& selectionMarca.equals("")) {    
             try {
-                System.out.println(" condicion 1 true");
                 products2= Ps.Dao.buscarPorCategoria(selectionCategoria);
-                Ss.Display(model, products2);
+                is.Display(model, products2, TableAgregar.getDefaultRenderer(Object.class));
+                sePudeAgregar=false;
             } catch (Exception ex) {
-              JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
+              JOptionPane.showMessageDialog(null, "Error L380 :"+ex.getMessage());
             }
         } else{
-                System.out.println(" condicion 1 false");
+               
             }
         if (selectionCategoria.equals("")&& !selectionMarca.equals("")) {
             try {
                 System.out.println(" condicion 2 true");
                 products2= Ps.Dao.buscarPorMarca(selectionMarca);
-                Ss.Display(model, products2);
+                is.Display(model, products2, TableAgregar.getDefaultRenderer(Object.class));
             } catch (Exception ex) {
              JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
             }
@@ -400,7 +404,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
                 try {
                      System.out.println(" condicion 3 true");
                     products2= Ps.Dao.buscarPorCategoriayMarca(selectionCategoria, selectionMarca);
-                    Ss.Display(model, products2);
+                    is.Display(model, products2, TableAgregar.getDefaultRenderer(Object.class));
                 } catch (Exception ex) {
                    JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
                 }
@@ -413,8 +417,10 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
       String input = (JOptionPane.showInputDialog("Ingrese la cantidad de filas de productos a agregar, el maximo es 100"));
             if (input != null) {
                 int rows = Integer.parseInt(input);
-                model = Ss.AddSelected(model, rows);
-            }            
+                model = is.AddSelected(model, rows);
+                sePudeAgregar=true;
+            }    
+            
     }//GEN-LAST:event_BtnAgregarProuctosActionPerformed
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
@@ -443,9 +449,9 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_MimtStockActionPerformed
 
     private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-        stockEditarAdmin S1;
+      StockEditarAdminR S1;
         try {
-            S1 = new stockEditarAdmin();
+            S1 = new StockEditarAdminR();
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();
@@ -527,7 +533,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuItem MitmEditar;
     private javax.swing.JMenuItem MitmSalir;
     private javax.swing.JMenuItem MitmVenta;
-    private javax.swing.JTable TableVenta;
+    private javax.swing.JTable TableAgregar;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuUsuario;
     private javax.swing.JPanel jPanel1;

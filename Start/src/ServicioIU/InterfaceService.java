@@ -11,15 +11,19 @@ import Servicios.ProductService;
 import Servicios.SellProductService;
 import Servicios.sellService;
 import Servicios.usuarioService;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -84,16 +88,17 @@ public class InterfaceService {
 
     }
 
-    public DefaultTableModel Display(DefaultTableModel model, List<Product> products2) {
+    public DefaultTableModel Display(DefaultTableModel model, List<Product> products2, TableCellRenderer defaultRenderer) {
         model.setRowCount(0); // Eliminar contenido existente
-        boolean iconDrop ;
-        for (Product product : products2) {
-            
-            if(product.getStock()<=product.getStockWarning()){
-                 iconDrop = true;
-             }else {
-                iconDrop = false ;
-            }
+        JLabel icon1 = new JLabel(new ImageIcon(getClass().getResource("/icons/ok.png")));
+        JLabel icon2  = new JLabel(new ImageIcon(getClass().getResource("/icons/trianguloexclamacion.png")));
+        JLabel iconCorrecto;
+        for (Product product : products2) {  
+            if(product.getStock()>= product.getStockWarning()){
+                iconCorrecto=icon1;
+            }else {
+               iconCorrecto=icon2;
+            };
             Object[] row = {
                 product.getId(),
                 product.getProductName(),
@@ -104,9 +109,8 @@ public class InterfaceService {
                 product.getStock(),
                 product.getStockWarning(),
                 product.getInterest(),
-                drop(iconDrop),
+                iconCorrecto,
             };
-             
             model.addRow(row);
         }
         return model;
@@ -573,6 +577,17 @@ public class InterfaceService {
             i = icon2;
        }
        return i ;
+    }
+
+   public JTable configuraciondeTablas(JTable tabla) {
+       tabla.setGridColor(Color.gray);
+        //tabla.setIntercellSpacing(intercellSpacing);
+        Dimension intercellSpacing = tabla.getIntercellSpacing();
+        System.out.println("============= intercell spacing to string ===============");
+        System.out.println(intercellSpacing.toString());
+        tabla.setShowVerticalLines(false);
+        tabla.setRowHeight(32);
+      return tabla;
     }
     
 }

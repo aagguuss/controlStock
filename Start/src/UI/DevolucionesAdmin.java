@@ -41,9 +41,12 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         isnull= new ArrayList<>();
         categoria= new ArrayList<>();
         products= new ArrayList<>();
-        modelproducto = is.Display((DefaultTableModel) TableStockDevolucion.getModel(), Ps.Dao.listarTodos());
+        modelproducto = is.Display((DefaultTableModel) TableStockDevolucion.getModel(), Ps.Dao.listarTodos(), TableVenta.getDefaultRenderer(Object.class));
         modelventas = is.DisplaySells((DefaultTableModel) TableVenta.getModel(), ss.dao.listarTodos());
         modelDevolucion = (DefaultTableModel)TableCarritoDevolucion.getModel();
+         TableStockDevolucion=is.configuraciondeTablas(TableStockDevolucion);
+        TableVenta = is.configuraciondeTablas(TableVenta);
+        TableCarritoDevolucion = is.configuraciondeTablas(TableCarritoDevolucion);
     }
 
     /**
@@ -70,7 +73,6 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         LblMarca2 = new javax.swing.JLabel();
         TxtFieldPrimero = new javax.swing.JTextField();
         TxtFieldtercero = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         BtnBuscar = new javax.swing.JButton();
         TxtFieldFecha = new javax.swing.JTextField();
@@ -81,7 +83,6 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         TxtFieldProducto = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         TableVenta = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         LblId = new javax.swing.JLabel();
         TxtFieldIdVenta = new javax.swing.JTextField();
@@ -158,7 +159,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         TableStockDevolucion.setForeground(new java.awt.Color(255, 255, 255));
         TableStockDevolucion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio", "Stock"
@@ -181,9 +182,10 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         });
         TableStockDevolucion.setCellSelectionEnabled(true);
         TableStockDevolucion.setFillsViewportHeight(true);
-        TableStockDevolucion.setGridColor(new java.awt.Color(153, 255, 153));
+        TableStockDevolucion.setGridColor(new java.awt.Color(204, 204, 204));
         TableStockDevolucion.setInheritsPopupMenu(true);
         TableStockDevolucion.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableStockDevolucion.setShowGrid(true);
         TableStockDevolucion.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TableStockDevolucion);
 
@@ -302,8 +304,6 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
                 .addGap(0, 16, Short.MAX_VALUE))
         );
 
-        jPanel7.setBackground(new java.awt.Color(33, 33, 33));
-
         jPanel2.setBackground(new java.awt.Color(33, 33, 33));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -362,7 +362,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         TableVenta.setForeground(new java.awt.Color(255, 255, 255));
         TableVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null}
             },
             new String [] {
                 "Id", "Fecha", "Valor Total", "Productos ", "Vendedor"
@@ -385,9 +385,10 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         });
         TableVenta.setCellSelectionEnabled(true);
         TableVenta.setFillsViewportHeight(true);
-        TableVenta.setGridColor(new java.awt.Color(153, 255, 153));
+        TableVenta.setGridColor(new java.awt.Color(204, 204, 204));
         TableVenta.setInheritsPopupMenu(true);
         TableVenta.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableVenta.setShowGrid(true);
         TableVenta.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(TableVenta);
 
@@ -409,8 +410,8 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1014, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1020, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,37 +437,6 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1008, Short.MAX_VALUE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-
-        jPanel4.setBackground(new java.awt.Color(33, 33, 33));
-        jPanel4.setForeground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1646, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -476,20 +446,17 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(555, 555, 555)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(835, 835, 835))
         );
 
         jPanel3.setBackground(new java.awt.Color(33, 33, 33));
@@ -636,7 +603,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         TableCarritoDevolucion.setForeground(new java.awt.Color(255, 255, 255));
         TableCarritoDevolucion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio", "Cantidad"
@@ -659,9 +626,10 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         });
         TableCarritoDevolucion.setCellSelectionEnabled(true);
         TableCarritoDevolucion.setFillsViewportHeight(true);
-        TableCarritoDevolucion.setGridColor(new java.awt.Color(153, 255, 153));
+        TableCarritoDevolucion.setGridColor(new java.awt.Color(204, 204, 204));
         TableCarritoDevolucion.setInheritsPopupMenu(true);
         TableCarritoDevolucion.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableCarritoDevolucion.setShowGrid(true);
         TableCarritoDevolucion.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(TableCarritoDevolucion);
 
@@ -679,7 +647,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1014, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -774,9 +742,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1445, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -941,9 +907,9 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_MimtStockActionPerformed
 
     private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-        stockEditarAdmin S1;
+        StockEditarAdminR S1;
         try {
-            S1 = new stockEditarAdmin();
+            S1 = new StockEditarAdminR();
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();
@@ -1031,10 +997,8 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1082,5 +1046,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         }
 
     }
+
+    
    
 }
