@@ -10,6 +10,7 @@ import Servicios.ProductService;
 import Servicios.usuarioService;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -607,77 +608,6 @@ public class refactorVentasAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-        Venta V;
-        try {
-            V = new Venta();
-            V.setVisible(true);
-            V.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al abrir ventas" + e.getMessage());
-        }
-    }//GEN-LAST:event_MitmVentaActionPerformed
-
-    private void MimtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MimtStockActionPerformed
-        stockAgregarAdmin s1;
-        try {
-            s1 = new stockAgregarAdmin();
-            s1.setVisible(true);
-            s1.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir Stock Agregar : " + ex.getMessage());
-        }
-    }//GEN-LAST:event_MimtStockActionPerformed
-
-    private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-       StockEditarAdminR S1;
-        try {
-            S1 = new StockEditarAdminR();
-            S1.setVisible(true);
-            S1.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir Stock editar . " + ex.getMessage());
-        }
-    }//GEN-LAST:event_MitmEditarActionPerformed
-
-    private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
-        try {
-            DevolucionesAdmin d = new DevolucionesAdmin();
-            d.setVisible(true);
-            d.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al abrir devolucion : " + ex.getMessage());
-        }
-    }//GEN-LAST:event_MitmDevolucionActionPerformed
-
-    private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
-        UsuarioAdmin mi = new UsuarioAdmin();
-        mi.setVisible(true);
-        mi.setLocationRelativeTo(null);
-        this.dispose();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuUsuarioActionPerformed
-
-    private void MitmCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmCesionActionPerformed
-        MenuIngreso mi;
-        try {
-            mi = new MenuIngreso();
-            mi.setVisible(true);
-            mi.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion : " + e.getMessage());
-        }
-    }//GEN-LAST:event_MitmCesionActionPerformed
-
-    private void MitmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmSalirActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_MitmSalirActionPerformed
-
     private void TxtFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtFieldIdActionPerformed
@@ -751,6 +681,83 @@ public class refactorVentasAdmin extends javax.swing.JFrame {
     private void TxtFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFieldMarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtFieldMarcaActionPerformed
+
+    private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
+        ventasVendedor V;
+        try {
+            V = new ventasVendedor();
+            V.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            V.setVisible(true);
+            V.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al abrir ventas" + e.getMessage());
+        }
+    }//GEN-LAST:event_MitmVentaActionPerformed
+
+    private void MimtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MimtStockActionPerformed
+        stockAgregarAdmin s1;
+        try {
+            s1 = new stockAgregarAdmin();
+            s1.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            s1.setVisible(true);
+            s1.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al abrir Stock Agregar : " + ex.getMessage());
+        }
+
+    }//GEN-LAST:event_MimtStockActionPerformed
+
+    private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
+        StockEditarAdminR S1;
+        try {
+            S1 = new StockEditarAdminR();
+            S1.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            S1.setVisible(true);
+            S1.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al abrir Stock editar . " + ex.getMessage());
+        }
+    }//GEN-LAST:event_MitmEditarActionPerformed
+
+    private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
+        try {
+            DevolucionesAdmin d = new DevolucionesAdmin();
+            d.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            d.setVisible(true);
+            d.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al abrir devolucion : " + ex.getMessage());
+        }
+    }//GEN-LAST:event_MitmDevolucionActionPerformed
+
+    private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
+        UsuarioAdmin mi = new UsuarioAdmin();
+        mi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        mi.setVisible(true);
+        mi.setLocationRelativeTo(null);
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuUsuarioActionPerformed
+
+    private void MitmCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmCesionActionPerformed
+        MenuIngreso mi;
+        try {
+            mi = new MenuIngreso();
+            mi.setVisible(true);
+            mi.setLocationRelativeTo(null);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al abrir menu de cesion : " + e.getMessage());
+        }
+    }//GEN-LAST:event_MitmCesionActionPerformed
+
+    private void MitmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_MitmSalirActionPerformed
 
     /**
      * @param args the command line arguments

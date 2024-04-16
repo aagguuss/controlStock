@@ -14,10 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  * @author agust
@@ -256,8 +256,8 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         JMenuPrincipal.setText("Panel de Opciones");
@@ -424,9 +424,10 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnAgregarProuctosActionPerformed
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-        Venta V;
+        ventasVendedor V;
         try {
-            V = new Venta();
+            V = new ventasVendedor();
+            V.setExtendedState(JFrame.MAXIMIZED_BOTH);
             V.setVisible(true);
             V.setLocationRelativeTo(null);
             this.dispose();
@@ -439,6 +440,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
         stockAgregarAdmin s1;
         try {
             s1 = new stockAgregarAdmin();
+            s1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             s1.setVisible(true);
             s1.setLocationRelativeTo(null);
             this.dispose();
@@ -449,9 +451,10 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_MimtStockActionPerformed
 
     private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-      StockEditarAdminR S1;
+        StockEditarAdminR S1;
         try {
             S1 = new StockEditarAdminR();
+            S1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();
@@ -463,6 +466,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
     private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
         try {
             DevolucionesAdmin d = new DevolucionesAdmin();
+            d.setExtendedState(JFrame.MAXIMIZED_BOTH);
             d.setVisible(true);
             d.setLocationRelativeTo(null);
             this.dispose();
@@ -473,6 +477,7 @@ public class stockAgregarAdmin extends javax.swing.JFrame {
 
     private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
         UsuarioAdmin mi = new UsuarioAdmin();
+        mi.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mi.setVisible(true);
         mi.setLocationRelativeTo(null);
         this.dispose();

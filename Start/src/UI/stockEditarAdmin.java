@@ -4,6 +4,7 @@
  */
 package UI;
 
+
 import Entidades.ImgTabla;
 import Entidades.Product;
 import ServicioIU.InterfaceService;
@@ -11,50 +12,39 @@ import Servicios.ProductService;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
  * @author agust
  */
-public class StockEditarAdminR extends javax.swing.JFrame {
-
+public class stockEditarAdmin extends javax.swing.JFrame {
     String selectionMarca;
-    String selectionCategoria;
+    String selectionCategoria; 
     DefaultTableModel model;
     ProductService Ps;
-    InterfaceService Ss;
+    InterfaceService is;    
     private List<Product> products2;
     //checkear que hace bottongroup
     ButtonGroup groupButtons;
-
-    /**
-     * Creates new form StockEditarAdminR
-     * @throws java.lang.Exception
-     */
-    public StockEditarAdminR() throws Exception {
-           //inicializaciones
-        this.Ss = new InterfaceService();
+    
+    public stockEditarAdmin() throws Exception {
+        this.is = new InterfaceService();
         this.Ps = new ProductService(); 
         this.selectionCategoria="";
-        this.selectionMarca="";    
+        this.selectionMarca="";
+        products2 = Ps.Dao.listarTodos();        
         this.groupButtons = new ButtonGroup();
-        //Carga de lista de productos
-        products2 = Ps.Dao.listarTodos();
-        //inicializacion de componentes del Jframe
         initComponents();
+        
+        ComboCategoria.addItem("");
         ComboMarca.addItem("");
-        //
-        // metodo para poder colocar los iconos usando el objeto imgTabla que por herencia posee un cellrender
-        TableVenta.setDefaultRenderer(Object.class, new ImgTabla());
-        //inicializamos el modelo que manipulara la informacion de los productos 
-        this.model = Ss.Display((DefaultTableModel) TableVenta.getModel(), products2,TableVenta.getDefaultRenderer(Object.class));
-        // Evento que escucha los valores modificados relativos al precio de forma tal que los complete  cooerentemente a los tres 
-        // usando la regla de tres simple excluyendo al precio de compra este debe ser completado por el usuario 
+        TableEdtitar.setDefaultRenderer(Object.class, new ImgTabla());
+        this.model = is.Display((DefaultTableModel) TableEdtitar.getModel(), products2, TableEdtitar.getDefaultRenderer(Object.class));
+        // Agregar eventos de cambio de valor a las celdas
+        TableEdtitar = is.configuraciondeTablas(TableEdtitar);
         model.addTableModelListener((TableModelEvent e) -> {
             if (e.getType() == TableModelEvent.UPDATE) {
                 int row = e.getFirstRow();
@@ -67,10 +57,8 @@ public class StockEditarAdminR extends javax.swing.JFrame {
             }     
             
         });
-        // se llenan las consultas posibles del combo box los metodos solo traen la informacion en fromato string no es la clace producto
-        FillComboBox(ComboCategoria,(List<String>) Ps.Dao.TraerTodasCategorias());
-        FillComboBox(ComboMarca,(List<String>) Ps.Dao.TraerTodasMarcas());
-        
+           FillComboBox(ComboCategoria,(List<String>) Ps.Dao.TraerTodasCategorias());
+            FillComboBox(ComboMarca,(List<String>) Ps.Dao.TraerTodasMarcas());
     }
 
     /**
@@ -91,7 +79,7 @@ public class StockEditarAdminR extends javax.swing.JFrame {
         LabelMarca = new javax.swing.JLabel();
         BtnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableVenta = new javax.swing.JTable();
+        TableEdtitar = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         JMenuPrincipal = new javax.swing.JMenu();
         MitmVenta = new javax.swing.JMenuItem();
@@ -167,12 +155,11 @@ public class StockEditarAdminR extends javax.swing.JFrame {
                     .addComponent(LabelMarca)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ComboCategoria, 0, 123, Short.MAX_VALUE)
-                                .addComponent(ComboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(BtnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ComboCategoria, 0, 123, Short.MAX_VALUE)
+                            .addComponent(BtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ComboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -196,12 +183,12 @@ public class StockEditarAdminR extends javax.swing.JFrame {
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setMaximumSize(new java.awt.Dimension(555555555, 555555555));
 
-        TableVenta.setBackground(new java.awt.Color(51, 51, 51));
-        TableVenta.setFont(new java.awt.Font("SimSun", 1, 12)); // NOI18N
-        TableVenta.setForeground(new java.awt.Color(255, 255, 255));
-        TableVenta.setModel(new javax.swing.table.DefaultTableModel(
+        TableEdtitar.setBackground(new java.awt.Color(51, 51, 51));
+        TableEdtitar.setFont(new java.awt.Font("SimSun", 1, 12)); // NOI18N
+        TableEdtitar.setForeground(new java.awt.Color(255, 255, 255));
+        TableEdtitar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Id", "Nombre", "Marca", "Categoria", "Precio de compra", "Precio", "Stock", "Alerta stock", "Interes", "Icono de Stock"
@@ -222,38 +209,37 @@ public class StockEditarAdminR extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TableVenta.setAutoscrolls(false);
-        TableVenta.setCellSelectionEnabled(true);
-        TableVenta.setFillsViewportHeight(true);
-        TableVenta.setGridColor(new java.awt.Color(204, 204, 204));
-        TableVenta.setInheritsPopupMenu(true);
-        TableVenta.setMaximumSize(new java.awt.Dimension(2147483647, 555555555));
-        TableVenta.setMinimumSize(new java.awt.Dimension(800, 600));
-        TableVenta.setName(""); // NOI18N
-        TableVenta.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        TableVenta.setShowGrid(true);
-        TableVenta.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(TableVenta);
+        TableEdtitar.setAutoscrolls(false);
+        TableEdtitar.setCellSelectionEnabled(true);
+        TableEdtitar.setFillsViewportHeight(true);
+        TableEdtitar.setGridColor(new java.awt.Color(204, 204, 204));
+        TableEdtitar.setInheritsPopupMenu(true);
+        TableEdtitar.setMaximumSize(new java.awt.Dimension(2147483647, 555555555));
+        TableEdtitar.setMinimumSize(new java.awt.Dimension(800, 600));
+        TableEdtitar.setName(""); // NOI18N
+        TableEdtitar.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        TableEdtitar.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(TableEdtitar);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(45, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1130, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                .addGap(45, 45, 45))
         );
 
         JMenuPrincipal.setText("Panel de Opciones");
@@ -348,60 +334,10 @@ public class StockEditarAdminR extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
-        try {
-            TableModel modelbis = this.TableVenta.getModel();
-            model = (DefaultTableModel) modelbis;
-            products2 = Ss.EditaleData(Ss.comprobarPrecios(model));
-            for (Product product : products2) {
-                Ps.Dao.editar(product);
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "Error en btn aceptar linea 281 Stock : " + ex.getMessage());
-        }
-    }//GEN-LAST:event_BtnAceptarActionPerformed
-
-    private void ComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboCategoriaActionPerformed
-        selectionCategoria = (String) ComboCategoria.getSelectedItem();
-    }//GEN-LAST:event_ComboCategoriaActionPerformed
-
-    private void ComboMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMarcaActionPerformed
-        selectionMarca = (String) ComboMarca.getSelectedItem();
-    }//GEN-LAST:event_ComboMarcaActionPerformed
-
-    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-        if (!selectionCategoria.equals("") && selectionMarca.equals("")) {
-            try {
-                products2 = Ps.Dao.buscarPorCategoria(selectionCategoria);
-                Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error :" + ex.getMessage());
-            }
-        }
-        if (selectionCategoria.equals("") && !selectionMarca.equals("")) {
-            try {
-                products2 = Ps.Dao.buscarPorMarca(selectionMarca);
-                Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error :" + ex.getMessage());
-            }
-            if (!selectionCategoria.equals("") && !selectionMarca.equals("")) {
-                try {
-                    products2 = Ps.Dao.buscarPorCategoriayMarca(selectionCategoria, selectionMarca);
-                    Ss.Display(model, products2, TableVenta.getDefaultRenderer(Object.class));
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error :" + ex.getMessage());
-                }
-            }
-        }
-    }//GEN-LAST:event_BtnBuscarActionPerformed
-
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-        ventasVendedor V;
+        Venta V;
         try {
-            V = new ventasVendedor();
-            V.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            V = new Venta();
             V.setVisible(true);
             V.setLocationRelativeTo(null);
             this.dispose();
@@ -414,7 +350,6 @@ public class StockEditarAdminR extends javax.swing.JFrame {
         stockAgregarAdmin s1;
         try {
             s1 = new stockAgregarAdmin();
-            s1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             s1.setVisible(true);
             s1.setLocationRelativeTo(null);
             this.dispose();
@@ -425,10 +360,9 @@ public class StockEditarAdminR extends javax.swing.JFrame {
     }//GEN-LAST:event_MimtStockActionPerformed
 
     private void MitmEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmEditarActionPerformed
-        StockEditarAdminR S1;
+        stockEditarAdmin S1;
         try {
-            S1 = new StockEditarAdminR();
-            S1.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            S1 = new stockEditarAdmin();
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();
@@ -440,7 +374,6 @@ public class StockEditarAdminR extends javax.swing.JFrame {
     private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
         try {
             DevolucionesAdmin d = new DevolucionesAdmin();
-            d.setExtendedState(JFrame.MAXIMIZED_BOTH);
             d.setVisible(true);
             d.setLocationRelativeTo(null);
             this.dispose();
@@ -451,7 +384,6 @@ public class StockEditarAdminR extends javax.swing.JFrame {
 
     private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
         UsuarioAdmin mi = new UsuarioAdmin();
-        mi.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mi.setVisible(true);
         mi.setLocationRelativeTo(null);
         this.dispose();
@@ -474,48 +406,58 @@ public class StockEditarAdminR extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_MitmSalirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnAceptar;
-    private javax.swing.JButton BtnBuscar;
-    private javax.swing.JComboBox<String> ComboCategoria;
-    private javax.swing.JComboBox<String> ComboMarca;
-    private javax.swing.JMenu JMenuPrincipal;
-    private javax.swing.JLabel LabelCategoria;
-    private javax.swing.JLabel LabelMarca;
-    private javax.swing.JMenuItem MimtStock;
-    private javax.swing.JMenuItem MitmCesion;
-    private javax.swing.JMenuItem MitmDevolucion;
-    private javax.swing.JMenuItem MitmEditar;
-    private javax.swing.JMenuItem MitmSalir;
-    private javax.swing.JMenuItem MitmVenta;
-    private javax.swing.JTable TableVenta;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuUsuario;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
-
- private void FillComboBox(JComboBox<String> Combo,List<String> contenido) {
-        
-        if (Combo == ComboMarca) {
-             
-            for (String marca : contenido) {
-                Combo.addItem(marca);
+    private void BtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarActionPerformed
+        try {
+            //TODO checkear comprobar precios
+            TableModel modelbis = this.TableEdtitar.getModel();
+            model = (DefaultTableModel) modelbis;
+            products2 = is.EditaleData(is.comprobarPrecios(model));
+            for (Product product : products2) {
+                Ps.Dao.editar(product);
             }
-        } else {
-          
-            for (String categoria : contenido) {
-                Combo.addItem(categoria);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Error en btn aceptar linea 281 Stock : " + ex.getMessage());
+        }
+    }//GEN-LAST:event_BtnAceptarActionPerformed
+
+    private void ComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboCategoriaActionPerformed
+        selectionCategoria = (String) ComboCategoria.getSelectedItem();
+    }//GEN-LAST:event_ComboCategoriaActionPerformed
+
+    private void ComboMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMarcaActionPerformed
+        selectionMarca = (String) ComboMarca.getSelectedItem();
+    }//GEN-LAST:event_ComboMarcaActionPerformed
+
+    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
+        if (!selectionCategoria.equals("")&& selectionMarca.equals("")) {
+            try {
+                products2= Ps.Dao.buscarPorCategoria(selectionCategoria);
+                is.Display(model, products2, TableEdtitar.getDefaultRenderer(Object.class));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
             }
         }
-    }
-    
-     private void calculatePrice(int row, DefaultTableModel model1) {        
+        if (selectionCategoria.equals("")&& !selectionMarca.equals("")) {
+            try {
+                products2= Ps.Dao.buscarPorMarca(selectionMarca);
+                is.Display(model, products2, TableEdtitar.getDefaultRenderer(Object.class));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
+            }
+            if (!selectionCategoria.equals("")&& !selectionMarca.equals("")){
+                try {
+                    products2= Ps.Dao.buscarPorCategoriayMarca(selectionCategoria, selectionMarca);
+                    is.Display(model, products2, TableEdtitar.getDefaultRenderer(Object.class));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error :"+ex.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_BtnBuscarActionPerformed
+
+    //esto deberia pasarse a StockService pero hasta no haberlo probado vamos a dejarlo aca
+    private void calculatePrice(int row, DefaultTableModel model1) {        
         try {            
             Double precioCompra = (Double) model1.getValueAt(row, 4);
             Double interes = (Double) model1.getValueAt(row, 8);
@@ -535,4 +477,44 @@ public class StockEditarAdminR extends javax.swing.JFrame {
             System.out.println(e.toString());
         }
         
-    }}
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAceptar;
+    private javax.swing.JButton BtnBuscar;
+    private javax.swing.JComboBox<String> ComboCategoria;
+    private javax.swing.JComboBox<String> ComboMarca;
+    private javax.swing.JMenu JMenuPrincipal;
+    private javax.swing.JLabel LabelCategoria;
+    private javax.swing.JLabel LabelMarca;
+    private javax.swing.JMenuItem MimtStock;
+    private javax.swing.JMenuItem MitmCesion;
+    private javax.swing.JMenuItem MitmDevolucion;
+    private javax.swing.JMenuItem MitmEditar;
+    private javax.swing.JMenuItem MitmSalir;
+    private javax.swing.JMenuItem MitmVenta;
+    private javax.swing.JTable TableEdtitar;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuUsuario;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+
+    private void FillComboBox(JComboBox<String> Combo,List<String> contenido) {
+        
+        if (Combo == ComboMarca) {
+             
+            for (String marca : contenido) {
+                Combo.addItem(marca);
+            }
+        } else {
+          
+            for (String categoria : contenido) {
+                Combo.addItem(categoria);
+            }
+        }
+    }
+     
+   
+}

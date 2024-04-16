@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -535,6 +536,7 @@ public class UsuarioAdmin extends javax.swing.JFrame {
         ventasVendedor V;
         try {
             V = new ventasVendedor();
+            V.setExtendedState(JFrame.MAXIMIZED_BOTH);
             V.setVisible(true);
             V.setLocationRelativeTo(null);
             this.dispose();
@@ -548,6 +550,7 @@ public class UsuarioAdmin extends javax.swing.JFrame {
         StockEditarAdminR S1;
         try {
             S1 = new StockEditarAdminR();
+            S1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();
@@ -560,6 +563,7 @@ public class UsuarioAdmin extends javax.swing.JFrame {
         stockAgregarAdmin s1;
         try {
             s1 = new stockAgregarAdmin();
+            s1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             s1.setVisible(true);
             s1.setLocationRelativeTo(null);
             this.dispose();
@@ -800,6 +804,7 @@ public class UsuarioAdmin extends javax.swing.JFrame {
     private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
         try {
             DevolucionesAdmin d = new DevolucionesAdmin();
+            d.setExtendedState(JFrame.MAXIMIZED_BOTH);
             d.setVisible(true);
             d.setLocationRelativeTo(null);
             this.dispose();
@@ -811,6 +816,7 @@ public class UsuarioAdmin extends javax.swing.JFrame {
 
     private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
         UsuarioAdmin mi = new UsuarioAdmin();
+        mi.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mi.setVisible(true);
         mi.setLocationRelativeTo(null);
         this.dispose();

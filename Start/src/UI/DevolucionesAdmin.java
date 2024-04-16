@@ -11,6 +11,7 @@ import Servicios.ProductService;
 import Servicios.sellService;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -882,9 +883,10 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeleccionarVentaActionPerformed
 
     private void MitmVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmVentaActionPerformed
-        Venta V;
+        ventasVendedor V;
         try {
-            V = new Venta();
+            V = new ventasVendedor();
+            V.setExtendedState(JFrame.MAXIMIZED_BOTH);
             V.setVisible(true);
             V.setLocationRelativeTo(null);
             this.dispose();
@@ -897,6 +899,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         stockAgregarAdmin s1;
         try {
             s1 = new stockAgregarAdmin();
+            s1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             s1.setVisible(true);
             s1.setLocationRelativeTo(null);
             this.dispose();
@@ -910,6 +913,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
         StockEditarAdminR S1;
         try {
             S1 = new StockEditarAdminR();
+            S1.setExtendedState(JFrame.MAXIMIZED_BOTH);
             S1.setVisible(true);
             S1.setLocationRelativeTo(null);
             this.dispose();
@@ -921,6 +925,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
     private void MitmDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitmDevolucionActionPerformed
         try {
             DevolucionesAdmin d = new DevolucionesAdmin();
+            d.setExtendedState(JFrame.MAXIMIZED_BOTH);
             d.setVisible(true);
             d.setLocationRelativeTo(null);
             this.dispose();
@@ -931,6 +936,7 @@ public class DevolucionesAdmin extends javax.swing.JFrame {
 
     private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
         UsuarioAdmin mi = new UsuarioAdmin();
+        mi.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mi.setVisible(true);
         mi.setLocationRelativeTo(null);
         this.dispose();
